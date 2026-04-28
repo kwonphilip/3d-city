@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Generated tile pipeline artifacts (intermediate)
+data/manhattan/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

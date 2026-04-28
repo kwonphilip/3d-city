@@ -1,0 +1,8405 @@
+{
+  "origin": {
+    "lat": 40.758,
+    "lon": -73.9855
+  },
+  "tileSize": 500,
+  "borough": "manhattan",
+  "source": "OpenStreetMap (Overpass)",
+  "generatedAt": "2026-04-28T06:09:51.172Z",
+  "tiles": [
+    {
+      "id": "-5_12",
+      "file": "tile_-5_12.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 81
+    },
+    {
+      "id": "-2_12",
+      "file": "tile_-2_12.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 142
+    },
+    {
+      "id": "-1_12",
+      "file": "tile_-1_12.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 80
+    },
+    {
+      "id": "-3_13",
+      "file": "tile_-3_13.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 6500,
+        "maxZ": 7000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "0_12",
+      "file": "tile_0_12.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 149
+    },
+    {
+      "id": "1_12",
+      "file": "tile_1_12.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 27
+    },
+    {
+      "id": "2_12",
+      "file": "tile_2_12.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 24
+    },
+    {
+      "id": "3_12",
+      "file": "tile_3_12.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 100
+    },
+    {
+      "id": "4_12",
+      "file": "tile_4_12.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 513
+    },
+    {
+      "id": "5_12",
+      "file": "tile_5_12.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 391
+    },
+    {
+      "id": "8_12",
+      "file": "tile_8_12.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 188
+    },
+    {
+      "id": "7_12",
+      "file": "tile_7_12.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 212
+    },
+    {
+      "id": "6_12",
+      "file": "tile_6_12.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 173
+    },
+    {
+      "id": "9_12",
+      "file": "tile_9_12.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 494
+    },
+    {
+      "id": "10_12",
+      "file": "tile_10_12.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 547
+    },
+    {
+      "id": "11_12",
+      "file": "tile_11_12.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 678
+    },
+    {
+      "id": "12_12",
+      "file": "tile_12_12.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 627
+    },
+    {
+      "id": "13_12",
+      "file": "tile_13_12.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 159
+    },
+    {
+      "id": "-6_11",
+      "file": "tile_-6_11.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 27
+    },
+    {
+      "id": "-6_12",
+      "file": "tile_-6_12.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "-6_10",
+      "file": "tile_-6_10.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 26
+    },
+    {
+      "id": "-5_11",
+      "file": "tile_-5_11.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 123
+    },
+    {
+      "id": "-4_11",
+      "file": "tile_-4_11.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 140
+    },
+    {
+      "id": "-4_12",
+      "file": "tile_-4_12.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 6000,
+        "maxZ": 6500
+      },
+      "buildingCount": 10
+    },
+    {
+      "id": "-3_11",
+      "file": "tile_-3_11.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 80
+    },
+    {
+      "id": "-5_10",
+      "file": "tile_-5_10.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 96
+    },
+    {
+      "id": "-4_10",
+      "file": "tile_-4_10.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 154
+    },
+    {
+      "id": "-3_10",
+      "file": "tile_-3_10.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 98
+    },
+    {
+      "id": "-2_11",
+      "file": "tile_-2_11.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-2_10",
+      "file": "tile_-2_10.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 130
+    },
+    {
+      "id": "-1_11",
+      "file": "tile_-1_11.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 10
+    },
+    {
+      "id": "0_11",
+      "file": "tile_0_11.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 35
+    },
+    {
+      "id": "1_11",
+      "file": "tile_1_11.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 15
+    },
+    {
+      "id": "0_10",
+      "file": "tile_0_10.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 31
+    },
+    {
+      "id": "-1_10",
+      "file": "tile_-1_10.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 65
+    },
+    {
+      "id": "2_11",
+      "file": "tile_2_11.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 14
+    },
+    {
+      "id": "3_11",
+      "file": "tile_3_11.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 295
+    },
+    {
+      "id": "3_10",
+      "file": "tile_3_10.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 397
+    },
+    {
+      "id": "2_10",
+      "file": "tile_2_10.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 34
+    },
+    {
+      "id": "4_11",
+      "file": "tile_4_11.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 454
+    },
+    {
+      "id": "5_11",
+      "file": "tile_5_11.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 537
+    },
+    {
+      "id": "4_10",
+      "file": "tile_4_10.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 353
+    },
+    {
+      "id": "5_10",
+      "file": "tile_5_10.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 438
+    },
+    {
+      "id": "6_11",
+      "file": "tile_6_11.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 262
+    },
+    {
+      "id": "7_11",
+      "file": "tile_7_11.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 404
+    },
+    {
+      "id": "8_11",
+      "file": "tile_8_11.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 189
+    },
+    {
+      "id": "6_10",
+      "file": "tile_6_10.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 593
+    },
+    {
+      "id": "8_10",
+      "file": "tile_8_10.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 210
+    },
+    {
+      "id": "7_10",
+      "file": "tile_7_10.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 314
+    },
+    {
+      "id": "9_11",
+      "file": "tile_9_11.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 251
+    },
+    {
+      "id": "10_11",
+      "file": "tile_10_11.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 358
+    },
+    {
+      "id": "10_10",
+      "file": "tile_10_10.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 81
+    },
+    {
+      "id": "9_10",
+      "file": "tile_9_10.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 42
+    },
+    {
+      "id": "11_11",
+      "file": "tile_11_11.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 759
+    },
+    {
+      "id": "12_11",
+      "file": "tile_12_11.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 794
+    },
+    {
+      "id": "11_10",
+      "file": "tile_11_10.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 477
+    },
+    {
+      "id": "12_10",
+      "file": "tile_12_10.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 391
+    },
+    {
+      "id": "13_11",
+      "file": "tile_13_11.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 5500,
+        "maxZ": 6000
+      },
+      "buildingCount": 207
+    },
+    {
+      "id": "13_10",
+      "file": "tile_13_10.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 235
+    },
+    {
+      "id": "-6_9",
+      "file": "tile_-6_9.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 14
+    },
+    {
+      "id": "-5_9",
+      "file": "tile_-5_9.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 142
+    },
+    {
+      "id": "-4_9",
+      "file": "tile_-4_9.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 214
+    },
+    {
+      "id": "-3_9",
+      "file": "tile_-3_9.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 295
+    },
+    {
+      "id": "-5_8",
+      "file": "tile_-5_8.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 117
+    },
+    {
+      "id": "-6_8",
+      "file": "tile_-6_8.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "-4_8",
+      "file": "tile_-4_8.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 286
+    },
+    {
+      "id": "-3_8",
+      "file": "tile_-3_8.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 418
+    },
+    {
+      "id": "-2_9",
+      "file": "tile_-2_9.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 377
+    },
+    {
+      "id": "-1_9",
+      "file": "tile_-1_9.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 279
+    },
+    {
+      "id": "0_9",
+      "file": "tile_0_9.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 73
+    },
+    {
+      "id": "1_9",
+      "file": "tile_1_9.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 22
+    },
+    {
+      "id": "1_10",
+      "file": "tile_1_10.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 5000,
+        "maxZ": 5500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-2_8",
+      "file": "tile_-2_8.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 451
+    },
+    {
+      "id": "-1_8",
+      "file": "tile_-1_8.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 403
+    },
+    {
+      "id": "0_8",
+      "file": "tile_0_8.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 309
+    },
+    {
+      "id": "1_8",
+      "file": "tile_1_8.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 75
+    },
+    {
+      "id": "3_9",
+      "file": "tile_3_9.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 354
+    },
+    {
+      "id": "2_9",
+      "file": "tile_2_9.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "4_9",
+      "file": "tile_4_9.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 517
+    },
+    {
+      "id": "5_9",
+      "file": "tile_5_9.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 437
+    },
+    {
+      "id": "3_8",
+      "file": "tile_3_8.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 31
+    },
+    {
+      "id": "4_8",
+      "file": "tile_4_8.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 502
+    },
+    {
+      "id": "5_8",
+      "file": "tile_5_8.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 161
+    },
+    {
+      "id": "7_9",
+      "file": "tile_7_9.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 630
+    },
+    {
+      "id": "6_9",
+      "file": "tile_6_9.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 784
+    },
+    {
+      "id": "8_9",
+      "file": "tile_8_9.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 211
+    },
+    {
+      "id": "10_9",
+      "file": "tile_10_9.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 40
+    },
+    {
+      "id": "9_9",
+      "file": "tile_9_9.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 42
+    },
+    {
+      "id": "6_8",
+      "file": "tile_6_8.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 406
+    },
+    {
+      "id": "7_8",
+      "file": "tile_7_8.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 469
+    },
+    {
+      "id": "8_8",
+      "file": "tile_8_8.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 85
+    },
+    {
+      "id": "9_8",
+      "file": "tile_9_8.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 24
+    },
+    {
+      "id": "10_8",
+      "file": "tile_10_8.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 32
+    },
+    {
+      "id": "12_9",
+      "file": "tile_12_9.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 527
+    },
+    {
+      "id": "11_9",
+      "file": "tile_11_9.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 71
+    },
+    {
+      "id": "13_9",
+      "file": "tile_13_9.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 4500,
+        "maxZ": 5000
+      },
+      "buildingCount": 158
+    },
+    {
+      "id": "11_8",
+      "file": "tile_11_8.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 35
+    },
+    {
+      "id": "12_8",
+      "file": "tile_12_8.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 213
+    },
+    {
+      "id": "13_8",
+      "file": "tile_13_8.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 4000,
+        "maxZ": 4500
+      },
+      "buildingCount": 207
+    },
+    {
+      "id": "-3_7",
+      "file": "tile_-3_7.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 442
+    },
+    {
+      "id": "-4_7",
+      "file": "tile_-4_7.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 193
+    },
+    {
+      "id": "-5_7",
+      "file": "tile_-5_7.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 81
+    },
+    {
+      "id": "-4_6",
+      "file": "tile_-4_6.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 286
+    },
+    {
+      "id": "-5_6",
+      "file": "tile_-5_6.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "-2_6",
+      "file": "tile_-2_6.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 178
+    },
+    {
+      "id": "-1_6",
+      "file": "tile_-1_6.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 511
+    },
+    {
+      "id": "-1_7",
+      "file": "tile_-1_7.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 332
+    },
+    {
+      "id": "-3_6",
+      "file": "tile_-3_6.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 401
+    },
+    {
+      "id": "-2_7",
+      "file": "tile_-2_7.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 347
+    },
+    {
+      "id": "0_7",
+      "file": "tile_0_7.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 389
+    },
+    {
+      "id": "0_6",
+      "file": "tile_0_6.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 516
+    },
+    {
+      "id": "1_6",
+      "file": "tile_1_6.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 165
+    },
+    {
+      "id": "1_7",
+      "file": "tile_1_7.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 234
+    },
+    {
+      "id": "2_6",
+      "file": "tile_2_6.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 13
+    },
+    {
+      "id": "2_7",
+      "file": "tile_2_7.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 9
+    },
+    {
+      "id": "5_7",
+      "file": "tile_5_7.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 511
+    },
+    {
+      "id": "5_6",
+      "file": "tile_5_6.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 658
+    },
+    {
+      "id": "4_7",
+      "file": "tile_4_7.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 58
+    },
+    {
+      "id": "4_6",
+      "file": "tile_4_6.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 342
+    },
+    {
+      "id": "8_7",
+      "file": "tile_8_7.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 153
+    },
+    {
+      "id": "8_6",
+      "file": "tile_8_6.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 62
+    },
+    {
+      "id": "7_6",
+      "file": "tile_7_6.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 174
+    },
+    {
+      "id": "6_7",
+      "file": "tile_6_7.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 791
+    },
+    {
+      "id": "6_6",
+      "file": "tile_6_6.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 424
+    },
+    {
+      "id": "7_7",
+      "file": "tile_7_7.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 638
+    },
+    {
+      "id": "9_7",
+      "file": "tile_9_7.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "9_6",
+      "file": "tile_9_6.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "10_6",
+      "file": "tile_10_6.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 62
+    },
+    {
+      "id": "10_7",
+      "file": "tile_10_7.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 10
+    },
+    {
+      "id": "11_7",
+      "file": "tile_11_7.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 48
+    },
+    {
+      "id": "12_7",
+      "file": "tile_12_7.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 212
+    },
+    {
+      "id": "11_6",
+      "file": "tile_11_6.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 46
+    },
+    {
+      "id": "12_6",
+      "file": "tile_12_6.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 15
+    },
+    {
+      "id": "13_6",
+      "file": "tile_13_6.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 3000,
+        "maxZ": 3500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "13_7",
+      "file": "tile_13_7.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 3500,
+        "maxZ": 4000
+      },
+      "buildingCount": 138
+    },
+    {
+      "id": "-5_5",
+      "file": "tile_-5_5.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 67
+    },
+    {
+      "id": "-4_5",
+      "file": "tile_-4_5.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 570
+    },
+    {
+      "id": "-3_5",
+      "file": "tile_-3_5.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 608
+    },
+    {
+      "id": "-3_4",
+      "file": "tile_-3_4.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 497
+    },
+    {
+      "id": "-4_4",
+      "file": "tile_-4_4.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 560
+    },
+    {
+      "id": "-4_3",
+      "file": "tile_-4_3.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 142
+    },
+    {
+      "id": "-5_4",
+      "file": "tile_-5_4.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 9
+    },
+    {
+      "id": "-2_5",
+      "file": "tile_-2_5.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 376
+    },
+    {
+      "id": "-1_5",
+      "file": "tile_-1_5.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 245
+    },
+    {
+      "id": "-1_4",
+      "file": "tile_-1_4.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 299
+    },
+    {
+      "id": "-2_4",
+      "file": "tile_-2_4.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 285
+    },
+    {
+      "id": "-2_3",
+      "file": "tile_-2_3.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 312
+    },
+    {
+      "id": "-3_3",
+      "file": "tile_-3_3.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 507
+    },
+    {
+      "id": "-1_3",
+      "file": "tile_-1_3.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 179
+    },
+    {
+      "id": "0_5",
+      "file": "tile_0_5.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 279
+    },
+    {
+      "id": "1_5",
+      "file": "tile_1_5.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 35
+    },
+    {
+      "id": "0_4",
+      "file": "tile_0_4.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 264
+    },
+    {
+      "id": "0_3",
+      "file": "tile_0_3.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 372
+    },
+    {
+      "id": "1_4",
+      "file": "tile_1_4.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 66
+    },
+    {
+      "id": "2_4",
+      "file": "tile_2_4.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "1_3",
+      "file": "tile_1_3.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 251
+    },
+    {
+      "id": "4_5",
+      "file": "tile_4_5.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 381
+    },
+    {
+      "id": "5_5",
+      "file": "tile_5_5.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 535
+    },
+    {
+      "id": "5_4",
+      "file": "tile_5_4.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 192
+    },
+    {
+      "id": "4_4",
+      "file": "tile_4_4.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 48
+    },
+    {
+      "id": "5_3",
+      "file": "tile_5_3.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 242
+    },
+    {
+      "id": "4_3",
+      "file": "tile_4_3.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 66
+    },
+    {
+      "id": "6_5",
+      "file": "tile_6_5.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 39
+    },
+    {
+      "id": "7_5",
+      "file": "tile_7_5.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 40
+    },
+    {
+      "id": "8_4",
+      "file": "tile_8_4.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 128
+    },
+    {
+      "id": "8_5",
+      "file": "tile_8_5.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 77
+    },
+    {
+      "id": "7_4",
+      "file": "tile_7_4.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 34
+    },
+    {
+      "id": "6_4",
+      "file": "tile_6_4.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 28
+    },
+    {
+      "id": "6_3",
+      "file": "tile_6_3.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 47
+    },
+    {
+      "id": "7_3",
+      "file": "tile_7_3.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 45
+    },
+    {
+      "id": "9_5",
+      "file": "tile_9_5.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "10_5",
+      "file": "tile_10_5.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 72
+    },
+    {
+      "id": "9_4",
+      "file": "tile_9_4.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 261
+    },
+    {
+      "id": "8_3",
+      "file": "tile_8_3.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 39
+    },
+    {
+      "id": "10_4",
+      "file": "tile_10_4.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 675
+    },
+    {
+      "id": "9_3",
+      "file": "tile_9_3.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 172
+    },
+    {
+      "id": "11_5",
+      "file": "tile_11_5.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 170
+    },
+    {
+      "id": "11_4",
+      "file": "tile_11_4.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 425
+    },
+    {
+      "id": "11_3",
+      "file": "tile_11_3.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 338
+    },
+    {
+      "id": "10_3",
+      "file": "tile_10_3.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 406
+    },
+    {
+      "id": "12_4",
+      "file": "tile_12_4.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 42
+    },
+    {
+      "id": "13_5",
+      "file": "tile_13_5.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "12_5",
+      "file": "tile_12_5.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 2500,
+        "maxZ": 3000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "13_4",
+      "file": "tile_13_4.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 2000,
+        "maxZ": 2500
+      },
+      "buildingCount": 119
+    },
+    {
+      "id": "-5_3",
+      "file": "tile_-5_3.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "-4_2",
+      "file": "tile_-4_2.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 216
+    },
+    {
+      "id": "-5_2",
+      "file": "tile_-5_2.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "-3_2",
+      "file": "tile_-3_2.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 313
+    },
+    {
+      "id": "-2_2",
+      "file": "tile_-2_2.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 268
+    },
+    {
+      "id": "-1_2",
+      "file": "tile_-1_2.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 293
+    },
+    {
+      "id": "0_2",
+      "file": "tile_0_2.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 231
+    },
+    {
+      "id": "1_2",
+      "file": "tile_1_2.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 353
+    },
+    {
+      "id": "-1_1",
+      "file": "tile_-1_1.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 200
+    },
+    {
+      "id": "2_3",
+      "file": "tile_2_3.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "2_2",
+      "file": "tile_2_2.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 45
+    },
+    {
+      "id": "4_2",
+      "file": "tile_4_2.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 18
+    },
+    {
+      "id": "5_2",
+      "file": "tile_5_2.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 287
+    },
+    {
+      "id": "6_2",
+      "file": "tile_6_2.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 246
+    },
+    {
+      "id": "7_2",
+      "file": "tile_7_2.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 78
+    },
+    {
+      "id": "8_2",
+      "file": "tile_8_2.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 19
+    },
+    {
+      "id": "9_2",
+      "file": "tile_9_2.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 86
+    },
+    {
+      "id": "10_2",
+      "file": "tile_10_2.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 223
+    },
+    {
+      "id": "13_3",
+      "file": "tile_13_3.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 112
+    },
+    {
+      "id": "11_2",
+      "file": "tile_11_2.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 675
+    },
+    {
+      "id": "12_3",
+      "file": "tile_12_3.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 1500,
+        "maxZ": 2000
+      },
+      "buildingCount": 285
+    },
+    {
+      "id": "12_2",
+      "file": "tile_12_2.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 455
+    },
+    {
+      "id": "13_2",
+      "file": "tile_13_2.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 1000,
+        "maxZ": 1500
+      },
+      "buildingCount": 163
+    },
+    {
+      "id": "-7_1",
+      "file": "tile_-7_1.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-5_1",
+      "file": "tile_-5_1.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "-3_1",
+      "file": "tile_-3_1.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 103
+    },
+    {
+      "id": "-4_1",
+      "file": "tile_-4_1.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 72
+    },
+    {
+      "id": "-3_0",
+      "file": "tile_-3_0.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 85
+    },
+    {
+      "id": "-2_1",
+      "file": "tile_-2_1.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 160
+    },
+    {
+      "id": "-2_0",
+      "file": "tile_-2_0.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 236
+    },
+    {
+      "id": "-1_0",
+      "file": "tile_-1_0.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 159
+    },
+    {
+      "id": "0_1",
+      "file": "tile_0_1.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 258
+    },
+    {
+      "id": "1_1",
+      "file": "tile_1_1.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 154
+    },
+    {
+      "id": "0_0",
+      "file": "tile_0_0.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 179
+    },
+    {
+      "id": "1_0",
+      "file": "tile_1_0.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 115
+    },
+    {
+      "id": "2_0",
+      "file": "tile_2_0.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 275
+    },
+    {
+      "id": "2_1",
+      "file": "tile_2_1.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 166
+    },
+    {
+      "id": "3_1",
+      "file": "tile_3_1.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 43
+    },
+    {
+      "id": "3_0",
+      "file": "tile_3_0.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 298
+    },
+    {
+      "id": "5_1",
+      "file": "tile_5_1.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 69
+    },
+    {
+      "id": "4_1",
+      "file": "tile_4_1.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "7_0",
+      "file": "tile_7_0.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 207
+    },
+    {
+      "id": "6_1",
+      "file": "tile_6_1.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 129
+    },
+    {
+      "id": "7_1",
+      "file": "tile_7_1.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 124
+    },
+    {
+      "id": "8_1",
+      "file": "tile_8_1.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 176
+    },
+    {
+      "id": "8_0",
+      "file": "tile_8_0.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 407
+    },
+    {
+      "id": "6_0",
+      "file": "tile_6_0.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 57
+    },
+    {
+      "id": "10_0",
+      "file": "tile_10_0.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 289
+    },
+    {
+      "id": "10_1",
+      "file": "tile_10_1.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 66
+    },
+    {
+      "id": "9_0",
+      "file": "tile_9_0.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 506
+    },
+    {
+      "id": "9_1",
+      "file": "tile_9_1.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 104
+    },
+    {
+      "id": "-4_0",
+      "file": "tile_-4_0.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 12
+    },
+    {
+      "id": "4_0",
+      "file": "tile_4_0.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 36
+    },
+    {
+      "id": "5_0",
+      "file": "tile_5_0.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "11_1",
+      "file": "tile_11_1.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 102
+    },
+    {
+      "id": "12_1",
+      "file": "tile_12_1.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 123
+    },
+    {
+      "id": "12_0",
+      "file": "tile_12_0.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 278
+    },
+    {
+      "id": "13_0",
+      "file": "tile_13_0.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 162
+    },
+    {
+      "id": "13_1",
+      "file": "tile_13_1.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": 500,
+        "maxZ": 1000
+      },
+      "buildingCount": 46
+    },
+    {
+      "id": "11_0",
+      "file": "tile_11_0.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": 0,
+        "maxZ": 500
+      },
+      "buildingCount": 701
+    },
+    {
+      "id": "-6_-1",
+      "file": "tile_-6_-1.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "-7_-1",
+      "file": "tile_-7_-1.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "-7_-2",
+      "file": "tile_-7_-2.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-6_-2",
+      "file": "tile_-6_-2.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 17
+    },
+    {
+      "id": "-4_-1",
+      "file": "tile_-4_-1.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "-3_-1",
+      "file": "tile_-3_-1.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 27
+    },
+    {
+      "id": "-2_-1",
+      "file": "tile_-2_-1.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 310
+    },
+    {
+      "id": "-1_-1",
+      "file": "tile_-1_-1.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 389
+    },
+    {
+      "id": "-2_-2",
+      "file": "tile_-2_-2.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 244
+    },
+    {
+      "id": "-1_-2",
+      "file": "tile_-1_-2.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 385
+    },
+    {
+      "id": "-3_-2",
+      "file": "tile_-3_-2.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 26
+    },
+    {
+      "id": "0_-1",
+      "file": "tile_0_-1.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 98
+    },
+    {
+      "id": "1_-1",
+      "file": "tile_1_-1.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 134
+    },
+    {
+      "id": "1_-2",
+      "file": "tile_1_-2.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 135
+    },
+    {
+      "id": "0_-2",
+      "file": "tile_0_-2.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 177
+    },
+    {
+      "id": "2_-1",
+      "file": "tile_2_-1.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 155
+    },
+    {
+      "id": "3_-1",
+      "file": "tile_3_-1.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 320
+    },
+    {
+      "id": "2_-2",
+      "file": "tile_2_-2.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 260
+    },
+    {
+      "id": "3_-2",
+      "file": "tile_3_-2.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 404
+    },
+    {
+      "id": "4_-1",
+      "file": "tile_4_-1.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 135
+    },
+    {
+      "id": "5_-1",
+      "file": "tile_5_-1.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "4_-2",
+      "file": "tile_4_-2.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 234
+    },
+    {
+      "id": "5_-2",
+      "file": "tile_5_-2.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 53
+    },
+    {
+      "id": "6_-1",
+      "file": "tile_6_-1.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 53
+    },
+    {
+      "id": "7_-1",
+      "file": "tile_7_-1.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 306
+    },
+    {
+      "id": "8_-1",
+      "file": "tile_8_-1.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 165
+    },
+    {
+      "id": "8_-2",
+      "file": "tile_8_-2.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 236
+    },
+    {
+      "id": "6_-2",
+      "file": "tile_6_-2.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 18
+    },
+    {
+      "id": "7_-2",
+      "file": "tile_7_-2.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 207
+    },
+    {
+      "id": "9_-1",
+      "file": "tile_9_-1.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 611
+    },
+    {
+      "id": "10_-1",
+      "file": "tile_10_-1.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 758
+    },
+    {
+      "id": "10_-2",
+      "file": "tile_10_-2.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 554
+    },
+    {
+      "id": "9_-2",
+      "file": "tile_9_-2.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 508
+    },
+    {
+      "id": "11_-1",
+      "file": "tile_11_-1.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 737
+    },
+    {
+      "id": "12_-1",
+      "file": "tile_12_-1.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 817
+    },
+    {
+      "id": "12_-2",
+      "file": "tile_12_-2.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 866
+    },
+    {
+      "id": "11_-2",
+      "file": "tile_11_-2.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 745
+    },
+    {
+      "id": "13_-1",
+      "file": "tile_13_-1.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -500,
+        "maxZ": 0
+      },
+      "buildingCount": 223
+    },
+    {
+      "id": "13_-2",
+      "file": "tile_13_-2.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -1000,
+        "maxZ": -500
+      },
+      "buildingCount": 225
+    },
+    {
+      "id": "-7_-3",
+      "file": "tile_-7_-3.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 60
+    },
+    {
+      "id": "-6_-3",
+      "file": "tile_-6_-3.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 224
+    },
+    {
+      "id": "-6_-4",
+      "file": "tile_-6_-4.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 484
+    },
+    {
+      "id": "-7_-4",
+      "file": "tile_-7_-4.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 96
+    },
+    {
+      "id": "-5_-3",
+      "file": "tile_-5_-3.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "0_-3",
+      "file": "tile_0_-3.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 76
+    },
+    {
+      "id": "-3_-3",
+      "file": "tile_-3_-3.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-2_-3",
+      "file": "tile_-2_-3.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 48
+    },
+    {
+      "id": "-1_-3",
+      "file": "tile_-1_-3.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 145
+    },
+    {
+      "id": "-2_-4",
+      "file": "tile_-2_-4.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 9
+    },
+    {
+      "id": "-1_-4",
+      "file": "tile_-1_-4.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 52
+    },
+    {
+      "id": "0_-4",
+      "file": "tile_0_-4.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 137
+    },
+    {
+      "id": "1_-4",
+      "file": "tile_1_-4.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 151
+    },
+    {
+      "id": "1_-3",
+      "file": "tile_1_-3.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "5_-3",
+      "file": "tile_5_-3.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 322
+    },
+    {
+      "id": "2_-3",
+      "file": "tile_2_-3.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 109
+    },
+    {
+      "id": "3_-3",
+      "file": "tile_3_-3.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 353
+    },
+    {
+      "id": "3_-4",
+      "file": "tile_3_-4.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 293
+    },
+    {
+      "id": "4_-3",
+      "file": "tile_4_-3.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 309
+    },
+    {
+      "id": "4_-4",
+      "file": "tile_4_-4.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 383
+    },
+    {
+      "id": "5_-4",
+      "file": "tile_5_-4.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 419
+    },
+    {
+      "id": "8_-3",
+      "file": "tile_8_-3.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 265
+    },
+    {
+      "id": "6_-3",
+      "file": "tile_6_-3.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 18
+    },
+    {
+      "id": "6_-4",
+      "file": "tile_6_-4.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 343
+    },
+    {
+      "id": "7_-3",
+      "file": "tile_7_-3.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 8
+    },
+    {
+      "id": "8_-4",
+      "file": "tile_8_-4.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 87
+    },
+    {
+      "id": "9_-3",
+      "file": "tile_9_-3.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 669
+    },
+    {
+      "id": "9_-4",
+      "file": "tile_9_-4.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 499
+    },
+    {
+      "id": "10_-3",
+      "file": "tile_10_-3.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 514
+    },
+    {
+      "id": "10_-4",
+      "file": "tile_10_-4.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 557
+    },
+    {
+      "id": "11_-3",
+      "file": "tile_11_-3.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 664
+    },
+    {
+      "id": "11_-4",
+      "file": "tile_11_-4.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 676
+    },
+    {
+      "id": "12_-3",
+      "file": "tile_12_-3.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 734
+    },
+    {
+      "id": "12_-4",
+      "file": "tile_12_-4.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 821
+    },
+    {
+      "id": "13_-3",
+      "file": "tile_13_-3.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -1500,
+        "maxZ": -1000
+      },
+      "buildingCount": 88
+    },
+    {
+      "id": "13_-4",
+      "file": "tile_13_-4.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 237
+    },
+    {
+      "id": "-6_-5",
+      "file": "tile_-6_-5.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 553
+    },
+    {
+      "id": "-7_-5",
+      "file": "tile_-7_-5.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 90
+    },
+    {
+      "id": "-5_-4",
+      "file": "tile_-5_-4.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 23
+    },
+    {
+      "id": "-4_-5",
+      "file": "tile_-4_-5.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-5_-5",
+      "file": "tile_-5_-5.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 183
+    },
+    {
+      "id": "0_-5",
+      "file": "tile_0_-5.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 356
+    },
+    {
+      "id": "-1_-5",
+      "file": "tile_-1_-5.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 60
+    },
+    {
+      "id": "1_-5",
+      "file": "tile_1_-5.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 396
+    },
+    {
+      "id": "2_-4",
+      "file": "tile_2_-4.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "3_-5",
+      "file": "tile_3_-5.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 78
+    },
+    {
+      "id": "2_-5",
+      "file": "tile_2_-5.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 13
+    },
+    {
+      "id": "5_-5",
+      "file": "tile_5_-5.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 388
+    },
+    {
+      "id": "4_-5",
+      "file": "tile_4_-5.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 335
+    },
+    {
+      "id": "7_-4",
+      "file": "tile_7_-4.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -2000,
+        "maxZ": -1500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "6_-5",
+      "file": "tile_6_-5.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 355
+    },
+    {
+      "id": "7_-5",
+      "file": "tile_7_-5.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "9_-5",
+      "file": "tile_9_-5.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 18
+    },
+    {
+      "id": "8_-5",
+      "file": "tile_8_-5.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 24
+    },
+    {
+      "id": "10_-5",
+      "file": "tile_10_-5.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 200
+    },
+    {
+      "id": "12_-5",
+      "file": "tile_12_-5.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 746
+    },
+    {
+      "id": "11_-5",
+      "file": "tile_11_-5.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 1013
+    },
+    {
+      "id": "13_-5",
+      "file": "tile_13_-5.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -2500,
+        "maxZ": -2000
+      },
+      "buildingCount": 134
+    },
+    {
+      "id": "-6_-6",
+      "file": "tile_-6_-6.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 555
+    },
+    {
+      "id": "-6_-7",
+      "file": "tile_-6_-7.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 581
+    },
+    {
+      "id": "-7_-6",
+      "file": "tile_-7_-6.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 69
+    },
+    {
+      "id": "-7_-7",
+      "file": "tile_-7_-7.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 84
+    },
+    {
+      "id": "-6_-8",
+      "file": "tile_-6_-8.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 713
+    },
+    {
+      "id": "-7_-8",
+      "file": "tile_-7_-8.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 77
+    },
+    {
+      "id": "-5_-6",
+      "file": "tile_-5_-6.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 229
+    },
+    {
+      "id": "-5_-7",
+      "file": "tile_-5_-7.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 611
+    },
+    {
+      "id": "-4_-6",
+      "file": "tile_-4_-6.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 13
+    },
+    {
+      "id": "-4_-7",
+      "file": "tile_-4_-7.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 517
+    },
+    {
+      "id": "-3_-6",
+      "file": "tile_-3_-6.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "-3_-7",
+      "file": "tile_-3_-7.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 56
+    },
+    {
+      "id": "-3_-8",
+      "file": "tile_-3_-8.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 260
+    },
+    {
+      "id": "-5_-8",
+      "file": "tile_-5_-8.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 595
+    },
+    {
+      "id": "-4_-8",
+      "file": "tile_-4_-8.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 666
+    },
+    {
+      "id": "0_-6",
+      "file": "tile_0_-6.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 266
+    },
+    {
+      "id": "-1_-6",
+      "file": "tile_-1_-6.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "0_-7",
+      "file": "tile_0_-7.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 134
+    },
+    {
+      "id": "1_-6",
+      "file": "tile_1_-6.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 394
+    },
+    {
+      "id": "1_-7",
+      "file": "tile_1_-7.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 258
+    },
+    {
+      "id": "1_-8",
+      "file": "tile_1_-8.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 290
+    },
+    {
+      "id": "0_-8",
+      "file": "tile_0_-8.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "2_-7",
+      "file": "tile_2_-7.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 496
+    },
+    {
+      "id": "2_-6",
+      "file": "tile_2_-6.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 157
+    },
+    {
+      "id": "3_-6",
+      "file": "tile_3_-6.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "2_-8",
+      "file": "tile_2_-8.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 256
+    },
+    {
+      "id": "3_-7",
+      "file": "tile_3_-7.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "3_-8",
+      "file": "tile_3_-8.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 133
+    },
+    {
+      "id": "4_-6",
+      "file": "tile_4_-6.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 140
+    },
+    {
+      "id": "5_-6",
+      "file": "tile_5_-6.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 360
+    },
+    {
+      "id": "5_-7",
+      "file": "tile_5_-7.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 231
+    },
+    {
+      "id": "4_-7",
+      "file": "tile_4_-7.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 60
+    },
+    {
+      "id": "5_-8",
+      "file": "tile_5_-8.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 45
+    },
+    {
+      "id": "6_-6",
+      "file": "tile_6_-6.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 224
+    },
+    {
+      "id": "6_-7",
+      "file": "tile_6_-7.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 159
+    },
+    {
+      "id": "7_-6",
+      "file": "tile_7_-6.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "7_-7",
+      "file": "tile_7_-7.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 96
+    },
+    {
+      "id": "6_-8",
+      "file": "tile_6_-8.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 325
+    },
+    {
+      "id": "7_-8",
+      "file": "tile_7_-8.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 250
+    },
+    {
+      "id": "8_-7",
+      "file": "tile_8_-7.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "8_-6",
+      "file": "tile_8_-6.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "9_-7",
+      "file": "tile_9_-7.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 20
+    },
+    {
+      "id": "9_-6",
+      "file": "tile_9_-6.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "10_-7",
+      "file": "tile_10_-7.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 25
+    },
+    {
+      "id": "9_-8",
+      "file": "tile_9_-8.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "10_-8",
+      "file": "tile_10_-8.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 31
+    },
+    {
+      "id": "11_-6",
+      "file": "tile_11_-6.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 330
+    },
+    {
+      "id": "10_-6",
+      "file": "tile_10_-6.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "12_-6",
+      "file": "tile_12_-6.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 442
+    },
+    {
+      "id": "11_-7",
+      "file": "tile_11_-7.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 15
+    },
+    {
+      "id": "12_-7",
+      "file": "tile_12_-7.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 51
+    },
+    {
+      "id": "11_-8",
+      "file": "tile_11_-8.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 24
+    },
+    {
+      "id": "13_-6",
+      "file": "tile_13_-6.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -3000,
+        "maxZ": -2500
+      },
+      "buildingCount": 25
+    },
+    {
+      "id": "13_-7",
+      "file": "tile_13_-7.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -3500,
+        "maxZ": -3000
+      },
+      "buildingCount": 8
+    },
+    {
+      "id": "-6_-10",
+      "file": "tile_-6_-10.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 498
+    },
+    {
+      "id": "-6_-9",
+      "file": "tile_-6_-9.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 549
+    },
+    {
+      "id": "-7_-9",
+      "file": "tile_-7_-9.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 68
+    },
+    {
+      "id": "-7_-10",
+      "file": "tile_-7_-10.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 19
+    },
+    {
+      "id": "-5_-9",
+      "file": "tile_-5_-9.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 678
+    },
+    {
+      "id": "-5_-10",
+      "file": "tile_-5_-10.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 615
+    },
+    {
+      "id": "-4_-9",
+      "file": "tile_-4_-9.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 714
+    },
+    {
+      "id": "-4_-10",
+      "file": "tile_-4_-10.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 501
+    },
+    {
+      "id": "-3_-9",
+      "file": "tile_-3_-9.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 439
+    },
+    {
+      "id": "-3_-10",
+      "file": "tile_-3_-10.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 52
+    },
+    {
+      "id": "-2_-9",
+      "file": "tile_-2_-9.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 16
+    },
+    {
+      "id": "-2_-10",
+      "file": "tile_-2_-10.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 57
+    },
+    {
+      "id": "-2_-8",
+      "file": "tile_-2_-8.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "4_-8",
+      "file": "tile_4_-8.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "2_-9",
+      "file": "tile_2_-9.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 211
+    },
+    {
+      "id": "1_-9",
+      "file": "tile_1_-9.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 32
+    },
+    {
+      "id": "2_-10",
+      "file": "tile_2_-10.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 214
+    },
+    {
+      "id": "3_-9",
+      "file": "tile_3_-9.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 142
+    },
+    {
+      "id": "3_-10",
+      "file": "tile_3_-10.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 275
+    },
+    {
+      "id": "4_-9",
+      "file": "tile_4_-9.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 38
+    },
+    {
+      "id": "4_-10",
+      "file": "tile_4_-10.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 217
+    },
+    {
+      "id": "5_-10",
+      "file": "tile_5_-10.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 253
+    },
+    {
+      "id": "5_-9",
+      "file": "tile_5_-9.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 19
+    },
+    {
+      "id": "8_-8",
+      "file": "tile_8_-8.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 14
+    },
+    {
+      "id": "6_-9",
+      "file": "tile_6_-9.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 106
+    },
+    {
+      "id": "6_-10",
+      "file": "tile_6_-10.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 164
+    },
+    {
+      "id": "7_-9",
+      "file": "tile_7_-9.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 305
+    },
+    {
+      "id": "7_-10",
+      "file": "tile_7_-10.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 282
+    },
+    {
+      "id": "8_-9",
+      "file": "tile_8_-9.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 470
+    },
+    {
+      "id": "8_-10",
+      "file": "tile_8_-10.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 229
+    },
+    {
+      "id": "9_-9",
+      "file": "tile_9_-9.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 37
+    },
+    {
+      "id": "9_-10",
+      "file": "tile_9_-10.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 15
+    },
+    {
+      "id": "13_-8",
+      "file": "tile_13_-8.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 19
+    },
+    {
+      "id": "12_-8",
+      "file": "tile_12_-8.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -4000,
+        "maxZ": -3500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "10_-9",
+      "file": "tile_10_-9.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 26
+    },
+    {
+      "id": "10_-10",
+      "file": "tile_10_-10.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "11_-9",
+      "file": "tile_11_-9.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "12_-9",
+      "file": "tile_12_-9.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -4500,
+        "maxZ": -4000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "11_-10",
+      "file": "tile_11_-10.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 94
+    },
+    {
+      "id": "12_-10",
+      "file": "tile_12_-10.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 104
+    },
+    {
+      "id": "13_-10",
+      "file": "tile_13_-10.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -5000,
+        "maxZ": -4500
+      },
+      "buildingCount": 16
+    },
+    {
+      "id": "-7_-11",
+      "file": "tile_-7_-11.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "-6_-11",
+      "file": "tile_-6_-11.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 295
+    },
+    {
+      "id": "-5_-11",
+      "file": "tile_-5_-11.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 705
+    },
+    {
+      "id": "-4_-11",
+      "file": "tile_-4_-11.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 803
+    },
+    {
+      "id": "-2_-11",
+      "file": "tile_-2_-11.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 184
+    },
+    {
+      "id": "-3_-11",
+      "file": "tile_-3_-11.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 35
+    },
+    {
+      "id": "-1_-11",
+      "file": "tile_-1_-11.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 12
+    },
+    {
+      "id": "0_-11",
+      "file": "tile_0_-11.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "2_-11",
+      "file": "tile_2_-11.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 33
+    },
+    {
+      "id": "3_-11",
+      "file": "tile_3_-11.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 178
+    },
+    {
+      "id": "5_-11",
+      "file": "tile_5_-11.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 375
+    },
+    {
+      "id": "4_-11",
+      "file": "tile_4_-11.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 189
+    },
+    {
+      "id": "7_-11",
+      "file": "tile_7_-11.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 238
+    },
+    {
+      "id": "8_-11",
+      "file": "tile_8_-11.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 68
+    },
+    {
+      "id": "6_-11",
+      "file": "tile_6_-11.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 551
+    },
+    {
+      "id": "9_-11",
+      "file": "tile_9_-11.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 54
+    },
+    {
+      "id": "10_-11",
+      "file": "tile_10_-11.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 145
+    },
+    {
+      "id": "12_-11",
+      "file": "tile_12_-11.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 174
+    },
+    {
+      "id": "11_-11",
+      "file": "tile_11_-11.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 163
+    },
+    {
+      "id": "13_-11",
+      "file": "tile_13_-11.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -5500,
+        "maxZ": -5000
+      },
+      "buildingCount": 8
+    },
+    {
+      "id": "-6_-12",
+      "file": "tile_-6_-12.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 22
+    },
+    {
+      "id": "-6_-13",
+      "file": "tile_-6_-13.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "-7_-12",
+      "file": "tile_-7_-12.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-5_-13",
+      "file": "tile_-5_-13.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 77
+    },
+    {
+      "id": "-5_-12",
+      "file": "tile_-5_-12.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 496
+    },
+    {
+      "id": "-4_-12",
+      "file": "tile_-4_-12.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 599
+    },
+    {
+      "id": "-4_-13",
+      "file": "tile_-4_-13.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 129
+    },
+    {
+      "id": "-3_-12",
+      "file": "tile_-3_-12.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 209
+    },
+    {
+      "id": "-2_-12",
+      "file": "tile_-2_-12.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 498
+    },
+    {
+      "id": "-3_-13",
+      "file": "tile_-3_-13.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 44
+    },
+    {
+      "id": "-1_-12",
+      "file": "tile_-1_-12.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 33
+    },
+    {
+      "id": "-2_-13",
+      "file": "tile_-2_-13.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 423
+    },
+    {
+      "id": "-1_-13",
+      "file": "tile_-1_-13.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 203
+    },
+    {
+      "id": "0_-12",
+      "file": "tile_0_-12.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "3_-12",
+      "file": "tile_3_-12.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 68
+    },
+    {
+      "id": "4_-12",
+      "file": "tile_4_-12.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 98
+    },
+    {
+      "id": "3_-13",
+      "file": "tile_3_-13.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "5_-12",
+      "file": "tile_5_-12.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 351
+    },
+    {
+      "id": "5_-13",
+      "file": "tile_5_-13.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 163
+    },
+    {
+      "id": "4_-13",
+      "file": "tile_4_-13.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 105
+    },
+    {
+      "id": "6_-12",
+      "file": "tile_6_-12.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 338
+    },
+    {
+      "id": "6_-13",
+      "file": "tile_6_-13.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 365
+    },
+    {
+      "id": "7_-12",
+      "file": "tile_7_-12.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 504
+    },
+    {
+      "id": "8_-12",
+      "file": "tile_8_-12.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 71
+    },
+    {
+      "id": "7_-13",
+      "file": "tile_7_-13.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 322
+    },
+    {
+      "id": "8_-13",
+      "file": "tile_8_-13.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 41
+    },
+    {
+      "id": "9_-12",
+      "file": "tile_9_-12.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 116
+    },
+    {
+      "id": "10_-12",
+      "file": "tile_10_-12.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 381
+    },
+    {
+      "id": "10_-13",
+      "file": "tile_10_-13.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 125
+    },
+    {
+      "id": "9_-13",
+      "file": "tile_9_-13.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 82
+    },
+    {
+      "id": "11_-12",
+      "file": "tile_11_-12.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 285
+    },
+    {
+      "id": "11_-13",
+      "file": "tile_11_-13.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 396
+    },
+    {
+      "id": "12_-12",
+      "file": "tile_12_-12.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 183
+    },
+    {
+      "id": "13_-12",
+      "file": "tile_13_-12.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -6000,
+        "maxZ": -5500
+      },
+      "buildingCount": 44
+    },
+    {
+      "id": "12_-13",
+      "file": "tile_12_-13.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 128
+    },
+    {
+      "id": "13_-13",
+      "file": "tile_13_-13.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 51
+    },
+    {
+      "id": "-7_-13",
+      "file": "tile_-7_-13.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-6_-14",
+      "file": "tile_-6_-14.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "-5_-14",
+      "file": "tile_-5_-14.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 28
+    },
+    {
+      "id": "-4_-14",
+      "file": "tile_-4_-14.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 49
+    },
+    {
+      "id": "-3_-14",
+      "file": "tile_-3_-14.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 37
+    },
+    {
+      "id": "-5_-15",
+      "file": "tile_-5_-15.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 12
+    },
+    {
+      "id": "-6_-15",
+      "file": "tile_-6_-15.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-4_-15",
+      "file": "tile_-4_-15.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 34
+    },
+    {
+      "id": "-1_-14",
+      "file": "tile_-1_-14.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 452
+    },
+    {
+      "id": "-2_-14",
+      "file": "tile_-2_-14.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 178
+    },
+    {
+      "id": "0_-13",
+      "file": "tile_0_-13.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "1_-13",
+      "file": "tile_1_-13.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -6500,
+        "maxZ": -6000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "1_-14",
+      "file": "tile_1_-14.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 9
+    },
+    {
+      "id": "0_-14",
+      "file": "tile_0_-14.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 172
+    },
+    {
+      "id": "-3_-15",
+      "file": "tile_-3_-15.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 73
+    },
+    {
+      "id": "-2_-15",
+      "file": "tile_-2_-15.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 409
+    },
+    {
+      "id": "-1_-15",
+      "file": "tile_-1_-15.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 483
+    },
+    {
+      "id": "0_-15",
+      "file": "tile_0_-15.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 526
+    },
+    {
+      "id": "1_-15",
+      "file": "tile_1_-15.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 92
+    },
+    {
+      "id": "5_-14",
+      "file": "tile_5_-14.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 122
+    },
+    {
+      "id": "4_-14",
+      "file": "tile_4_-14.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 67
+    },
+    {
+      "id": "2_-15",
+      "file": "tile_2_-15.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "4_-15",
+      "file": "tile_4_-15.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 13
+    },
+    {
+      "id": "5_-15",
+      "file": "tile_5_-15.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 255
+    },
+    {
+      "id": "4_-16",
+      "file": "tile_4_-16.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "6_-14",
+      "file": "tile_6_-14.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 392
+    },
+    {
+      "id": "8_-14",
+      "file": "tile_8_-14.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 39
+    },
+    {
+      "id": "7_-14",
+      "file": "tile_7_-14.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 373
+    },
+    {
+      "id": "9_-14",
+      "file": "tile_9_-14.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 121
+    },
+    {
+      "id": "10_-14",
+      "file": "tile_10_-14.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 129
+    },
+    {
+      "id": "6_-15",
+      "file": "tile_6_-15.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 482
+    },
+    {
+      "id": "8_-15",
+      "file": "tile_8_-15.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 43
+    },
+    {
+      "id": "7_-15",
+      "file": "tile_7_-15.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 254
+    },
+    {
+      "id": "9_-15",
+      "file": "tile_9_-15.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 33
+    },
+    {
+      "id": "10_-15",
+      "file": "tile_10_-15.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 35
+    },
+    {
+      "id": "9_-16",
+      "file": "tile_9_-16.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 13
+    },
+    {
+      "id": "11_-14",
+      "file": "tile_11_-14.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 347
+    },
+    {
+      "id": "12_-14",
+      "file": "tile_12_-14.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 327
+    },
+    {
+      "id": "13_-14",
+      "file": "tile_13_-14.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -7000,
+        "maxZ": -6500
+      },
+      "buildingCount": 96
+    },
+    {
+      "id": "11_-15",
+      "file": "tile_11_-15.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 171
+    },
+    {
+      "id": "12_-15",
+      "file": "tile_12_-15.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 213
+    },
+    {
+      "id": "13_-15",
+      "file": "tile_13_-15.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -7500,
+        "maxZ": -7000
+      },
+      "buildingCount": 49
+    },
+    {
+      "id": "-6_-16",
+      "file": "tile_-6_-16.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-5_-16",
+      "file": "tile_-5_-16.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 70
+    },
+    {
+      "id": "-4_-16",
+      "file": "tile_-4_-16.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 346
+    },
+    {
+      "id": "-5_-17",
+      "file": "tile_-5_-17.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 48
+    },
+    {
+      "id": "-4_-17",
+      "file": "tile_-4_-17.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 306
+    },
+    {
+      "id": "-3_-16",
+      "file": "tile_-3_-16.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 337
+    },
+    {
+      "id": "-3_-17",
+      "file": "tile_-3_-17.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 165
+    },
+    {
+      "id": "-2_-16",
+      "file": "tile_-2_-16.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 442
+    },
+    {
+      "id": "-1_-16",
+      "file": "tile_-1_-16.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 568
+    },
+    {
+      "id": "-1_-17",
+      "file": "tile_-1_-17.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 561
+    },
+    {
+      "id": "-2_-17",
+      "file": "tile_-2_-17.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 302
+    },
+    {
+      "id": "0_-16",
+      "file": "tile_0_-16.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 401
+    },
+    {
+      "id": "1_-16",
+      "file": "tile_1_-16.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 82
+    },
+    {
+      "id": "1_-17",
+      "file": "tile_1_-17.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 201
+    },
+    {
+      "id": "0_-17",
+      "file": "tile_0_-17.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 346
+    },
+    {
+      "id": "-6_-18",
+      "file": "tile_-6_-18.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 24
+    },
+    {
+      "id": "-7_-18",
+      "file": "tile_-7_-18.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-6_-17",
+      "file": "tile_-6_-17.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-6_-19",
+      "file": "tile_-6_-19.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "-7_-19",
+      "file": "tile_-7_-19.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-5_-18",
+      "file": "tile_-5_-18.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 77
+    },
+    {
+      "id": "-4_-18",
+      "file": "tile_-4_-18.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 246
+    },
+    {
+      "id": "-3_-18",
+      "file": "tile_-3_-18.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 262
+    },
+    {
+      "id": "-4_-19",
+      "file": "tile_-4_-19.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 103
+    },
+    {
+      "id": "-5_-19",
+      "file": "tile_-5_-19.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-3_-19",
+      "file": "tile_-3_-19.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 355
+    },
+    {
+      "id": "-2_-18",
+      "file": "tile_-2_-18.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 303
+    },
+    {
+      "id": "-1_-18",
+      "file": "tile_-1_-18.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 349
+    },
+    {
+      "id": "-2_-19",
+      "file": "tile_-2_-19.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 270
+    },
+    {
+      "id": "-1_-19",
+      "file": "tile_-1_-19.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 358
+    },
+    {
+      "id": "0_-18",
+      "file": "tile_0_-18.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 391
+    },
+    {
+      "id": "1_-18",
+      "file": "tile_1_-18.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 241
+    },
+    {
+      "id": "0_-19",
+      "file": "tile_0_-19.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 245
+    },
+    {
+      "id": "1_-19",
+      "file": "tile_1_-19.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 263
+    },
+    {
+      "id": "2_-17",
+      "file": "tile_2_-17.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "2_-16",
+      "file": "tile_2_-16.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "5_-16",
+      "file": "tile_5_-16.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 78
+    },
+    {
+      "id": "6_-16",
+      "file": "tile_6_-16.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 424
+    },
+    {
+      "id": "7_-16",
+      "file": "tile_7_-16.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 251
+    },
+    {
+      "id": "8_-16",
+      "file": "tile_8_-16.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 45
+    },
+    {
+      "id": "6_-17",
+      "file": "tile_6_-17.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 135
+    },
+    {
+      "id": "8_-17",
+      "file": "tile_8_-17.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 16
+    },
+    {
+      "id": "7_-17",
+      "file": "tile_7_-17.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 205
+    },
+    {
+      "id": "5_-17",
+      "file": "tile_5_-17.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "10_-16",
+      "file": "tile_10_-16.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 77
+    },
+    {
+      "id": "10_-17",
+      "file": "tile_10_-17.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 91
+    },
+    {
+      "id": "9_-17",
+      "file": "tile_9_-17.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 276
+    },
+    {
+      "id": "2_-18",
+      "file": "tile_2_-18.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 46
+    },
+    {
+      "id": "2_-19",
+      "file": "tile_2_-19.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 20
+    },
+    {
+      "id": "6_-18",
+      "file": "tile_6_-18.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 67
+    },
+    {
+      "id": "7_-18",
+      "file": "tile_7_-18.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 282
+    },
+    {
+      "id": "8_-18",
+      "file": "tile_8_-18.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 35
+    },
+    {
+      "id": "7_-19",
+      "file": "tile_7_-19.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 94
+    },
+    {
+      "id": "6_-19",
+      "file": "tile_6_-19.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "8_-19",
+      "file": "tile_8_-19.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 139
+    },
+    {
+      "id": "9_-18",
+      "file": "tile_9_-18.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 142
+    },
+    {
+      "id": "10_-18",
+      "file": "tile_10_-18.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 184
+    },
+    {
+      "id": "10_-19",
+      "file": "tile_10_-19.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 265
+    },
+    {
+      "id": "9_-19",
+      "file": "tile_9_-19.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 32
+    },
+    {
+      "id": "11_-16",
+      "file": "tile_11_-16.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 311
+    },
+    {
+      "id": "12_-16",
+      "file": "tile_12_-16.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 175
+    },
+    {
+      "id": "11_-17",
+      "file": "tile_11_-17.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 239
+    },
+    {
+      "id": "12_-17",
+      "file": "tile_12_-17.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 269
+    },
+    {
+      "id": "13_-16",
+      "file": "tile_13_-16.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -8000,
+        "maxZ": -7500
+      },
+      "buildingCount": 75
+    },
+    {
+      "id": "13_-17",
+      "file": "tile_13_-17.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -8500,
+        "maxZ": -8000
+      },
+      "buildingCount": 33
+    },
+    {
+      "id": "11_-18",
+      "file": "tile_11_-18.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 135
+    },
+    {
+      "id": "12_-18",
+      "file": "tile_12_-18.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 405
+    },
+    {
+      "id": "12_-19",
+      "file": "tile_12_-19.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 122
+    },
+    {
+      "id": "11_-19",
+      "file": "tile_11_-19.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 151
+    },
+    {
+      "id": "13_-18",
+      "file": "tile_13_-18.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -9000,
+        "maxZ": -8500
+      },
+      "buildingCount": 37
+    },
+    {
+      "id": "13_-19",
+      "file": "tile_13_-19.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -9500,
+        "maxZ": -9000
+      },
+      "buildingCount": 14
+    },
+    {
+      "id": "-7_-20",
+      "file": "tile_-7_-20.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 14
+    },
+    {
+      "id": "-6_-20",
+      "file": "tile_-6_-20.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "-4_-20",
+      "file": "tile_-4_-20.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 95
+    },
+    {
+      "id": "-3_-20",
+      "file": "tile_-3_-20.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 393
+    },
+    {
+      "id": "-5_-20",
+      "file": "tile_-5_-20.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "-7_-21",
+      "file": "tile_-7_-21.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "-5_-21",
+      "file": "tile_-5_-21.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "-4_-21",
+      "file": "tile_-4_-21.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 53
+    },
+    {
+      "id": "-4_-23",
+      "file": "tile_-4_-23.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-3_-21",
+      "file": "tile_-3_-21.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 302
+    },
+    {
+      "id": "-5_-22",
+      "file": "tile_-5_-22.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "-2_-20",
+      "file": "tile_-2_-20.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 343
+    },
+    {
+      "id": "-1_-20",
+      "file": "tile_-1_-20.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 322
+    },
+    {
+      "id": "0_-20",
+      "file": "tile_0_-20.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 105
+    },
+    {
+      "id": "1_-20",
+      "file": "tile_1_-20.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 251
+    },
+    {
+      "id": "-2_-21",
+      "file": "tile_-2_-21.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 358
+    },
+    {
+      "id": "-1_-21",
+      "file": "tile_-1_-21.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 304
+    },
+    {
+      "id": "-2_-22",
+      "file": "tile_-2_-22.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 405
+    },
+    {
+      "id": "-1_-22",
+      "file": "tile_-1_-22.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 248
+    },
+    {
+      "id": "-2_-23",
+      "file": "tile_-2_-23.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 334
+    },
+    {
+      "id": "-1_-23",
+      "file": "tile_-1_-23.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 282
+    },
+    {
+      "id": "-3_-22",
+      "file": "tile_-3_-22.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 89
+    },
+    {
+      "id": "-3_-23",
+      "file": "tile_-3_-23.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "0_-21",
+      "file": "tile_0_-21.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 141
+    },
+    {
+      "id": "1_-21",
+      "file": "tile_1_-21.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 315
+    },
+    {
+      "id": "0_-22",
+      "file": "tile_0_-22.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 222
+    },
+    {
+      "id": "1_-22",
+      "file": "tile_1_-22.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 284
+    },
+    {
+      "id": "0_-23",
+      "file": "tile_0_-23.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 280
+    },
+    {
+      "id": "1_-23",
+      "file": "tile_1_-23.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 113
+    },
+    {
+      "id": "2_-20",
+      "file": "tile_2_-20.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 167
+    },
+    {
+      "id": "3_-20",
+      "file": "tile_3_-20.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 7
+    },
+    {
+      "id": "2_-21",
+      "file": "tile_2_-21.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 203
+    },
+    {
+      "id": "3_-21",
+      "file": "tile_3_-21.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 63
+    },
+    {
+      "id": "3_-22",
+      "file": "tile_3_-22.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 49
+    },
+    {
+      "id": "3_-23",
+      "file": "tile_3_-23.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 91
+    },
+    {
+      "id": "2_-22",
+      "file": "tile_2_-22.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 54
+    },
+    {
+      "id": "2_-23",
+      "file": "tile_2_-23.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 192
+    },
+    {
+      "id": "7_-20",
+      "file": "tile_7_-20.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 86
+    },
+    {
+      "id": "8_-20",
+      "file": "tile_8_-20.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 189
+    },
+    {
+      "id": "10_-20",
+      "file": "tile_10_-20.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 77
+    },
+    {
+      "id": "6_-20",
+      "file": "tile_6_-20.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "6_-21",
+      "file": "tile_6_-21.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "7_-21",
+      "file": "tile_7_-21.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 63
+    },
+    {
+      "id": "8_-21",
+      "file": "tile_8_-21.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 190
+    },
+    {
+      "id": "8_-22",
+      "file": "tile_8_-22.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 129
+    },
+    {
+      "id": "7_-22",
+      "file": "tile_7_-22.json",
+      "bounds": {
+        "minX": 3500,
+        "maxX": 4000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 33
+    },
+    {
+      "id": "9_-20",
+      "file": "tile_9_-20.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "9_-21",
+      "file": "tile_9_-21.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 140
+    },
+    {
+      "id": "9_-22",
+      "file": "tile_9_-22.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 161
+    },
+    {
+      "id": "9_-23",
+      "file": "tile_9_-23.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 116
+    },
+    {
+      "id": "8_-23",
+      "file": "tile_8_-23.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 28
+    },
+    {
+      "id": "10_-23",
+      "file": "tile_10_-23.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 22
+    },
+    {
+      "id": "10_-22",
+      "file": "tile_10_-22.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "-6_-24",
+      "file": "tile_-6_-24.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "-6_-23",
+      "file": "tile_-6_-23.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-6_-26",
+      "file": "tile_-6_-26.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 392
+    },
+    {
+      "id": "-6_-25",
+      "file": "tile_-6_-25.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 442
+    },
+    {
+      "id": "-7_-25",
+      "file": "tile_-7_-25.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 38
+    },
+    {
+      "id": "-5_-23",
+      "file": "tile_-5_-23.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-4_-24",
+      "file": "tile_-4_-24.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-4_-26",
+      "file": "tile_-4_-26.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 18
+    },
+    {
+      "id": "-3_-26",
+      "file": "tile_-3_-26.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 146
+    },
+    {
+      "id": "-5_-26",
+      "file": "tile_-5_-26.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 174
+    },
+    {
+      "id": "-5_-25",
+      "file": "tile_-5_-25.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 73
+    },
+    {
+      "id": "-5_-24",
+      "file": "tile_-5_-24.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "-7_-27",
+      "file": "tile_-7_-27.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 97
+    },
+    {
+      "id": "-6_-27",
+      "file": "tile_-6_-27.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 382
+    },
+    {
+      "id": "-7_-26",
+      "file": "tile_-7_-26.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 34
+    },
+    {
+      "id": "-6_-28",
+      "file": "tile_-6_-28.json",
+      "bounds": {
+        "minX": -3000,
+        "maxX": -2500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 245
+    },
+    {
+      "id": "-7_-28",
+      "file": "tile_-7_-28.json",
+      "bounds": {
+        "minX": -3500,
+        "maxX": -3000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 54
+    },
+    {
+      "id": "-5_-27",
+      "file": "tile_-5_-27.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 243
+    },
+    {
+      "id": "-4_-27",
+      "file": "tile_-4_-27.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 226
+    },
+    {
+      "id": "-5_-28",
+      "file": "tile_-5_-28.json",
+      "bounds": {
+        "minX": -2500,
+        "maxX": -2000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 211
+    },
+    {
+      "id": "-3_-27",
+      "file": "tile_-3_-27.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 193
+    },
+    {
+      "id": "-3_-28",
+      "file": "tile_-3_-28.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 179
+    },
+    {
+      "id": "-4_-28",
+      "file": "tile_-4_-28.json",
+      "bounds": {
+        "minX": -2000,
+        "maxX": -1500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 144
+    },
+    {
+      "id": "-3_-24",
+      "file": "tile_-3_-24.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 16
+    },
+    {
+      "id": "-2_-24",
+      "file": "tile_-2_-24.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 151
+    },
+    {
+      "id": "-1_-24",
+      "file": "tile_-1_-24.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 265
+    },
+    {
+      "id": "-1_-25",
+      "file": "tile_-1_-25.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 215
+    },
+    {
+      "id": "-3_-25",
+      "file": "tile_-3_-25.json",
+      "bounds": {
+        "minX": -1500,
+        "maxX": -1000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "-2_-25",
+      "file": "tile_-2_-25.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "0_-24",
+      "file": "tile_0_-24.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 260
+    },
+    {
+      "id": "1_-24",
+      "file": "tile_1_-24.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 115
+    },
+    {
+      "id": "-1_-26",
+      "file": "tile_-1_-26.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 133
+    },
+    {
+      "id": "0_-25",
+      "file": "tile_0_-25.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 213
+    },
+    {
+      "id": "0_-26",
+      "file": "tile_0_-26.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 199
+    },
+    {
+      "id": "1_-25",
+      "file": "tile_1_-25.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 71
+    },
+    {
+      "id": "-2_-26",
+      "file": "tile_-2_-26.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "-1_-27",
+      "file": "tile_-1_-27.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 29
+    },
+    {
+      "id": "-2_-28",
+      "file": "tile_-2_-28.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 14
+    },
+    {
+      "id": "-2_-27",
+      "file": "tile_-2_-27.json",
+      "bounds": {
+        "minX": -1000,
+        "maxX": -500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "-1_-28",
+      "file": "tile_-1_-28.json",
+      "bounds": {
+        "minX": -500,
+        "maxX": 0,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "0_-27",
+      "file": "tile_0_-27.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 103
+    },
+    {
+      "id": "1_-26",
+      "file": "tile_1_-26.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 3
+    },
+    {
+      "id": "1_-27",
+      "file": "tile_1_-27.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "0_-28",
+      "file": "tile_0_-28.json",
+      "bounds": {
+        "minX": 0,
+        "maxX": 500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 20
+    },
+    {
+      "id": "1_-28",
+      "file": "tile_1_-28.json",
+      "bounds": {
+        "minX": 500,
+        "maxX": 1000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "2_-24",
+      "file": "tile_2_-24.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 97
+    },
+    {
+      "id": "3_-24",
+      "file": "tile_3_-24.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 222
+    },
+    {
+      "id": "3_-25",
+      "file": "tile_3_-25.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 228
+    },
+    {
+      "id": "2_-25",
+      "file": "tile_2_-25.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 49
+    },
+    {
+      "id": "3_-26",
+      "file": "tile_3_-26.json",
+      "bounds": {
+        "minX": 1500,
+        "maxX": 2000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "4_-24",
+      "file": "tile_4_-24.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 238
+    },
+    {
+      "id": "4_-23",
+      "file": "tile_4_-23.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "5_-24",
+      "file": "tile_5_-24.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "5_-23",
+      "file": "tile_5_-23.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "5_-26",
+      "file": "tile_5_-26.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 18
+    },
+    {
+      "id": "4_-26",
+      "file": "tile_4_-26.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "4_-25",
+      "file": "tile_4_-25.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "5_-25",
+      "file": "tile_5_-25.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 4
+    },
+    {
+      "id": "2_-26",
+      "file": "tile_2_-26.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "2_-28",
+      "file": "tile_2_-28.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "2_-27",
+      "file": "tile_2_-27.json",
+      "bounds": {
+        "minX": 1000,
+        "maxX": 1500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "4_-27",
+      "file": "tile_4_-27.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 8
+    },
+    {
+      "id": "5_-27",
+      "file": "tile_5_-27.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 19
+    },
+    {
+      "id": "4_-28",
+      "file": "tile_4_-28.json",
+      "bounds": {
+        "minX": 2000,
+        "maxX": 2500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "5_-28",
+      "file": "tile_5_-28.json",
+      "bounds": {
+        "minX": 2500,
+        "maxX": 3000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 10
+    },
+    {
+      "id": "9_-24",
+      "file": "tile_9_-24.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 81
+    },
+    {
+      "id": "8_-24",
+      "file": "tile_8_-24.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "10_-24",
+      "file": "tile_10_-24.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 159
+    },
+    {
+      "id": "10_-25",
+      "file": "tile_10_-25.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 140
+    },
+    {
+      "id": "9_-25",
+      "file": "tile_9_-25.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 59
+    },
+    {
+      "id": "8_-25",
+      "file": "tile_8_-25.json",
+      "bounds": {
+        "minX": 4000,
+        "maxX": 4500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "9_-26",
+      "file": "tile_9_-26.json",
+      "bounds": {
+        "minX": 4500,
+        "maxX": 5000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 6
+    },
+    {
+      "id": "6_-27",
+      "file": "tile_6_-27.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "6_-26",
+      "file": "tile_6_-26.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 1
+    },
+    {
+      "id": "6_-28",
+      "file": "tile_6_-28.json",
+      "bounds": {
+        "minX": 3000,
+        "maxX": 3500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 2
+    },
+    {
+      "id": "12_-20",
+      "file": "tile_12_-20.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 199
+    },
+    {
+      "id": "11_-20",
+      "file": "tile_11_-20.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 195
+    },
+    {
+      "id": "13_-20",
+      "file": "tile_13_-20.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -10000,
+        "maxZ": -9500
+      },
+      "buildingCount": 76
+    },
+    {
+      "id": "11_-21",
+      "file": "tile_11_-21.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 281
+    },
+    {
+      "id": "10_-21",
+      "file": "tile_10_-21.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 162
+    },
+    {
+      "id": "12_-21",
+      "file": "tile_12_-21.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 224
+    },
+    {
+      "id": "12_-22",
+      "file": "tile_12_-22.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 310
+    },
+    {
+      "id": "11_-22",
+      "file": "tile_11_-22.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 223
+    },
+    {
+      "id": "11_-23",
+      "file": "tile_11_-23.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 29
+    },
+    {
+      "id": "12_-23",
+      "file": "tile_12_-23.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 175
+    },
+    {
+      "id": "13_-21",
+      "file": "tile_13_-21.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -10500,
+        "maxZ": -10000
+      },
+      "buildingCount": 68
+    },
+    {
+      "id": "13_-23",
+      "file": "tile_13_-23.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -11500,
+        "maxZ": -11000
+      },
+      "buildingCount": 70
+    },
+    {
+      "id": "13_-22",
+      "file": "tile_13_-22.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -11000,
+        "maxZ": -10500
+      },
+      "buildingCount": 108
+    },
+    {
+      "id": "11_-24",
+      "file": "tile_11_-24.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 72
+    },
+    {
+      "id": "12_-24",
+      "file": "tile_12_-24.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 51
+    },
+    {
+      "id": "11_-26",
+      "file": "tile_11_-26.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 88
+    },
+    {
+      "id": "11_-25",
+      "file": "tile_11_-25.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 84
+    },
+    {
+      "id": "12_-26",
+      "file": "tile_12_-26.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 31
+    },
+    {
+      "id": "12_-25",
+      "file": "tile_12_-25.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 11
+    },
+    {
+      "id": "13_-24",
+      "file": "tile_13_-24.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -12000,
+        "maxZ": -11500
+      },
+      "buildingCount": 32
+    },
+    {
+      "id": "13_-25",
+      "file": "tile_13_-25.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -12500,
+        "maxZ": -12000
+      },
+      "buildingCount": 20
+    },
+    {
+      "id": "13_-26",
+      "file": "tile_13_-26.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -13000,
+        "maxZ": -12500
+      },
+      "buildingCount": 5
+    },
+    {
+      "id": "10_-27",
+      "file": "tile_10_-27.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 9
+    },
+    {
+      "id": "11_-27",
+      "file": "tile_11_-27.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 40
+    },
+    {
+      "id": "12_-27",
+      "file": "tile_12_-27.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 230
+    },
+    {
+      "id": "12_-28",
+      "file": "tile_12_-28.json",
+      "bounds": {
+        "minX": 6000,
+        "maxX": 6500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 107
+    },
+    {
+      "id": "11_-28",
+      "file": "tile_11_-28.json",
+      "bounds": {
+        "minX": 5500,
+        "maxX": 6000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 63
+    },
+    {
+      "id": "10_-28",
+      "file": "tile_10_-28.json",
+      "bounds": {
+        "minX": 5000,
+        "maxX": 5500,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 19
+    },
+    {
+      "id": "13_-27",
+      "file": "tile_13_-27.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -13500,
+        "maxZ": -13000
+      },
+      "buildingCount": 21
+    },
+    {
+      "id": "13_-28",
+      "file": "tile_13_-28.json",
+      "bounds": {
+        "minX": 6500,
+        "maxX": 7000,
+        "minZ": -14000,
+        "maxZ": -13500
+      },
+      "buildingCount": 26
+    }
+  ]
+}
