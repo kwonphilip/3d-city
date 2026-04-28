@@ -1,0 +1,38 @@
+.quality-panel {
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.q-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 2px 8px;
+  cursor: default;
+}
+
+.q-row span:first-child {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.q-val {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: right;
+}
+
+.q-row input[type='range'] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+}
