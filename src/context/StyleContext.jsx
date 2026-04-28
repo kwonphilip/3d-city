@@ -1,18 +1,15 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from 'react'
-import * as THREE from 'three'
+import { create } from 'zustand'
+import { STYLE_REGISTRY, DEFAULT_STYLE_ID } from '../styles/index'
 
-const defaultStyle = {
-  id: 'lowPolyFlat',
-  background: '#0a0a1a',
-  buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#4a7fbf') }),
-  highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#ff8844') }),
-}
+const defaultStyle = STYLE_REGISTRY.find(s => s.id === DEFAULT_STYLE_ID)
 
-const StyleContext = createContext(defaultStyle)
-export const useStyle = () => useContext(StyleContext)
+export const useStyleStore = create((set) => ({
+  style: defaultStyle,
+  setStyleById: (id) => {
+    const s = STYLE_REGISTRY.find(p => p.id === id)
+    if (s) set({ style: s })
+  },
+}))
 
-export function StyleProvider({ children }) {
-  const [style] = useState(defaultStyle)
-  return <StyleContext.Provider value={style}>{children}</StyleContext.Provider>
-}
+// Convenience hook matching prior API: useStyle().style, useStyle().buildingMaterial, etc.
+export const useStyle = () => useStyleStore(s => s.style)

@@ -1,0 +1,30 @@
+.style-picker {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 8px;
+}
+
+.style-btn {
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.style-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.style-btn.active {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
