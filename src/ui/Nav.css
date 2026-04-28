@@ -1,0 +1,82 @@
+.nav {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 280px;
+}
+
+.nav-pins {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 8px;
+}
+
+.nav-pin {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+  text-align: left;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.nav-pin:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.nav-search {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 8px;
+}
+
+.nav-search input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.nav-search input::placeholder { color: rgba(255, 255, 255, 0.35); }
+.nav-search input:focus { border-color: rgba(255, 255, 255, 0.5); }
+.nav-search input.error { border-color: rgba(255, 80, 80, 0.7); }
+
+.nav-search button {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  padding: 0 10px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.nav-search button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.2); }
+.nav-search button:disabled { opacity: 0.5; cursor: default; }
+
+.nav-error {
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: rgba(255, 120, 120, 0.9);
+}

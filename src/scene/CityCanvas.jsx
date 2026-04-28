@@ -1,7 +1,15 @@
 import { Canvas } from '@react-three/fiber'
 import { MapControls } from '@react-three/drei'
 import { useStyle } from '../context/StyleContext'
+import useCameraFlight from '../hooks/useCameraFlight'
 import Buildings from './Buildings'
+import Pins from './Pins'
+import Highlight from './Highlight'
+
+function CameraRig() {
+  useCameraFlight()
+  return null
+}
 
 function Scene() {
   const style = useStyle()
@@ -13,6 +21,9 @@ function Scene() {
       {Lights && <Lights />}
       {Ground && <Ground />}
       <Buildings />
+      <Pins />
+      <Highlight />
+      <CameraRig />
     </>
   )
 }
@@ -27,6 +38,7 @@ export default function CityCanvas({ children }) {
       <Scene />
       {children}
       <MapControls
+        makeDefault
         maxPolarAngle={Math.PI / 2.1}
         minDistance={80}
         maxDistance={6000}
