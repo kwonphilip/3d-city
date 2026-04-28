@@ -1,37 +1,42 @@
 import { Canvas } from '@react-three/fiber'
 import { MapControls } from '@react-three/drei'
+import { StyleProvider, useStyle } from '../context/StyleContext'
+import { QualityProvider } from '../context/QualityContext'
+import Buildings from './Buildings'
 
-function TestScene() {
+function Scene() {
+  const { background } = useStyle()
   return (
     <>
-      <color attach="background" args={['#0a0a1a']} />
+      <color attach="background" args={[background]} />
       <ambientLight intensity={0.4} />
       <directionalLight position={[500, 800, 300]} intensity={1.2} castShadow={false} />
       <directionalLight position={[-300, 400, -200]} intensity={0.3} />
-
-      {/* Ground plane */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-        <planeGeometry args={[8000, 8000]} />
-        <meshLambertMaterial color="#1a1a2e" />
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[12000, 12000]} />
+        <meshLambertMaterial color="#12121e" />
       </mesh>
-
-      {/* Grid */}
-      <gridHelper args={[8000, 80, '#223', '#161620']} position={[0, 0.5, 0]} />
-
-      {/* Test cube — will be replaced by real buildings in Phase 3 */}
-      <mesh position={[0, 50, 0]}>
-        <boxGeometry args={[60, 100, 60]} />
-        <meshLambertMaterial color="#4488ff" />
-      </mesh>
-      <mesh position={[120, 30, -80]}>
-        <boxGeometry args={[50, 60, 50]} />
-        <meshLambertMaterial color="#3366cc" />
-      </mesh>
-      <mesh position={[-100, 20, 60]}>
-        <boxGeometry args={[40, 40, 40]} />
-        <meshLambertMaterial color="#2255aa" />
-      </mesh>
+      <Buildings />
     </>
+  )
+}
+
+// Providers live inside Canvas so R3F's separate React root can consume them.
+// When Phase 4 needs UI panels to share style/quality state, migrate to Zustand.
+function InnerScene() {
+  return (
+    <StyleProvider>
+      <QualityProvider>
+        <Scene />
+        <MapControls
+          maxPolarAngle={Math.PI / 2.1}
+          minDistance={80}
+          maxDistance={6000}
+          panSpeed={1.5}
+          zoomSpeed={1.2}
+        />
+      </QualityProvider>
+    </StyleProvider>
   )
 }
 
@@ -42,16 +47,8 @@ export default function CityCanvas({ children }) {
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       style={{ width: '100%', height: '100%' }}
     >
-      <TestScene />
+      <InnerScene />
       {children}
-      <MapControls
-        maxPolarAngle={Math.PI / 2.1}
-        minDistance={80}
-        maxDistance={6000}
-        panSpeed={1.5}
-        zoomSpeed={1.2}
-        target={[0, 0, 0]}
-      />
     </Canvas>
   )
 }
