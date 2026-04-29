@@ -8,7 +8,7 @@ import GeometryWorker from '../workers/geometryWorker.js?worker'
 
 const MANIFEST_URL = '/data/manhattan/manifest.json'
 const LAND_URL = '/data/manhattan/land.json'
-const CHECK_EVERY = 45 // frames between visibility scans
+const CHECK_EVERY = 45
 
 function TileMesh({ posArr, nrmArr, idxArr, material }) {
   const geom = useMemo(() => {
@@ -23,7 +23,6 @@ function TileMesh({ posArr, nrmArr, idxArr, material }) {
   return <mesh geometry={geom} material={material} />
 }
 
-// Standard ray-cast point-in-polygon over a [x, z] ring.
 function pointInRing(x, z, ring) {
   let inside = false
   for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
@@ -36,24 +35,36 @@ function pointInRing(x, z, ring) {
   return inside
 }
 
+// Stable serialization of the boroughs object so the flush effect only fires
+// when the *set* of enabled boroughs actually changes (not on every render).
+function boroughsKey(boroughs) {
+  return Object.entries(boroughs)
+    .filter(([, on]) => on)
+    .map(([k]) => k)
+    .sort()
+    .join('|')
+}
+
 export default function Buildings() {
   const { camera } = useThree()
   const { buildingMaterial } = useStyle()
-  const { renderRadius, minBuildingHeight, manhattanOnly } = useQuality()
+  const { renderRadius, minBuildingHeight, boroughs } = useQuality()
   const addTile = useBuildingRegistry(s => s.addTile)
   const removeTile = useBuildingRegistry(s => s.removeTile)
 
-  const qualityRef = useRef({ renderRadius, minBuildingHeight, manhattanOnly })
+  const qualityRef = useRef({ renderRadius, minBuildingHeight, boroughs })
   useEffect(() => {
-    qualityRef.current = { renderRadius, minBuildingHeight, manhattanOnly }
-  }, [renderRadius, minBuildingHeight, manhattanOnly])
+    qualityRef.current = { renderRadius, minBuildingHeight, boroughs }
+  }, [renderRadius, minBuildingHeight, boroughs])
 
   const [renderedTiles, setRenderedTiles] = useState(new Map())
   const loadedIdsRef = useRef(new Set())
   const inFlightRef = useRef(new Set())
   const workerRef = useRef(null)
   const manifestRef = useRef(null)
-  const manhattanRingsRef = useRef(null) // [[x, z], ...] outer rings of Manhattan landmasses
+  // Map<boroughName, ring[]> — each value is an array of outer rings. Used by the
+  // borough filter to decide which buildings keep their 3D form.
+  const ringsByBoroughRef = useRef(null)
   const frameRef = useRef(0)
 
   useEffect(() => {
@@ -80,29 +91,31 @@ export default function Buildings() {
     fetch(MANIFEST_URL).then(r => r.json()).then(m => { manifestRef.current = m })
   }, [])
 
-  // Load Manhattan polygon rings for the manhattanOnly filter.
+  // Load all borough/region rings indexed by name.
   useEffect(() => {
     fetch(LAND_URL)
       .then(r => r.json())
       .then(d => {
-        const rings = (d.landmasses || [])
-          .filter(lm => lm.name === 'Manhattan' && lm.outer?.length >= 3)
-          .map(lm => lm.outer)
-        manhattanRingsRef.current = rings
+        const map = new Map()
+        for (const lm of d.landmasses || []) {
+          if (!lm?.name || !lm.outer || lm.outer.length < 3) continue
+          if (!map.has(lm.name)) map.set(lm.name, [])
+          map.get(lm.name).push(lm.outer)
+        }
+        ringsByBoroughRef.current = map
       })
       .catch(() => { /* filter unavailable; treat as no filter */ })
   }, [])
 
-  // Toggle change → flush all loaded tiles so they re-fetch with the new filter.
-  // The setState here is intentional — we want React to drop the rendered tile
-  // meshes so the world reflects the new filter on the next streaming pass.
+  // Toggle change → flush loaded tiles so they re-fetch under the new filter.
+  const flushKey = boroughsKey(boroughs)
   useEffect(() => {
     for (const id of loadedIdsRef.current) removeTile(id)
     loadedIdsRef.current.clear()
     inFlightRef.current.clear()
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setRenderedTiles(new Map())
-  }, [manhattanOnly, removeTile])
+  }, [flushKey, removeTile])
 
   useFrame(() => {
     if (++frameRef.current % CHECK_EVERY !== 0) return
@@ -110,7 +123,7 @@ export default function Buildings() {
     if (!manifest || !workerRef.current) return
 
     const { x, y, z } = camera.position
-    const { renderRadius: baseRadius, minBuildingHeight: minH, manhattanOnly: mOnly } = qualityRef.current
+    const { renderRadius: baseRadius, minBuildingHeight: minH, boroughs: brs } = qualityRef.current
     const radius = Math.max(baseRadius, y * 1.5)
     const inRange = new Set()
 
@@ -121,8 +134,19 @@ export default function Buildings() {
       if (Math.hypot(x - cx, z - cz) < radius) inRange.add(tile.id)
     }
 
-    const rings = manhattanRingsRef.current
-    const filterEnabled = mOnly && rings && rings.length > 0
+    // Build a per-frame list of enabled boroughs' rings. If the rings haven't
+    // loaded yet, fall back to "render everything" so we don't show an empty city.
+    const ringsByBorough = ringsByBoroughRef.current
+    const enabledRings = []
+    if (ringsByBorough) {
+      for (const [name, on] of Object.entries(brs)) {
+        if (!on) continue
+        const rings = ringsByBorough.get(name)
+        if (rings) enabledRings.push(...rings)
+      }
+    }
+    const filterEnabled = ringsByBorough != null
+    const anyEnabled = enabledRings.length > 0
 
     for (const tile of manifest.tiles) {
       if (!inRange.has(tile.id)) continue
@@ -134,15 +158,18 @@ export default function Buildings() {
           if (!workerRef.current) return
           let kept = buildings
           if (filterEnabled) {
+            // No boroughs enabled = no 3D buildings anywhere.
+            if (!anyEnabled) {
+              inFlightRef.current.delete(tile.id)
+              return
+            }
             kept = buildings.filter(b => {
               const [bx, bz] = b.center
-              for (const ring of rings) if (pointInRing(bx, bz, ring)) return true
+              for (const ring of enabledRings) if (pointInRing(bx, bz, ring)) return true
               return false
             })
           }
           if (kept.length === 0) {
-            // Tile contributes no rendered buildings — drop it from the loaded set
-            // so it doesn't pad the bounds box with empty area.
             inFlightRef.current.delete(tile.id)
             return
           }

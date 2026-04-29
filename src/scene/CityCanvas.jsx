@@ -35,8 +35,8 @@ function Scene() {
 export default function CityCanvas({ children }) {
   return (
     <Canvas
-      camera={{ position: [0, 800, 900], fov: 45, near: 1, far: 60000 }}
-      gl={{ antialias: true, powerPreference: 'high-performance' }}
+      camera={{ position: [0, 800, 900], fov: 45, near: 50, far: 60000 }}
+      gl={{ antialias: true, powerPreference: 'high-performance', logarithmicDepthBuffer: true }}
       style={{ width: '100%', height: '100%' }}
     >
       <Scene />

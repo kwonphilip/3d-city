@@ -3,8 +3,17 @@ import './QualityPanel.css'
 
 const RADIUS_MAX = 12000
 
+const BOROUGH_OPTIONS = [
+  { key: 'Manhattan', label: 'Manhattan' },
+  { key: 'Brooklyn', label: 'Brooklyn' },
+  { key: 'Queens', label: 'Queens' },
+  { key: 'Bronx', label: 'Bronx' },
+  { key: 'Staten Island', label: 'Staten Island' },
+  { key: 'NJ Hudson Waterfront', label: 'NJ Waterfront' },
+]
+
 export default function QualityPanel() {
-  const { renderRadius, minBuildingHeight, manhattanOnly, setQuality } = useQualityStore()
+  const { renderRadius, minBuildingHeight, boroughs, setQuality, setBorough } = useQualityStore()
   const atMax = renderRadius >= RADIUS_MAX
   return (
     <div className="quality-panel">
@@ -32,14 +41,19 @@ export default function QualityPanel() {
           onChange={e => setQuality({ minBuildingHeight: Number(e.target.value) })}
         />
       </label>
-      <label className="q-row q-check">
-        <input
-          type="checkbox"
-          checked={manhattanOnly}
-          onChange={e => setQuality({ manhattanOnly: e.target.checked })}
-        />
-        <span>Manhattan only (3D)</span>
-      </label>
+      <div className="q-borough-group">
+        <span className="q-borough-header">3D buildings in</span>
+        {BOROUGH_OPTIONS.map(({ key, label }) => (
+          <label key={key} className="q-check">
+            <input
+              type="checkbox"
+              checked={!!boroughs[key]}
+              onChange={e => setBorough(key, e.target.checked)}
+            />
+            <span>{label}</span>
+          </label>
+        ))}
+      </div>
     </div>
   )
 }

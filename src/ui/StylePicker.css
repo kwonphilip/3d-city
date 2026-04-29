@@ -1,12 +1,67 @@
 .style-picker {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px 12px;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(6px);
   border-radius: 8px;
   width: 240px;
+  overflow: hidden;
+}
+
+/* Header (always visible) */
+.sp-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  width: 100%;
+}
+
+.sp-header:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sp-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.sp-header-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.sp-header-hint {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 1px;
+}
+
+.sp-chevron {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.sp-chevron-up {
+  transform: rotate(180deg);
+}
+
+/* Expanded list */
+.sp-open .sp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 10px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sp-group {

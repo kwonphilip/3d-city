@@ -7,7 +7,7 @@ export default {
   perfTier: 'standard',
   category: 'day',
   background: '#dde6ec',
-  buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#e3dec8') }),
+  buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#9aa5b4') }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#4285f4') }),
   highlightOutlineColor: '#1f5fc4',
   highlightBeamColor: '#4285f4',

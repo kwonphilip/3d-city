@@ -1,11 +1,12 @@
+import { useState } from 'react'
 import { STYLE_REGISTRY } from '../styles/index'
 import { useStyleStore } from '../context/StyleContext'
 import './StylePicker.css'
 
 const CATEGORY_ORDER = ['day', 'night', 'outline']
 const CATEGORY_LABEL = { day: 'Day', night: 'Night', outline: 'Outline' }
-
 const PERF_LABEL = { light: 'Light', standard: 'Standard', heavy: 'Heavy' }
+const STORAGE_KEY = 'style-picker-open'
 
 function colorFromMaterial(m) {
   if (!m) return null
@@ -14,8 +15,6 @@ function colorFromMaterial(m) {
 }
 
 function Swatch({ preset }) {
-  // 2×2 palette preview: background, building, land-or-park, glow-or-highlight.
-  // For day-category presets, use park (the green) so the swatch reads as "daytime".
   const bg = preset.background
   const building = colorFromMaterial(preset.buildingMaterial)
   const useParkInSwatch = preset.category === 'day' && preset.parkMaterial
@@ -53,8 +52,25 @@ function StyleCard({ preset, active, onClick }) {
   )
 }
 
+function readInitialOpen() {
+  try {
+    return localStorage.getItem(STORAGE_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
 export default function StylePicker() {
   const { style, setStyleById } = useStyleStore()
+  const [open, setOpen] = useState(readInitialOpen)
+
+  const toggle = () => {
+    setOpen((v) => {
+      const next = !v
+      try { localStorage.setItem(STORAGE_KEY, next ? '1' : '0') } catch { /* ignore */ }
+      return next
+    })
+  }
 
   // Group presets by category, preserving registry order within each group.
   const groups = new Map()
@@ -66,23 +82,36 @@ export default function StylePicker() {
   }
 
   return (
-    <div className="style-picker">
-      {[...groups.entries()].map(([cat, presets]) => {
-        if (presets.length === 0) return null
-        return (
-          <div key={cat} className="sp-group">
-            <div className="sp-group-header">{CATEGORY_LABEL[cat] ?? cat}</div>
-            {presets.map((p) => (
-              <StyleCard
-                key={p.id}
-                preset={p}
-                active={style.id === p.id}
-                onClick={() => setStyleById(p.id)}
-              />
-            ))}
-          </div>
-        )
-      })}
+    <div className={`style-picker${open ? ' sp-open' : ''}`}>
+      <button type="button" className="sp-header" onClick={toggle} aria-expanded={open}>
+        <Swatch preset={style} />
+        <div className="sp-header-text">
+          <div className="sp-header-label">{style.label}</div>
+          <div className="sp-header-hint">{open ? 'Hide styles' : 'Change style'}</div>
+        </div>
+        <span className={`sp-chevron${open ? ' sp-chevron-up' : ''}`} aria-hidden="true">▾</span>
+      </button>
+
+      {open && (
+        <div className="sp-list">
+          {[...groups.entries()].map(([cat, presets]) => {
+            if (presets.length === 0) return null
+            return (
+              <div key={cat} className="sp-group">
+                <div className="sp-group-header">{CATEGORY_LABEL[cat] ?? cat}</div>
+                {presets.map((p) => (
+                  <StyleCard
+                    key={p.id}
+                    preset={p}
+                    active={style.id === p.id}
+                    onClick={() => setStyleById(p.id)}
+                  />
+                ))}
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

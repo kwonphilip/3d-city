@@ -163,28 +163,38 @@ async function fetchNYC() {
 }
 
 async function fetchNJShoreline() {
-  console.log('\nFetching NJ Hudson waterfront (OSM natural=coastline)...')
-  // Tight bbox covering Hoboken / Jersey City / Weehawken / Bayonne — west of Manhattan only.
+  // OSM admin_level=8 = NJ municipality. Each relation's outer ways form the
+  // city boundary, which (unlike natural=coastline) covers the entire municipality
+  // as a filled polygon — no ring-closure issues.
+  console.log('\nFetching NJ municipalities (OSM admin_level=8)...')
   const query = `
 [out:json][timeout:90];
-way["natural"="coastline"](40.685,-74.10,40.825,-74.00);
+rel["boundary"="administrative"]["admin_level"="8"](40.685,-74.10,40.825,-73.99);
 out geom;
 `
   const data = await fetchOverpass(query)
-  const ways = (data.elements || []).filter((e) => e.type === 'way' && e.geometry?.length)
-  console.log(`  ${ways.length} coastline ways`)
+  const rels = (data.elements || []).filter((e) => e.type === 'relation' && e.members)
+  console.log(`  ${rels.length} municipality relations`)
 
-  const rawRings = stitchWays(ways)
-  const rings = rawRings
-    .filter((r) => r.length >= 50)
-    .map((r) => {
-      const projected = r.map(([lon, lat]) => project(lon, lat))
-      return simplify(projected, SIMPLIFY_TOLERANCE)
-    })
-    .filter((r) => r.length >= 3)
-
-  console.log(`  ${rings.length} substantial ring(s) after stitch+simplify`)
-  return rings.map((r) => ({ name: 'NJ Hudson Waterfront', outer: round1(r) }))
+  const landmasses = []
+  for (const rel of rels) {
+    const cityName = rel.tags?.name || 'NJ'
+    const outerWays = rel.members.filter((m) => m.type === 'way' && m.role === 'outer' && m.geometry?.length)
+    if (outerWays.length === 0) continue
+    const rings = stitchWays(outerWays)
+    let added = 0
+    for (const ring of rings) {
+      const projected = ring.map(([lon, lat]) => project(lon, lat))
+      const simplified = simplify(projected, SIMPLIFY_TOLERANCE)
+      if (simplified.length < 3) continue
+      // Tag every NJ landmass with the same group name "NJ Hudson Waterfront" so the
+      // borough toggle in the UI groups them. Real city name kept in `subname`.
+      landmasses.push({ name: 'NJ Hudson Waterfront', subname: cityName, outer: round1(simplified) })
+      added++
+    }
+    if (added > 0) console.log(`  ${cityName}: ${added} polygon(s)`)
+  }
+  return landmasses
 }
 
 async function fetchOutlyingIslands() {

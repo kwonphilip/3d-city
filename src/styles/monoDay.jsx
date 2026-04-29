@@ -9,7 +9,7 @@ export default {
   perfTier: 'light',
   category: 'day',
   background: '#dde6ec',
-  buildingMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#e3dec8') }),
+  buildingMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#7d8a99') }),
   highlightMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#4285f4') }),
   highlightOutlineColor: '#1f5fc4',
   highlightBeamColor: '#4285f4',

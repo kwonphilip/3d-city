@@ -8,10 +8,21 @@ function detectDefaults() {
   return { renderRadius: 2000, minBuildingHeight: 5 }
 }
 
+// Borough/region keys here must match the `name` field on landmasses in land.json.
+const DEFAULT_BOROUGHS = {
+  Manhattan: true,
+  Brooklyn: false,
+  Queens: false,
+  Bronx: false,
+  'Staten Island': false,
+  'NJ Hudson Waterfront': false,
+}
+
 export const useQualityStore = create((set) => ({
   ...detectDefaults(),
-  manhattanOnly: true,
+  boroughs: DEFAULT_BOROUGHS,
   setQuality: (patch) => set(patch),
+  setBorough: (name, on) => set((s) => ({ boroughs: { ...s.boroughs, [name]: on } })),
 }))
 
 export const useQuality = () => useQualityStore()
