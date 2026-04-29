@@ -16,6 +16,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import ClipperLib from 'clipper-lib'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const OUT_FILE = path.join(__dirname, '..', 'public', 'data', 'manhattan', 'land.json')
@@ -26,6 +27,10 @@ const LAT_TO_M = 111139
 const LON_TO_M = 111139 * Math.cos(ORIGIN_LAT * (Math.PI / 180))
 
 const SIMPLIFY_TOLERANCE = 5
+const WATER_BUFFER_M = 600       // halo around every landmass in the water shape
+const WATER_SIMPLIFY_TOL = 10    // Douglas-Peucker tol applied to offset rings
+const CLIPPER_SCALE = 1000       // clipper-lib uses integers; 1000 = mm precision
+const CLIPPER_ARC_TOLERANCE = 0.25 * CLIPPER_SCALE // ~0.25m chord error on offset arcs
 
 const NYC_BOROUGHS_URL = 'https://data.cityofnewyork.us/api/geospatial/gthc-hcne?method=export&format=GeoJSON'
 
@@ -222,6 +227,123 @@ out geom;
     .filter((lm) => lm.outer.length >= 3)
 }
 
+// ─── water-shape buffer ───────────────────────────────────────────────────────
+// Each landmass is dilated outward by WATER_BUFFER_M using ClipperOffset (which
+// implements true polygon offset — Minkowski sum with a disc — handling concave
+// edges, sharp corners, and self-intersection cleanup natively). All offsets
+// are then unioned via Clipper to merge overlapping borough halos. Output is
+// one or more closed polygons hugging the NYC outline.
+
+function ringToClipper(ring) {
+  // Strip duplicate close-vertex if present; clipper closes implicitly.
+  const f = ring[0], l = ring[ring.length - 1]
+  const open = f[0] === l[0] && f[1] === l[1] ? ring.slice(0, -1) : ring
+  return open.map(([x, y]) => ({
+    X: Math.round(x * CLIPPER_SCALE),
+    Y: Math.round(y * CLIPPER_SCALE),
+  }))
+}
+
+function clipperToRing(path) {
+  return path.map((p) => [p.X / CLIPPER_SCALE, p.Y / CLIPPER_SCALE])
+}
+
+// Run ClipperOffset for one or many rings, returning the union of their offsets.
+function offsetRings(rings, distance) {
+  const co = new ClipperLib.ClipperOffset(2.0, CLIPPER_ARC_TOLERANCE)
+  for (const r of rings) {
+    if (r.length < 3) continue
+    co.AddPath(ringToClipper(r), ClipperLib.JoinType.jtRound, ClipperLib.EndType.etClosedPolygon)
+  }
+  const solution = new ClipperLib.Paths()
+  co.Execute(solution, distance * CLIPPER_SCALE)
+  return solution
+}
+
+// Convert Clipper Paths into [{outer, holes}] using the standard non-zero
+// winding interpretation (positive area = outer, negative = hole). Outer rings
+// are matched to their containing holes by point-in-polygon.
+function clipperPathsToPolygons(paths) {
+  const outers = []
+  const holes = []
+  for (const path of paths) {
+    if (path.length < 3) continue
+    const ring = clipperToRing(path)
+    const simplified = simplify(ring, WATER_SIMPLIFY_TOL)
+    if (simplified.length < 3) continue
+    if (ClipperLib.Clipper.Orientation(path)) outers.push(simplified)
+    else holes.push(simplified)
+  }
+  // For each hole, find the outer ring that contains it.
+  const polys = outers.map((outer) => ({ outer: round1(outer), holes: [] }))
+  for (const hole of holes) {
+    const [hx, hy] = hole[0]
+    let bestIdx = -1
+    let bestArea = Infinity
+    for (let i = 0; i < polys.length; i++) {
+      if (!pointInRing(hx, hy, polys[i].outer)) continue
+      const area = Math.abs(signedArea(polys[i].outer))
+      if (area < bestArea) { bestArea = area; bestIdx = i }
+    }
+    if (bestIdx >= 0) polys[bestIdx].holes.push(round1(hole))
+  }
+  return polys
+}
+
+function signedArea(ring) {
+  let a = 0
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    a += ring[j][0] * ring[i][1] - ring[i][0] * ring[j][1]
+  }
+  return a / 2
+}
+
+function pointInRing(x, y, ring) {
+  let inside = false
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const xi = ring[i][0], yi = ring[i][1]
+    const xj = ring[j][0], yj = ring[j][1]
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside
+  }
+  return inside
+}
+
+function computeWaterShape(landmasses) {
+  if (landmasses.length === 0) return []
+  console.log(`\nBuffering ${landmasses.length} landmasses by ${WATER_BUFFER_M}m for water shape...`)
+  const rings = landmasses
+    .filter((lm) => lm.outer && lm.outer.length >= 3)
+    .map((lm) => lm.outer)
+
+  // ClipperOffset over all rings at once — overlapping offsets are merged in
+  // the same pass, no separate union step needed.
+  const offset = offsetRings(rings, WATER_BUFFER_M)
+  const polys = clipperPathsToPolygons(offset)
+
+  console.log(`  → ${polys.length} water polygon(s)`)
+  for (const p of polys) console.log(`    outer ${p.outer.length} pts${p.holes.length ? `, ${p.holes.length} hole(s)` : ''}`)
+  return polys
+}
+
+// Compute the union axis-aligned bbox over every kept landmass (outer + holes).
+function computeBounds(landmasses) {
+  let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity
+  const sweep = (pts) => {
+    for (const [x, z] of pts) {
+      if (x < minX) minX = x
+      if (x > maxX) maxX = x
+      if (z < minZ) minZ = z
+      if (z > maxZ) maxZ = z
+    }
+  }
+  for (const lm of landmasses) {
+    sweep(lm.outer)
+    if (lm.holes) for (const h of lm.holes) sweep(h)
+  }
+  if (!isFinite(minX)) return null
+  return { minX, maxX, minZ, maxZ }
+}
+
 // ─── main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -229,7 +351,7 @@ async function main() {
 
   const landmasses = []
 
-  // NYC (authoritative)
+  // NYC (authoritative — covers all 5 boroughs + Roosevelt/Randalls/U Thant)
   try {
     landmasses.push(...(await fetchNYC()))
   } catch (err) {
@@ -238,28 +360,25 @@ async function main() {
     process.exit(1)
   }
 
-  // NJ (OSM)
-  try {
-    landmasses.push(...(await fetchNJShoreline()))
-  } catch (err) {
-    console.warn('NJ shoreline fetch failed (continuing without):', err.message)
-  }
-
-  // Outlying federal islands
+  // Outlying NYC harbor islands (Liberty / Ellis / Governors / Little Island)
   try {
     landmasses.push(...(await fetchOutlyingIslands()))
   } catch (err) {
     console.warn('Outlying islands fetch failed (continuing without):', err.message)
   }
 
+  const nycBounds = computeBounds(landmasses)
+  const waterShape = computeWaterShape(landmasses)
+
   const out = {
     origin: { lat: ORIGIN_LAT, lon: ORIGIN_LON },
     generatedAt: new Date().toISOString(),
     sources: {
       nyc: 'NYC OpenData — Borough Boundaries (gthc-hcne)',
-      nj: 'OpenStreetMap (Overpass) natural=coastline',
       islands: 'OpenStreetMap (Overpass) place=island',
     },
+    nycBounds,
+    waterShape,
     landmasses,
   }
 
@@ -267,7 +386,12 @@ async function main() {
   await fs.writeFile(OUT_FILE, json)
 
   console.log(`\nWrote ${landmasses.length} landmasses (${(json.length / 1024).toFixed(1)} KB) to ${OUT_FILE}`)
-  for (const lm of landmasses) console.log(`  - ${lm.name}: ${lm.outer.length} pts${lm.holes?.length ? `, ${lm.holes.length} hole(s)` : ''}`)
+  if (nycBounds) {
+    console.log(`NYC bounds: x=[${nycBounds.minX.toFixed(0)}, ${nycBounds.maxX.toFixed(0)}], z=[${nycBounds.minZ.toFixed(0)}, ${nycBounds.maxZ.toFixed(0)}]`)
+    console.log(`  ${(nycBounds.maxX - nycBounds.minX).toFixed(0)}m wide × ${(nycBounds.maxZ - nycBounds.minZ).toFixed(0)}m tall`)
+  }
+  for (const lm of landmasses.slice(0, 12)) console.log(`  - ${lm.name}: ${lm.outer.length} pts${lm.holes?.length ? `, ${lm.holes.length} hole(s)` : ''}`)
+  if (landmasses.length > 12) console.log(`  … and ${landmasses.length - 12} more`)
 }
 
 main().catch((err) => { console.error(err); process.exit(1) })

@@ -24,12 +24,11 @@ const SIMPLIFY_TOLERANCE = 2
 const MIN_AREA_M2 = 200  // drop tiny pocket parks; below this is visual noise
 
 const BANDS = [
-  [40.700, 40.756],
-  [40.756, 40.812],
-  [40.812, 40.882],
+  [40.495, 40.585], [40.585, 40.665], [40.665, 40.730],
+  [40.730, 40.790], [40.790, 40.850], [40.850, 40.920],
 ]
-const WEST = -74.05
-const EAST = -73.907
+const WEST = -74.265
+const EAST = -73.700
 
 const OVERPASS_INSTANCES = [
   'https://overpass.kumi.systems/api/interpreter',

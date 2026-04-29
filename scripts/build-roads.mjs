@@ -28,16 +28,15 @@ const SIMPLIFY_TOLERANCE = 1.5
 const MAX_RETRIES_PER_INSTANCE = 2
 const RETRY_DELAY_MS = 5000
 
+// All-NYC coverage. Roads are denser than buildings per row, so smaller bands.
 const BANDS = [
-  [40.700, 40.730],
-  [40.730, 40.756],
-  [40.756, 40.780],
-  [40.780, 40.812],
-  [40.812, 40.842],
-  [40.842, 40.882],
+  [40.495, 40.560], [40.560, 40.610], [40.610, 40.650],
+  [40.650, 40.685], [40.685, 40.715], [40.715, 40.745],
+  [40.745, 40.775], [40.775, 40.805], [40.805, 40.835],
+  [40.835, 40.865], [40.865, 40.920],
 ]
-const WEST = -74.022
-const EAST = -73.907
+const WEST = -74.265
+const EAST = -73.700
 
 const ALLOWED_CLASSES = new Set([
   'motorway', 'motorway_link',

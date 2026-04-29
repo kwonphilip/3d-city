@@ -3,6 +3,8 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
+import useNycMask from '../hooks/useNycMask'
+import { clipPathToBbox } from '../lib/nycMask'
 
 const MANIFEST_URL = '/data/manhattan/roads_manifest.json'
 const CHECK_EVERY = 45
@@ -110,10 +112,36 @@ function buildPillarsGeometry(bridges) {
   return g
 }
 
-function TileMeshes({ tile, roadMat, bridgeMat, pillarMat }) {
-  const roadGeom = useMemo(() => buildRibbonGeometry(tile.roads, ROAD_Y), [tile])
-  const bridgeGeom = useMemo(() => buildRibbonGeometry(tile.bridges, BRIDGE_Y), [tile])
-  const pillarGeom = useMemo(() => buildPillarsGeometry(tile.bridges), [tile])
+// Apply NYC mask:
+// - non-bridge segments: drop unless the midpoint is inside any borough ring
+// - bridges: keep when either endpoint is inside, then clip the path to worldBbox
+//   so cross-state spans (GWB, Bayonne, Goethals, Outerbridge) terminate at the
+//   visible water edge instead of dangling into the void.
+function filterTile(tile, mask) {
+  if (!mask) return { roads: [], bridges: [] }
+  const roads = []
+  for (const s of tile.roads) {
+    if (mask.contains(s.mid[0], s.mid[1])) roads.push(s)
+  }
+  const bridges = []
+  for (const b of tile.bridges) {
+    const path = b.path
+    if (!path || path.length < 2) continue
+    const start = path[0]
+    const end = path[path.length - 1]
+    if (!mask.contains(start[0], start[1]) && !mask.contains(end[0], end[1])) continue
+    const runs = clipPathToBbox(path, mask.worldBbox)
+    for (const run of runs) {
+      if (run.length >= 2) bridges.push({ ...b, path: run })
+    }
+  }
+  return { roads, bridges }
+}
+
+function TileMeshes({ roads, bridges, roadMat, bridgeMat, pillarMat }) {
+  const roadGeom = useMemo(() => buildRibbonGeometry(roads, ROAD_Y), [roads])
+  const bridgeGeom = useMemo(() => buildRibbonGeometry(bridges, BRIDGE_Y), [bridges])
+  const pillarGeom = useMemo(() => buildPillarsGeometry(bridges), [bridges])
   useEffect(() => () => {
     roadGeom?.dispose()
     bridgeGeom?.dispose()
@@ -128,13 +156,23 @@ function TileMeshes({ tile, roadMat, bridgeMat, pillarMat }) {
   )
 }
 
+function TileEntry({ tile, mask, roadMat, bridgeMat, pillarMat }) {
+  const filtered = useMemo(() => filterTile(tile, mask), [tile, mask])
+  if (filtered.roads.length === 0 && filtered.bridges.length === 0) return null
+  return <TileMeshes {...filtered} roadMat={roadMat} bridgeMat={bridgeMat} pillarMat={pillarMat} />
+}
+
 export default function Roads() {
   const { camera } = useThree()
   const style = useStyle()
   const { renderRadius } = useQuality()
+  const mask = useNycMask()
 
   const radiusRef = useRef(renderRadius)
   useEffect(() => { radiusRef.current = renderRadius }, [renderRadius])
+
+  const maskRef = useRef(mask)
+  useEffect(() => { maskRef.current = mask }, [mask])
 
   const [tiles, setTiles] = useState(new Map())
   const loadedRef = useRef(new Set())
@@ -153,10 +191,14 @@ export default function Roads() {
     if (++frameRef.current % CHECK_EVERY !== 0) return
     const manifest = manifestRef.current
     if (!manifest) return
+    const m = maskRef.current
     const { x, y, z } = camera.position
     const radius = Math.max(radiusRef.current, y * 1.5)
     const inRange = new Set()
     for (const t of manifest.tiles) {
+      // Skip tiles entirely outside the visible world — saves the network fetch
+      // for far-Long-Island and far-NJ tiles even before per-segment filtering.
+      if (m && !m.bboxIntersects(t.bounds)) continue
       const cx = (t.bounds.minX + t.bounds.maxX) / 2
       const cz = (t.bounds.minZ + t.bounds.maxZ) / 2
       if (Math.hypot(x - cx, z - cz) < radius) inRange.add(t.id)
@@ -189,12 +231,16 @@ export default function Roads() {
   })
 
   if (!style.roadMaterial) return null
+  // Hold off rendering until the mask loads. Otherwise we'd flash the full
+  // bbox (NJ + Nassau Co.) for one frame before the filter kicks in.
+  if (!mask) return null
   return (
     <>
       {[...tiles.entries()].map(([id, tile]) => (
-        <TileMeshes
+        <TileEntry
           key={id}
           tile={tile}
+          mask={mask}
           roadMat={style.roadMaterial}
           bridgeMat={style.bridgeMaterial ?? style.roadMaterial}
           pillarMat={style.bridgePillarMaterial ?? style.bridgeMaterial ?? style.roadMaterial}

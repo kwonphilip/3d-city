@@ -29,23 +29,24 @@ const M_PER_FLOOR = 3.5
 const MAX_RETRIES = 4
 const RETRY_DELAY_MS = 8000
 
-// Finer bands to keep each request small (~5k buildings)
+// All-NYC coverage. Each band ~0.015° (~1.7 km) tall in dense areas, larger in
+// sparser Staten Island / outer Queens. Monotonic, no overlaps.
 const BANDS = [
-  [40.700, 40.710], [40.710, 40.720],  // South Manhattan
-  [40.720, 40.730], [40.730, 40.740],  // Lower East Side / Greenwich Village
-  [40.740, 40.748], [40.748, 40.756],  // Chelsea / Midtown South
-  [40.756, 40.764], [40.764, 40.772],  // Midtown
-  [40.772, 40.780], [40.780, 40.790],  // Upper West/East Side south
-  [40.790, 40.800], [40.800, 40.812],  // Upper West/East Side north
-  [40.812, 40.825], [40.825, 40.842],  // Harlem / Washington Heights south
-  [40.842, 40.882],                    // Washington Heights / Inwood
+  [40.495, 40.530], [40.530, 40.560], [40.560, 40.585], [40.585, 40.610],
+  [40.610, 40.630], [40.630, 40.650], [40.650, 40.670], [40.670, 40.685],
+  [40.685, 40.700], [40.700, 40.715], [40.715, 40.730], [40.730, 40.745],
+  [40.745, 40.760], [40.760, 40.775], [40.775, 40.790], [40.790, 40.805],
+  [40.805, 40.820], [40.820, 40.835], [40.835, 40.850], [40.850, 40.865],
+  [40.865, 40.885], [40.885, 40.920],
 ]
-const WEST = -74.022
-const EAST = -73.907
+const WEST = -74.265  // Staten Island west tip
+const EAST = -73.700  // Queens east tip (Far Rockaway / JFK)
 
 const OVERPASS_INSTANCES = [
   'https://overpass.kumi.systems/api/interpreter',
   'https://overpass-api.de/api/interpreter',
+  'https://overpass.osm.ch/api/interpreter',
+  'https://overpass.openstreetmap.fr/api/interpreter',
 ]
 let instanceIdx = 0
 
@@ -118,18 +119,28 @@ async function fetchBand(south, north, bandIdx) {
     try {
       const res = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+          'User-Agent': '3d-city build-tiles.mjs (personal project)',
+        },
         body: 'data=' + encodeURIComponent(query),
-        signal: AbortSignal.timeout(100_000),
+        signal: AbortSignal.timeout(180_000),
       })
 
-      if (res.status === 504 || res.status === 429) {
+      if (res.status === 504 || res.status === 429 || res.status === 406) {
         console.log(`    HTTP ${res.status}, will retry…`)
         continue
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
       const json = await res.json()
+      // Overpass sometimes returns 200 OK with { remark: "...error..." } when overloaded.
+      // Treat as a retryable failure rather than a successful empty band.
+      if (json.remark && (!json.elements || json.elements.length === 0)) {
+        console.log(`    overpass remark: "${json.remark.slice(0, 120)}"`)
+        continue
+      }
       console.log(`    → ${json.elements.length} elements`)
       return json.elements
     } catch (err) {

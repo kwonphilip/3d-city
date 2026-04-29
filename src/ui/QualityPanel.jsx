@@ -9,7 +9,6 @@ const BOROUGH_OPTIONS = [
   { key: 'Queens', label: 'Queens' },
   { key: 'Bronx', label: 'Bronx' },
   { key: 'Staten Island', label: 'Staten Island' },
-  { key: 'NJ Hudson Waterfront', label: 'NJ Waterfront' },
 ]
 
 export default function QualityPanel() {

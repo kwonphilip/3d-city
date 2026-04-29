@@ -1,12 +1,19 @@
 import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
+import useNycMask from '../hooks/useNycMask'
+import { bufferRing, WORLD_PADDING } from '../lib/nycMask'
 
 const LAND_URL = '/data/manhattan/land.json'
 const PARKS_URL = '/data/manhattan/parks.json'
-const WATER_SIZE = 80000
 const LAND_Y = 3
 const PARK_Y = 3.5 // between land (3) and roads (4)
+
+function ringCentroid(ring) {
+  let cx = 0, cz = 0
+  for (const [x, z] of ring) { cx += x; cz += z }
+  return [cx / ring.length, cz / ring.length]
+}
 
 // Generic flat-polygon merge: takes [{outer, holes?}] entries and produces a
 // single rotated-onto-XZ ShapeGeometry. Used for both landmasses and parks.
@@ -68,6 +75,7 @@ function isLineMaterial(m) {
 
 export default function Terrain() {
   const style = useStyle()
+  const mask = useNycMask()
   const [landmasses, setLandmasses] = useState(null)
   const [parks, setParks] = useState(null)
 
@@ -92,6 +100,18 @@ export default function Terrain() {
   const landIsOutline = isLineMaterial(style.landMaterial)
   const parkIsOutline = isLineMaterial(style.parkMaterial)
 
+  // Drop parks whose centroid isn't on NYC land — kills NJ + Nassau Co. parks
+  // that the Overpass bbox sweep pulled in.
+  const visibleParks = useMemo(() => {
+    if (!parks) return null
+    if (!mask) return null // wait for mask to avoid flashing far-bbox parks
+    return parks.filter((p) => {
+      if (!p.outer || p.outer.length < 3) return false
+      const [cx, cz] = ringCentroid(p.outer)
+      return mask.contains(cx, cz)
+    })
+  }, [parks, mask])
+
   const landFillGeom = useMemo(
     () => (!landIsOutline && landmasses) ? buildFillGeometry(landmasses) : null,
     [landmasses, landIsOutline],
@@ -101,24 +121,38 @@ export default function Terrain() {
     [landmasses, landIsOutline],
   )
   const parkFillGeom = useMemo(
-    () => (style.parkMaterial && !parkIsOutline && parks) ? buildFillGeometry(parks) : null,
-    [parks, style.parkMaterial, parkIsOutline],
+    () => (style.parkMaterial && !parkIsOutline && visibleParks) ? buildFillGeometry(visibleParks) : null,
+    [visibleParks, style.parkMaterial, parkIsOutline],
   )
   const parkOutlineGeom = useMemo(
-    () => (style.parkMaterial && parkIsOutline && parks) ? buildOutlineGeometry(parks) : null,
-    [parks, style.parkMaterial, parkIsOutline],
+    () => (style.parkMaterial && parkIsOutline && visibleParks) ? buildOutlineGeometry(visibleParks) : null,
+    [visibleParks, style.parkMaterial, parkIsOutline],
   )
+
+  // Water shape: each landmass dilated outward by WORLD_PADDING and rendered as
+  // a flat polygon. The result follows NYC's outline instead of being a giant
+  // rectangle. Overlapping borough buffers (Manhattan ↔ Bronx, Brooklyn ↔ Queens
+  // via shared boundary) merge visually by overdraw.
+  const waterGeom = useMemo(() => {
+    if (!landmasses) return null
+    const buffered = landmasses
+      .map((lm) => bufferRing(lm.outer, WORLD_PADDING))
+      .filter((r) => r && r.length >= 3)
+      .map((outer) => ({ outer }))
+    return buildFillGeometry(buffered)
+  }, [landmasses])
 
   useEffect(() => () => landFillGeom?.dispose(), [landFillGeom])
   useEffect(() => () => landOutlineGeom?.dispose(), [landOutlineGeom])
   useEffect(() => () => parkFillGeom?.dispose(), [parkFillGeom])
   useEffect(() => () => parkOutlineGeom?.dispose(), [parkOutlineGeom])
+  useEffect(() => () => waterGeom?.dispose(), [waterGeom])
 
   return (
     <>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} material={style.waterMaterial}>
-        <planeGeometry args={[WATER_SIZE, WATER_SIZE]} />
-      </mesh>
+      {waterGeom && (
+        <mesh geometry={waterGeom} material={style.waterMaterial} position={[0, 0, 0]} />
+      )}
       {landFillGeom && (
         <mesh geometry={landFillGeom} material={style.landMaterial} position={[0, LAND_Y, 0]} />
       )}
