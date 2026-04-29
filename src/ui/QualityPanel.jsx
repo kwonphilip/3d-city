@@ -1,18 +1,21 @@
 import { useQualityStore } from '../context/QualityContext'
 import './QualityPanel.css'
 
+const RADIUS_MAX = 12000
+
 export default function QualityPanel() {
-  const { renderRadius, minBuildingHeight, setQuality } = useQualityStore()
+  const { renderRadius, minBuildingHeight, manhattanOnly, setQuality } = useQualityStore()
+  const atMax = renderRadius >= RADIUS_MAX
   return (
     <div className="quality-panel">
       <label className="q-row">
         <span>Render radius</span>
-        <span className="q-val">{renderRadius}m</span>
+        <span className="q-val">{atMax ? 'All Manhattan' : `${renderRadius}m`}</span>
         <input
           type="range"
           min={500}
-          max={5000}
-          step={250}
+          max={RADIUS_MAX}
+          step={500}
           value={renderRadius}
           onChange={e => setQuality({ renderRadius: Number(e.target.value) })}
         />
@@ -28,6 +31,14 @@ export default function QualityPanel() {
           value={minBuildingHeight}
           onChange={e => setQuality({ minBuildingHeight: Number(e.target.value) })}
         />
+      </label>
+      <label className="q-row q-check">
+        <input
+          type="checkbox"
+          checked={manhattanOnly}
+          onChange={e => setQuality({ manhattanOnly: e.target.checked })}
+        />
+        <span>Manhattan only (3D)</span>
       </label>
     </div>
   )

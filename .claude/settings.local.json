@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(node scripts/build-tiles.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"fetch\\('https://httpbin.org/get'\\).then\\(r => console.log\\('status:', r.status\\)\\).catch\\(e => console.log\\('error:', e.message\\)\\)\")",
+      "Bash(node -e \"const d = require\\(String.raw\\\\`D:\\\\Projects\\\\Personal Website\\\\3d-city\\\\data\\\\manhattan\\\\_checkpoint.json\\\\`\\); console.log\\('completed bands:', d.completedBands.join\\(', '\\)\\); console.log\\('seen ids count:', d.seenIds.length\\)\")",
+      "Bash(echo \"Pipeline started, PID: $!\")",
+      "Bash(node -e \"const d = require\\(String.raw\\\\`D:\\\\Projects\\\\Personal Website\\\\3d-city\\\\public\\\\data\\\\manhattan\\\\_checkpoint.json\\\\`\\); console.log\\('completed bands:', d.completedBands.join\\(', '\\)\\); console.log\\('seen ids count:', d.seenIds.length\\)\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('@react-three/fiber:', p.dependencies['@react-three/fiber']\\)\")",
+      "Bash(curl -s http://localhost:5173/)",
+      "Bash(node -e \"const d=require\\(String.raw\\\\`D:\\\\Projects\\\\Personal Website\\\\3d-city\\\\public\\\\data\\\\manhattan\\\\tile_-1_-1.json\\\\`\\); const b=d.buildings[0]; console.log\\('id:', b.id\\); console.log\\('height:', b.height\\); console.log\\('footprint[0]:', b.footprint[0]\\); console.log\\('center:', b.center\\); console.log\\('total buildings:', d.buildings.length\\)\")",
+      "Bash(npm list *)",
+      "Bash(node -e \"require\\('zustand'\\); console.log\\('zustand ok', require\\('zustand/package.json'\\).version\\)\")",
+      "Bash(netstat -ano)",
+      "Bash(awk '{print $5}')",
+      "Bash(xargs -I{} taskkill /PID {} /F)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const m=JSON.parse\\(d\\); console.log\\('tiles count:', m.tiles.length\\); console.log\\('first tile:', JSON.stringify\\(m.tiles[0]\\)\\)\")",
+      "Bash(node -e \"const m=require\\('./public/data/manhattan/manifest.json'\\); console.log\\('tiles:', m.tiles.length\\); const t=m.tiles[0]; console.log\\('first tile:', JSON.stringify\\(t\\)\\)\")",
+      "Bash(node -e \"const t=require\\('./public/data/manhattan/tile_-5_12.json'\\); console.log\\('buildings:', t.buildings.length\\); console.log\\('first building:', JSON.stringify\\(t.buildings[0]\\)\\)\")",
+      "Bash(curl -s \"http://localhost:5178/src/scene/Buildings.jsx\")",
+      "Bash(curl -s \"http://localhost:5178/src/workers/geometryWorker.js?worker\")",
+      "Bash(curl -sI \"http://localhost:5178/data/manhattan/manifest.json\")",
+      "Bash(curl -s \"http://localhost:5178/src/workers/geometryWorker.js?worker_file&type=module\")",
+      "PowerShell(Get-NetTCPConnection -State Listen -LocalPort 5173,5174,5175,5176,5177,5178 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue; \"Killed PID $\\($_.OwningProcess\\) on port $\\($_.LocalPort\\)\" })",
+      "Bash(node scripts/build-land.mjs)",
+      "Bash(node scripts/build-roads.mjs)",
+      "WebFetch(domain:data.cityofnewyork.us)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:api.us.socrata.com)",
+      "Bash(curl -sL \"https://data.cityofnewyork.us/api/geospatial/gthc-hcne?method=export&format=GeoJSON\" -o /tmp/nyc-boroughs.json -w \"HTTP: %{http_code}, size: %{size_download}\\\\n\")",
+      "Bash(node scripts/build-parks.mjs)"
+    ]
+  }
+}

@@ -23,47 +23,52 @@ node scripts/geocode-pins.mjs     # pin labels → lon/lat → data/pins.json
 - **Three.js** via **@react-three/fiber** (R3F) + **@react-three/drei** for helpers
 - No TypeScript; JS/JSX only
 
-## Planned Architecture
+## Architecture
 
-The Vite landing page (`src/App.jsx`) will be fully replaced. The app is a single-page interactive 3D NYC city model.
+Single-page interactive 3D NYC city model. The Vite landing page (`src/App.jsx`) is fully replaced.
 
-### Directory layout (in-progress)
+### Directory layout
 
 ```
 src/
   scene/
-    CityCanvas.jsx      # <Canvas>, MapControls, style provider context
-    Buildings.jsx       # tile loader + InstancedMesh per tile
-    Highlight.jsx       # selected-building material swap + camera tween
-    Pins.jsx            # fixed nav pin markers
+    CityCanvas.jsx      # <Canvas>, MapControls, scene composition
+    Buildings.jsx       # streams tiles by camera proximity, renders one Mesh per tile
+    Highlight.jsx       # extrudes the selected building with the style's highlightMaterial
+    Pins.jsx            # fixed nav pin markers (HTML labels via drei)
   styles/
-    index.js            # preset registry: { id, label, ...preset }
-    lowPolyFlat.js      # default (v1)
-    stylizedMono.js     # (v1)
-    wireframe.js        # (v1)
+    index.js            # preset registry + DEFAULT_STYLE_ID
+    lowPolyFlat.jsx     # default (v1)
+    stylizedMono.jsx    # (v1)
+    wireframe.jsx       # (v1)
     # future: night, cyberpunk, modernNoShadows, modernPbr, photoreal
-  data/
-    manhattan/
-      manifest.json     # tile grid metadata
-      tile_x_y.bin      # extruded building geometry per tile (generated)
-    pins.json           # fixed nav pin geocodes (generated)
   hooks/
-    useCameraFlight.js  # lerp MapControls target + position
-    useGeocode.js       # search query → lon/lat, client-side cached
-    useTileLoader.js    # mount/unmount tiles by camera position
+    useCameraFlight.js  # lerp MapControls target + camera.position on selection
+    useGeocode.js       # Nominatim search → lon/lat, ref-cached
+  context/
+    StyleContext.jsx        # zustand: current style preset
+    QualityContext.jsx      # zustand: render radius, min building height
+    SelectionContext.jsx    # zustand: { target: {label, x, z} | null }
   ui/
-    Nav.jsx             # fixed links + search box
-    QualityPanel.jsx    # sliders: render radius, height threshold, detail
+    Nav.jsx             # fixed pins + search box
+    QualityPanel.jsx    # sliders: render radius, height threshold
     StylePicker.jsx     # style toggle
   lib/
     projection.js       # lon/lat ↔ local meters (Manhattan-centered tangent plane)
-    tiling.js           # grid cell lookup helpers
   workers/
-    geometryWorker.js   # off-thread extrusion (add only if measured startup lag)
-  scripts/
-    build-tiles.mjs     # offline data pipeline
-    geocode-pins.mjs    # offline pin geocoding
+    geometryWorker.js   # off-thread ExtrudeGeometry merge per tile
+
+public/
+  data/
+    manhattan/
+      manifest.json     # tile grid metadata, served statically
+      tile_x_y.json     # buildings (footprint, height, center) per 500m cell
+
+data/
+  pins.json             # fixed nav pin geocodes; bundled via JS import (small, fixed)
 ```
+
+State lives in zustand stores rather than React Context because R3F's `<Canvas>` mounts a separate React root, and Context does not bridge that boundary.
 
 ### Style system
 
@@ -81,15 +86,23 @@ Each file under `src/styles/` exports a uniform preset shape:
 }
 ```
 
-`src/styles/index.js` exports a `STYLE_REGISTRY` array. Style switching swaps material refs on existing InstancedMeshes — **no geometry rebuild**. Adding a new style is one new file + one registry push.
+`src/styles/index.js` exports a `STYLE_REGISTRY` array. Style switching swaps material refs on existing meshes — **no geometry rebuild**. Adding a new style is one new file + one registry push.
+
+> Style preset files must use the `.jsx` extension because they contain JSX (`lights`/`ground` functions). Vite v8 (Rolldown) only transforms JSX in `.jsx` files.
 
 ### Building data
 
-- Source: NYC OpenData Building Footprints (GeoJSON with height fields)
-- Coverage v1: Manhattan only. Tiling is borough-agnostic; add other boroughs by running the pipeline on their data and dropping tiles into `data/<borough>/`.
-- Tile grid: 500m cells. Each tile = one InstancedMesh.
+- Source: OpenStreetMap building footprints via Overpass (height tags + level estimates)
+- Coverage v1: Manhattan only. Tiling is borough-agnostic; add other boroughs by running the pipeline and dropping tiles into `public/data/<borough>/`.
+- Tile grid: 500m cells. Each tile = one merged `BufferGeometry` (every building's `ExtrudeGeometry` concatenated). InstancedMesh isn't a fit because every NYC building has a unique footprint.
 - Projection: local tangent plane from a fixed Manhattan origin (see `lib/projection.js`). Mercator distortion is negligible at city scale.
-- Real NYC polygon data has validity issues (self-intersections, bad winding). `build-tiles.mjs` must sanitize before passing to `ExtrudeGeometry`.
+- `ExtrudeGeometry` is non-indexed — the worker generates sequential indices when merging.
+- Real polygon data has validity issues (self-intersections, bad winding). The worker silently skips degenerate polygons; the pipeline pre-sanitizes.
+
+### Worker pipeline
+
+- Imported via Vite `?worker` syntax (`import GeometryWorker from '...?worker'`). Plain `new Worker(new URL(...))` is unreliable in dev because the browser cannot resolve bare specifiers like `import * as THREE from 'three'` without Vite's transform.
+- Worker output: `{ tileId, positions, normals, indices, buildingMeta }` — all typed-array buffers transferred. `buildingMeta` is one entry per building with `{ id, footprint, height, center }`, used for highlight lookup.
 
 ### Camera
 
@@ -98,11 +111,12 @@ Each file under `src/styles/` exports a uniform preset shape:
 
 ### Geocoding
 
-- Fixed pins: geocoded offline by `scripts/geocode-pins.mjs`, stored in `data/pins.json`.
-- Search box: runtime via Nominatim or Mapbox (TBD). Results cached in a `useRef` map to avoid re-fetching. Nominatim requires a proxy or careful rate-limiting if embedded in a public site.
+- Fixed pins: geocoded offline by `scripts/geocode-pins.mjs`, stored in `data/pins.json`. Bundled into the JS via `import` (small, fixed, ~10 entries).
+- Search box: runtime via Nominatim, bounded to Manhattan viewbox. Results cached in a `useRef` map to avoid re-fetching. Nominatim requires a proxy or careful rate-limiting if embedded in a public site.
 
 ### Performance knobs
 
-- `QualityPanel` exposes: render radius (which tiles mount), height threshold (instance visibility mask), geometry simplification tolerance.
-- Default quality tier auto-detected from `navigator.hardwareConcurrency` + `devicePixelRatio`.
+- `QualityPanel` exposes: render radius (which tiles mount), min building height (per-building cull).
+- Default quality tier auto-detected from `navigator.hardwareConcurrency` + `devicePixelRatio` in `QualityContext.jsx`.
+- Render radius is also auto-scaled with camera height so the city stays visible when zoomed out (the slider sets the floor).
 - v1 styles use no post-processing. Bloom / shadows are deferred to future style presets.

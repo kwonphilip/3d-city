@@ -5,6 +5,9 @@ import useCameraFlight from '../hooks/useCameraFlight'
 import Buildings from './Buildings'
 import Pins from './Pins'
 import Highlight from './Highlight'
+import Terrain from './Terrain'
+import Roads from './Roads'
+import Starfield from './Starfield'
 
 function CameraRig() {
   useCameraFlight()
@@ -14,12 +17,13 @@ function CameraRig() {
 function Scene() {
   const style = useStyle()
   const Lights = style.lights
-  const Ground = style.ground
   return (
     <>
       <color attach="background" args={[style.background]} />
       {Lights && <Lights />}
-      {Ground && <Ground />}
+      {style.stars !== false && <Starfield />}
+      <Terrain />
+      <Roads />
       <Buildings />
       <Pins />
       <Highlight />
@@ -31,7 +35,7 @@ function Scene() {
 export default function CityCanvas({ children }) {
   return (
     <Canvas
-      camera={{ position: [0, 800, 900], fov: 45, near: 1, far: 25000 }}
+      camera={{ position: [0, 800, 900], fov: 45, near: 1, far: 60000 }}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       style={{ width: '100%', height: '100%' }}
     >

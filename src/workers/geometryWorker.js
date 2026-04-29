@@ -47,16 +47,25 @@ self.onmessage = ({ data }) => {
       const pos = geom.attributes.position.array
       const nrm = geom.attributes.normal.array
       const idx = geom.index ? geom.index.array : null
+      const vertCount = pos.length / 3
 
       for (let i = 0; i < pos.length; i++) positions.push(pos[i])
       for (let i = 0; i < nrm.length; i++) normals.push(nrm[i])
 
       if (idx) {
         for (let i = 0; i < idx.length; i++) indices.push(idx[i] + baseVertex)
-        baseVertex += pos.length / 3
+      } else {
+        // ExtrudeGeometry is non-indexed: positions already in triangle order.
+        for (let i = 0; i < vertCount; i++) indices.push(i + baseVertex)
       }
+      baseVertex += vertCount
 
-      buildingMeta.push({ id: building.id, center: building.center, height: building.height })
+      buildingMeta.push({
+        id: building.id,
+        center: building.center,
+        height: building.height,
+        footprint: building.footprint,
+      })
       geom.dispose()
     } catch {
       // skip degenerate polygons silently

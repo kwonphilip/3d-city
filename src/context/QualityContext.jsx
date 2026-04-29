@@ -10,6 +10,7 @@ function detectDefaults() {
 
 export const useQualityStore = create((set) => ({
   ...detectDefaults(),
+  manhattanOnly: true,
   setQuality: (patch) => set(patch),
 }))
 
