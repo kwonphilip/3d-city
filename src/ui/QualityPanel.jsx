@@ -1,5 +1,4 @@
 import { useQualityStore } from '../context/QualityContext'
-import { usePerfModeStore } from '../context/PerfModeContext'
 import './QualityPanel.css'
 
 const RADIUS_MAX = 12000
@@ -14,23 +13,9 @@ const BOROUGH_OPTIONS = [
 
 export default function QualityPanel() {
   const { renderRadius, minBuildingHeight, boroughs, setQuality, setBorough } = useQualityStore()
-  const { performanceMode, setPerformanceMode } = usePerfModeStore()
   const atMax = renderRadius >= RADIUS_MAX
-  const disabled = performanceMode
   return (
-    <div className={`quality-panel${disabled ? ' qp-perf' : ''}`}>
-      <button
-        type="button"
-        className={`qp-perf-toggle${performanceMode ? ' qp-perf-on' : ''}`}
-        onClick={() => setPerformanceMode(!performanceMode)}
-        data-tooltip="Show buildings only around where you double-click. Disables the controls below — best on slower machines."
-        data-tooltip-pos="left"
-      >
-        Performance mode {performanceMode ? 'ON' : 'OFF'}
-      </button>
-      {performanceMode && (
-        <div className="qp-perf-hint">Double-click the map to reveal buildings.</div>
-      )}
+    <div className="quality-panel">
       <label
         className="q-row"
         data-tooltip="How far from the camera buildings stream in. Lower values render less of the city — easier on slower machines."
@@ -44,7 +29,6 @@ export default function QualityPanel() {
           max={RADIUS_MAX}
           step={500}
           value={renderRadius}
-          disabled={disabled}
           onChange={e => setQuality({ renderRadius: Number(e.target.value) })}
         />
       </label>
@@ -61,7 +45,6 @@ export default function QualityPanel() {
           max={50}
           step={1}
           value={minBuildingHeight}
-          disabled={disabled}
           onChange={e => setQuality({ minBuildingHeight: Number(e.target.value) })}
         />
       </label>
@@ -76,7 +59,6 @@ export default function QualityPanel() {
             <input
               type="checkbox"
               checked={!!boroughs[key]}
-              disabled={disabled}
               onChange={e => setBorough(key, e.target.checked)}
             />
             <span>{label}</span>

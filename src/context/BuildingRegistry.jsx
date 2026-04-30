@@ -4,12 +4,6 @@ import { create } from 'zustand'
 // Each tile holds a Map<buildingId, {id, footprint, height, center}>.
 export const useBuildingRegistry = create((set, get) => ({
   tiles: new Map(),
-  // True once Buildings.jsx has fetched manifest.json. MapView's loading
-  // overlay uses this in perf mode (where no tiles auto-load) to know
-  // the canvas is interactive and the spinner can fade.
-  manifestReady: false,
-
-  setManifestReady: () => set({ manifestReady: true }),
 
   addTile: (tileId, buildings) => set((s) => {
     const next = new Map(s.tiles)

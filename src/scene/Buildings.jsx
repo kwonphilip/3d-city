@@ -3,7 +3,6 @@ import { useThree, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
-import { usePerfModeStore } from '../context/PerfModeContext'
 import { useBuildingRegistry } from '../context/BuildingRegistry'
 import { loadLand } from '../lib/landData'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
@@ -23,16 +22,8 @@ const MAX_IN_FLIGHT = NUM_WORKERS * 2
 // one full borough configuration (~30 Manhattan tiles) plus headroom for a
 // couple of recent toggles fits without thrash. Each entry is ~50–150 KB.
 const GEOM_CACHE_SIZE = 64
-// ─── Performance-mode reveal knobs ──────────────────────────────────────────
-// Radius in metres around the user's double-click that reveals buildings.
-// Tile grid is 500m, so values under ~250m typically touch only 1–4 tiles
-// regardless of exact radius. Edit and HMR will pick it up live.
-const POPUP_RADIUS_M = 50
-// Duration of the scale.y grow-out-of-the-ground animation when a tile mounts
-// in perf mode. Longer = more dramatic; 600ms feels like "pop up, settle."
-const REVEAL_DURATION_MS = 600
 
-function TileMesh({ posArr, nrmArr, idxArr, material, animateReveal }) {
+function TileMesh({ posArr, nrmArr, idxArr, material }) {
   const geom = useMemo(() => {
     const g = new THREE.BufferGeometry()
     g.setAttribute('position', new THREE.BufferAttribute(posArr, 3))
@@ -43,28 +34,7 @@ function TileMesh({ posArr, nrmArr, idxArr, material, animateReveal }) {
 
   useEffect(() => () => geom.dispose(), [geom])
 
-  const groupRef = useRef(null)
-  const startRef = useRef(null)
-  // Smoothstep ease-out from scale.y = 0 to 1. Buildings appear to grow out of
-  // the ground. Only fires when animateReveal is true (perf mode); otherwise
-  // the group stays at scale 1.
-  useFrame((state) => {
-    const g = groupRef.current
-    if (!g) return
-    if (!animateReveal) {
-      if (g.scale.y !== 1) g.scale.y = 1
-      return
-    }
-    if (startRef.current == null) startRef.current = state.clock.elapsedTime
-    const t = Math.min(1, (state.clock.elapsedTime - startRef.current) / (REVEAL_DURATION_MS / 1000))
-    g.scale.y = t * t * (3 - 2 * t)
-  })
-
-  return (
-    <group ref={groupRef} scale={[1, animateReveal ? 0.001 : 1, 1]}>
-      <mesh geometry={geom} material={material} />
-    </group>
-  )
+  return <mesh geometry={geom} material={material} />
 }
 
 function pointInRing(x, z, ring) {
@@ -130,21 +100,13 @@ export default function Buildings() {
   const { camera } = useThree()
   const { buildingMaterial } = useStyle()
   const { renderRadius, minBuildingHeight, boroughs } = useQuality()
-  const performanceMode = usePerfModeStore(s => s.performanceMode)
-  const popupCenter = usePerfModeStore(s => s.popupCenter)
   const addTile = useBuildingRegistry(s => s.addTile)
   const removeTile = useBuildingRegistry(s => s.removeTile)
-  const setManifestReady = useBuildingRegistry(s => s.setManifestReady)
 
   const qualityRef = useRef({ renderRadius, minBuildingHeight, boroughs })
   useEffect(() => {
     qualityRef.current = { renderRadius, minBuildingHeight, boroughs }
   }, [renderRadius, minBuildingHeight, boroughs])
-
-  const perfRef = useRef({ performanceMode, popupCenter })
-  useEffect(() => {
-    perfRef.current = { performanceMode, popupCenter }
-  }, [performanceMode, popupCenter])
 
   const [renderedTiles, setRenderedTiles] = useState(new Map())
   const loadedIdsRef = useRef(new Set())
@@ -204,12 +166,11 @@ export default function Buildings() {
   useEffect(() => {
     fetch(MANIFEST_URL).then(r => r.json()).then(m => {
       manifestRef.current = m
-      setManifestReady()
       // Force the next useFrame to run the in-range check instead of
       // waiting up to ~250ms for the periodic CHECK_EVERY tick.
       frameRef.current = CHECK_EVERY - 1
     })
-  }, [setManifestReady])
+  }, [])
 
   // Load all borough/region rings indexed by name. Shares one fetch with
   // Terrain and Minimap via the loadLand cache.
@@ -227,11 +188,10 @@ export default function Buildings() {
       .catch(() => { /* filter unavailable; treat as no filter */ })
   }, [])
 
-  // Toggle change → flush loaded tiles so they re-fetch under the new filter.
-  // Perf-mode toggle and popup-center change also flush, so the active set
-  // re-evaluates immediately under the new center / radius rules.
+  // Borough toggle change → flush loaded tiles so they re-fetch under the new
+  // filter. The geomCache key includes the borough set, so toggling back to a
+  // previously-seen configuration is a one-frame state update.
   const flushKey = boroughsKey(boroughs)
-  const popupKey = popupCenter ? `${popupCenter.x.toFixed(1)}_${popupCenter.z.toFixed(1)}` : ''
   useEffect(() => {
     for (const id of loadedIdsRef.current) removeTile(id)
     loadedIdsRef.current.clear()
@@ -241,7 +201,7 @@ export default function Buildings() {
     // Fire the in-range check on the very next frame instead of waiting up to
     // ~CHECK_EVERY frames (~750ms at 60fps) for the periodic tick.
     frameRef.current = CHECK_EVERY - 1
-  }, [flushKey, performanceMode, popupKey, removeTile])
+  }, [flushKey, removeTile])
 
   useFrame(() => {
     if (++frameRef.current % CHECK_EVERY !== 0) return
@@ -251,44 +211,19 @@ export default function Buildings() {
 
     const { x, y, z } = camera.position
     const { renderRadius: baseRadius, minBuildingHeight: minH, boroughs: brs } = qualityRef.current
-    const { performanceMode: pm, popupCenter: pc } = perfRef.current
     const inRange = new Set()
     const distById = new Map()
 
-    if (pm) {
-      // Perf mode: only tiles whose bbox intersects a small circle around the
-      // last double-click. AABB-circle test (not center-distance) so a click
-      // near a tile boundary still loads the neighbour.
-      if (pc) {
-        const r = POPUP_RADIUS_M
-        const r2 = r * r
-        for (const tile of manifest.tiles) {
-          const b = tile.bounds
-          const dx = Math.max(b.minX - pc.x, 0, pc.x - b.maxX)
-          const dz = Math.max(b.minZ - pc.z, 0, pc.z - b.maxZ)
-          const d2 = dx * dx + dz * dz
-          if (d2 < r2) {
-            inRange.add(tile.id)
-            // Sort by tile-center distance from popup so nearest dispatches first.
-            const tcx = (b.minX + b.maxX) / 2
-            const tcz = (b.minZ + b.maxZ) / 2
-            distById.set(tile.id, (pc.x - tcx) ** 2 + (pc.z - tcz) ** 2)
-          }
-        }
-      }
-      // popupCenter null → leave inRange empty so all tiles unload.
-    } else {
-      const radius = Math.max(baseRadius, y * 1.5)
-      const r2 = radius * radius
-      for (const tile of manifest.tiles) {
-        const b = tile.bounds
-        const cx = (b.minX + b.maxX) / 2
-        const cz = (b.minZ + b.maxZ) / 2
-        const d2 = (x - cx) * (x - cx) + (z - cz) * (z - cz)
-        if (d2 < r2) {
-          inRange.add(tile.id)
-          distById.set(tile.id, d2)
-        }
+    const radius = Math.max(baseRadius, y * 1.5)
+    const r2 = radius * radius
+    for (const tile of manifest.tiles) {
+      const b = tile.bounds
+      const cx = (b.minX + b.maxX) / 2
+      const cz = (b.minZ + b.maxZ) / 2
+      const d2 = (x - cx) * (x - cx) + (z - cz) * (z - cz)
+      if (d2 < r2) {
+        inRange.add(tile.id)
+        distById.set(tile.id, d2)
       }
     }
 
@@ -296,17 +231,15 @@ export default function Buildings() {
     // loaded yet, fall back to "render everything" so we don't show an empty
     // city. Buildings are tagged on first dispatch (idempotent), so per-tile
     // filter is an O(1) Set.has(name) per building instead of a per-ring scan.
-    // Perf mode bypasses the borough filter entirely — the click point is the
-    // only thing that decides what's visible.
     const ringsByBorough = ringsByBoroughRef.current
-    const filterEnabled = ringsByBorough != null && !pm
+    const filterEnabled = ringsByBorough != null
     const enabledSet = new Set()
     if (filterEnabled) {
       for (const [name, on] of Object.entries(brs)) if (on) enabledSet.add(name)
     }
     const anyEnabled = enabledSet.size > 0
 
-    const sortedEnabled = pm ? 'perf' : (filterEnabled ? [...enabledSet].sort().join(',') : '*')
+    const sortedEnabled = filterEnabled ? [...enabledSet].sort().join(',') : '*'
 
     const dispatch = (tileId, buildings) => {
       const ws = workersRef.current
@@ -406,7 +339,6 @@ export default function Buildings() {
           nrmArr={nrmArr}
           idxArr={idxArr}
           material={buildingMaterial}
-          animateReveal={performanceMode}
         />
       ))}
     </>

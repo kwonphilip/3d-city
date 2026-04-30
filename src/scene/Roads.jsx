@@ -8,6 +8,15 @@ import RoadsWorker from '../workers/roadsWorker.js?worker'
 
 const MANIFEST_URL = '/data/manhattan/roads_manifest.json'
 const CHECK_EVERY = 15
+// Cap concurrent fetch+build dispatches so when the camera moves, the queue
+// stays small and the next tick can re-prioritize by distance instead of
+// flushing every newly-in-range tile at once. 6 keeps the single road worker
+// fed without queuing very-far tiles ahead of nearby ones.
+const MAX_IN_FLIGHT = 6
+// LRU bound on built road geometry. Each entry is small (a few KB to a few
+// hundred KB), so a generous cap is cheap and means re-visiting a recent area
+// is a one-frame state update with no fetch and no worker dispatch.
+const GEOM_CACHE_SIZE = 128
 
 function makeBufferGeometry({ positions, normals, indices }) {
   const g = new THREE.BufferGeometry()
@@ -15,6 +24,23 @@ function makeBufferGeometry({ positions, normals, indices }) {
   g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3))
   g.setIndex(new THREE.BufferAttribute(new Uint32Array(indices), 1))
   return g
+}
+
+function lruGet(map, key) {
+  if (!map.has(key)) return null
+  const v = map.get(key)
+  map.delete(key)
+  map.set(key, v)
+  return v
+}
+
+function lruSet(map, key, value, limit) {
+  if (map.has(key)) map.delete(key)
+  map.set(key, value)
+  while (map.size > limit) {
+    const oldest = map.keys().next().value
+    map.delete(oldest)
+  }
 }
 
 function RoadTile({ entry, roadMat, bridgeMat, pillarMat }) {
@@ -53,6 +79,12 @@ export default function Roads() {
   const manifestRef = useRef(null)
   const workerRef = useRef(null)
   const frameRef = useRef(0)
+  // Persistent cache of fetched raw tile JSON: tileId -> tile. Avoids
+  // re-fetching when the camera leaves and re-enters an area.
+  const tileDataRef = useRef(new Map())
+  // LRU cache of built geometry keyed by tileId. On a hit we skip both fetch
+  // and worker entirely.
+  const geomCacheRef = useRef(new Map())
 
   useEffect(() => {
     const w = new RoadsWorker()
@@ -61,17 +93,26 @@ export default function Roads() {
       const { tileId, road, bridge, pillar } = data
       inFlightRef.current.delete(tileId)
       if (!road && !bridge && !pillar) return
+      lruSet(geomCacheRef.current, tileId, { road, bridge, pillar }, GEOM_CACHE_SIZE)
       loadedRef.current.add(tileId)
       setTileGeoms((prev) => new Map(prev).set(tileId, { road, bridge, pillar }))
     }
     workerRef.current = w
+    // Force the next useFrame to run the in-range check. Mirrors Buildings.jsx
+    // for the workers-finish-last race against the manifest fetch.
+    frameRef.current = CHECK_EVERY - 1
     return () => w.terminate()
   }, [])
 
   useEffect(() => {
     fetch(MANIFEST_URL)
       .then((r) => r.json())
-      .then((m) => { manifestRef.current = m })
+      .then((m) => {
+        manifestRef.current = m
+        // Force the next useFrame to run the in-range check instead of
+        // waiting up to ~250ms for the periodic CHECK_EVERY tick.
+        frameRef.current = CHECK_EVERY - 1
+      })
       .catch((err) => console.error('[Roads] manifest fetch:', err))
   }, [])
 
@@ -82,23 +123,57 @@ export default function Roads() {
     const m = maskRef.current
     const { x, y, z } = camera.position
     const radius = Math.max(radiusRef.current, y * 1.5)
+    const r2 = radius * radius
     const inRange = new Set()
+    const distById = new Map()
     for (const t of manifest.tiles) {
       // Skip tiles entirely outside the visible world — saves the network fetch
       // for far-Long-Island and far-NJ tiles even before per-segment filtering.
       if (m && !m.bboxIntersects(t.bounds)) continue
       const cx = (t.bounds.minX + t.bounds.maxX) / 2
       const cz = (t.bounds.minZ + t.bounds.maxZ) / 2
-      if (Math.hypot(x - cx, z - cz) < radius) inRange.add(t.id)
+      const d2 = (x - cx) * (x - cx) + (z - cz) * (z - cz)
+      if (d2 < r2) {
+        inRange.add(t.id)
+        distById.set(t.id, d2)
+      }
     }
 
+    // Build a sorted candidate list (nearest first) so when MAX_IN_FLIGHT clips
+    // the queue, the closest pending tiles are dispatched and far tiles wait
+    // for the next tick. Camera-move re-prioritization is implicit.
+    const candidates = []
     for (const t of manifest.tiles) {
       if (!inRange.has(t.id)) continue
       if (loadedRef.current.has(t.id) || inFlightRef.current.has(t.id)) continue
+      candidates.push(t)
+    }
+    candidates.sort((a, b) => distById.get(a.id) - distById.get(b.id))
+
+    for (const t of candidates) {
+      if (inFlightRef.current.size >= MAX_IN_FLIGHT) break
       inFlightRef.current.add(t.id)
+
+      // Geom cache hit → skip fetch + worker entirely.
+      const cachedGeom = lruGet(geomCacheRef.current, t.id)
+      if (cachedGeom) {
+        inFlightRef.current.delete(t.id)
+        loadedRef.current.add(t.id)
+        setTileGeoms((prev) => new Map(prev).set(t.id, cachedGeom))
+        continue
+      }
+
+      // Tile-data cache hit → skip fetch, dispatch to worker.
+      const cachedTile = tileDataRef.current.get(t.id)
+      if (cachedTile) {
+        workerRef.current.postMessage({ type: 'BUILD_ROAD_TILE', tileId: t.id, tile: cachedTile })
+        continue
+      }
+
       fetch(`/data/manhattan/${t.file}`)
         .then((r) => r.json())
         .then((data) => {
+          tileDataRef.current.set(t.id, data)
           if (!workerRef.current) {
             inFlightRef.current.delete(t.id)
             return

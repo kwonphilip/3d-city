@@ -64,14 +64,8 @@ export default function Landing() {
         <p className="landing-subtitle">Interactive 3D model of New York City building footprints.</p>
 
         <div className="landing-buttons">
-          <Link to="/map?mode=performance" className="landing-button landing-button-perf">
-            <div className="landing-button-title">Performance mode</div>
-            <div className="landing-button-desc">
-              Double-click anywhere to reveal buildings in a small radius. Designed for slower laptops and older GPUs.
-            </div>
-          </Link>
           <Link to="/map" className="landing-button landing-button-full">
-            <div className="landing-button-title">Full city</div>
+            <div className="landing-button-title">Enter the city</div>
             <div className="landing-button-desc">
               Explore Manhattan with all controls. Adjust render radius, height threshold, and toggle other boroughs.
             </div>
