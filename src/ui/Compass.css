@@ -1,0 +1,41 @@
+.compass {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.compass-dial {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /* will be rotated inline */
+}
+
+.compass-mark {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: system-ui, sans-serif;
+  user-select: none;
+}
+
+.compass-n { top: 4px;    left: 50%; transform: translateX(-50%); color: #ff7a7a; }
+.compass-s { bottom: 4px; left: 50%; transform: translateX(-50%); }
+.compass-e { right: 6px;  top: 50%;  transform: translateY(-50%); }
+.compass-w { left: 6px;   top: 50%;  transform: translateY(-50%); }
+
+.compass-needle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
