@@ -3,6 +3,7 @@ import Nav from './ui/Nav'
 import StylePicker from './ui/StylePicker'
 import QualityPanel from './ui/QualityPanel'
 import Compass from './ui/Compass'
+import Minimap from './ui/Minimap'
 
 export default function MapView() {
   return (
@@ -14,6 +15,7 @@ export default function MapView() {
         <StylePicker />
         <QualityPanel />
       </div>
+      <Minimap />
     </div>
   )
 }

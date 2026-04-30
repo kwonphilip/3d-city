@@ -8,5 +8,6 @@ export const useSelectionStore = create((set) => ({
     const { x, z } = lonLatToLocal(lon, lat)
     set({ target: { label, x, z } })
   },
+  flyToWorld: (x, z, label = '') => set({ target: { label, x, z } }),
   clear: () => set({ target: null }),
 }))

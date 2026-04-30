@@ -8,6 +8,7 @@ import Terrain from './Terrain'
 import Roads from './Roads'
 import Starfield from './Starfield'
 import CompassBridge from './CompassBridge'
+import MinimapBridge from './MinimapBridge'
 
 function CameraRig() {
   useCameraFlight()
@@ -28,6 +29,7 @@ function Scene() {
       <Highlight />
       <CameraRig />
       <CompassBridge />
+      <MinimapBridge />
     </>
   )
 }
