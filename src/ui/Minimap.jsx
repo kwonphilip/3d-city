@@ -6,12 +6,20 @@ import './Minimap.css'
 const LAND_URL = '/data/manhattan/land.json'
 const W = 180
 const H = 220
-const PAD = 1500 // metres of padding around land bbox
+const PAD = 800 // metres of padding around land bbox
+
+// Names whose polygons make up the rendered "world" we want to navigate. The
+// rest of the boroughs ship in land.json but aren't toggled on by default and
+// would balloon the bbox to ~47 km, shrinking Manhattan to a sliver.
+const SHOWN_NAMES = new Set(['Manhattan', 'Ellis Island'])
+
+function filterLandmasses(landmasses) {
+  return landmasses.filter((lm) => SHOWN_NAMES.has(lm.name) && lm.outer && lm.outer.length >= 3)
+}
 
 function computeBbox(landmasses) {
   let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity
   for (const lm of landmasses) {
-    if (!lm.outer) continue
     for (const [x, z] of lm.outer) {
       if (x < minX) minX = x
       if (x > maxX) maxX = x
@@ -40,13 +48,14 @@ function bakeLand(landmasses, proj) {
   off.width = W
   off.height = H
   const ctx = off.getContext('2d')
-  ctx.fillStyle = '#1a2332'
+  // Water — dark blue.
+  ctx.fillStyle = '#0d1830'
   ctx.fillRect(0, 0, W, H)
-  ctx.fillStyle = '#3a4a5e'
-  ctx.strokeStyle = '#5a7090'
-  ctx.lineWidth = 0.5
+  // Land — clearly brighter so Manhattan reads at a glance.
+  ctx.fillStyle = '#5d7ea8'
+  ctx.strokeStyle = '#9bb3d4'
+  ctx.lineWidth = 0.75
   for (const lm of landmasses) {
-    if (!lm.outer || lm.outer.length < 3) continue
     ctx.beginPath()
     for (let i = 0; i < lm.outer.length; i++) {
       const [px, pz] = proj.worldToPx(lm.outer[i][0], lm.outer[i][1])
@@ -74,13 +83,17 @@ export default function Minimap() {
   }, [])
 
   const projRef = useRef(null)
+  const bboxRef = useRef(null)
   const bakedRef = useRef(null)
   useEffect(() => {
     if (!land) return
-    const bbox = computeBbox(land)
+    const filtered = filterLandmasses(land)
+    if (filtered.length === 0) return
+    const bbox = computeBbox(filtered)
     const proj = makeProjection(bbox)
     projRef.current = proj
-    bakedRef.current = bakeLand(land, proj)
+    bboxRef.current = bbox
+    bakedRef.current = bakeLand(filtered, proj)
   }, [land])
 
   useEffect(() => {
@@ -134,12 +147,17 @@ export default function Minimap() {
 
   function handleClick(e) {
     const proj = projRef.current
-    if (!proj) return
+    const bbox = bboxRef.current
+    if (!proj || !bbox) return
     const rect = e.currentTarget.getBoundingClientRect()
     const px = e.clientX - rect.left
     const pz = e.clientY - rect.top
     const [wx, wz] = proj.pxToWorld(px, pz)
-    flyToWorld(wx, wz)
+    // Clamp to the rendered-world bbox so a click in the water margin still
+    // flies the camera to a sensible point on land instead of off-grid.
+    const cx = Math.min(bbox.maxX, Math.max(bbox.minX, wx))
+    const cz = Math.min(bbox.maxZ, Math.max(bbox.minZ, wz))
+    flyToWorld(cx, cz)
   }
 
   return (

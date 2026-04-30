@@ -37,7 +37,18 @@
       "Bash(npm i *)",
       "Bash(npm uninstall *)",
       "Bash(node scripts/audit-buildings.mjs)",
-      "Bash(npx eslint *)"
+      "Bash(npx eslint *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/map)",
+      "Bash(node -e \"const d = require\\('./public/data/manhattan/land.json'\\); console.log\\('keys:', Object.keys\\(d\\)\\); console.log\\('landmasses:', d.landmasses.length\\); console.log\\('first:', { name: d.landmasses[0].name, outerLen: d.landmasses[0].outer?.length, sample: d.landmasses[0].outer?.slice\\(0,2\\) }\\); const all = d.landmasses.flatMap\\(lm => lm.outer || []\\); let mnX=Infinity,mxX=-Infinity,mnZ=Infinity,mxZ=-Infinity; for \\(const [x,z] of all\\) { if \\(x<mnX\\) mnX=x; if \\(x>mxX\\) mxX=x; if \\(z<mnZ\\) mnZ=z; if \\(z>mxZ\\) mxZ=z; } console.log\\('world bbox:', { mnX, mxX, mnZ, mxZ }\\);\")",
+      "Bash(curl -s -o /dev/null -w \"/ → %{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(curl -s -o /dev/null -w \"/map → %{http_code}\\\\n\" http://localhost:5173/map)",
+      "Bash(curl -s -o /dev/null -w \"/map?mode=performance → %{http_code}\\\\n\" \"http://localhost:5173/map?mode=performance\")",
+      "Bash(node -e \"const d=require\\('d:/Projects/Personal Website/3d-city/public/data/manhattan/land.json'\\); console.log\\(Object.keys\\(d\\)\\); console.log\\('landmasses type:', typeof d.landmasses, Array.isArray\\(d.landmasses\\) ? 'len=' + d.landmasses.length : ''\\);\")",
+      "Bash(node -e \"const d=require\\('d:/Projects/Personal Website/3d-city/public/data/manhattan/land.json'\\); const lm=d.landmasses[0]; console.log\\('keys:', Object.keys\\(lm\\)\\); console.log\\('outer len:', lm.outer?.length\\); console.log\\('first 3 pts:', lm.outer?.slice\\(0,3\\)\\); let mn=[Infinity,Infinity], mx=[-Infinity,-Infinity]; for \\(const lm of d.landmasses\\) { if \\(!lm.outer\\) continue; for \\(const [x,z] of lm.outer\\) { if \\(x<mn[0]\\)mn[0]=x; if \\(z<mn[1]\\)mn[1]=z; if \\(x>mx[0]\\)mx[0]=x; if \\(z>mx[1]\\)mx[1]=z; }} console.log\\('global bbox:', mn, mx\\);\")",
+      "Bash(node -e \"const d=require\\('d:/Projects/Personal Website/3d-city/public/data/manhattan/land.json'\\); const names=new Set\\(\\); let manhattanLm=null; for\\(const lm of d.landmasses\\){ if\\(lm.name\\) names.add\\(lm.name\\); if\\(lm.name==='Manhattan'\\){manhattanLm=lm;}} console.log\\('names:', [...names]\\); if\\(manhattanLm\\){let mn=[Infinity,Infinity], mx=[-Infinity,-Infinity]; for \\(const [x,z] of manhattanLm.outer\\) { if \\(x<mn[0]\\)mn[0]=x; if \\(z<mn[1]\\)mn[1]=z; if \\(x>mx[0]\\)mx[0]=x; if \\(z>mx[1]\\)mx[1]=z; } console.log\\('Manhattan bbox:', mn, mx\\);}\")",
+      "Bash(node -e \"const d=require\\('d:/Projects/Personal Website/3d-city/public/data/manhattan/land.json'\\); const buckets={}; for\\(const lm of d.landmasses\\){ const n=lm.name||'?'; buckets[n]=\\(buckets[n]||0\\)+1; } console.log\\('counts by name:', buckets\\); let mn=[Infinity,Infinity], mx=[-Infinity,-Infinity]; for \\(const lm of d.landmasses\\) { if\\(lm.name!=='Manhattan'\\)continue; for \\(const [x,z] of lm.outer\\) { if \\(x<mn[0]\\)mn[0]=x; if \\(z<mn[1]\\)mn[1]=z; if \\(x>mx[0]\\)mx[0]=x; if \\(z>mx[1]\\)mx[1]=z; }} console.log\\('Manhattan combined bbox:', mn, mx\\);\")",
+      "Bash(node -e \"const m=require\\('d:/Projects/Personal Website/3d-city/public/data/manhattan/manifest.json'\\); console.log\\('keys:', Object.keys\\(m\\)\\); console.log\\('tile count:', m.tiles?.length\\); console.log\\('first tile:', JSON.stringify\\(m.tiles?.[0]\\)\\); let mn=[Infinity,Infinity], mx=[-Infinity,-Infinity]; for \\(const t of m.tiles\\) { const b=t.bounds; if\\(b.minX<mn[0]\\)mn[0]=b.minX; if\\(b.minZ<mn[1]\\)mn[1]=b.minZ; if\\(b.maxX>mx[0]\\)mx[0]=b.maxX; if\\(b.maxZ>mx[1]\\)mx[1]=b.maxZ;} console.log\\('manifest bbox:', mn, mx\\);\")"
     ]
   }
 }

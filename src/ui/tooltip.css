@@ -4,7 +4,10 @@
    pseudo-element anchors to it; if the host already needed `position: relative`
    that's a no-op. */
 
-[data-tooltip] {
+/* `:where()` keeps specificity at 0 so a host element with its own
+   `position: absolute` (e.g. `.minimap`, `.nav`) keeps that — we only fall
+   back to `relative` when the host hasn't picked one. */
+:where([data-tooltip]) {
   position: relative;
 }
 
