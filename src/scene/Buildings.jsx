@@ -190,6 +190,11 @@ export default function Buildings() {
       workers.push(w)
     }
     workersRef.current = workers
+    // Force the next useFrame to run the in-range check. If the manifest
+    // already resolved before workers were ready, its frameRef bump fired
+    // into a useFrame that bailed (workers.length === 0). Bumping again
+    // here covers the workers-finish-last case.
+    frameRef.current = CHECK_EVERY - 1
     return () => {
       for (const w of workers) w.terminate()
       workersRef.current = []
