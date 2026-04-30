@@ -91,14 +91,21 @@ export default function Terrain() {
     return () => { cancelled = true }
   }, [])
 
+  // Defer parks (~5 MB) until after land has loaded so it doesn't compete
+  // for bandwidth with the small critical files (manifest, land, tiles)
+  // during cold start. The parks layer renders on top of land anyway, so
+  // appearing a beat later isn't visually disruptive.
   useEffect(() => {
+    if (!landmasses) return
     let cancelled = false
-    fetch(PARKS_URL)
-      .then((r) => r.json())
-      .then((d) => { if (!cancelled) setParks(d.parks) })
-      .catch((err) => console.error('[Terrain] parks fetch failed:', err))
-    return () => { cancelled = true }
-  }, [])
+    const handle = setTimeout(() => {
+      fetch(PARKS_URL)
+        .then((r) => r.json())
+        .then((d) => { if (!cancelled) setParks(d.parks) })
+        .catch((err) => console.error('[Terrain] parks fetch failed:', err))
+    }, 0)
+    return () => { cancelled = true; clearTimeout(handle) }
+  }, [landmasses])
 
   const landIsOutline = isLineMaterial(style.landMaterial)
   const parkIsOutline = isLineMaterial(style.parkMaterial)
