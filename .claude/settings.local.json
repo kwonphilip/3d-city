@@ -35,7 +35,9 @@
       "Bash(curl -sL \"https://data.cityofnewyork.us/api/geospatial/gthc-hcne?method=export&format=GeoJSON\" -o /tmp/nyc-boroughs.json -w \"HTTP: %{http_code}, size: %{size_download}\\\\n\")",
       "Bash(node scripts/build-parks.mjs)",
       "Bash(npm i *)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(node scripts/audit-buildings.mjs)",
+      "Bash(npx eslint *)"
     ]
   }
 }
