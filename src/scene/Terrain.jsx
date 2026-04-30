@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import useNycMask from '../hooks/useNycMask'
+import { loadLand } from '../lib/landData'
 
-const LAND_URL = '/data/manhattan/land.json'
 const PARKS_URL = '/data/manhattan/parks.json'
 const LAND_Y = 3
 const PARK_Y = 3.5 // between land (3) and roads (4)
@@ -81,8 +81,7 @@ export default function Terrain() {
 
   useEffect(() => {
     let cancelled = false
-    fetch(LAND_URL)
-      .then((r) => r.json())
+    loadLand()
       .then((d) => {
         if (cancelled) return
         setLandmasses(d.landmasses)

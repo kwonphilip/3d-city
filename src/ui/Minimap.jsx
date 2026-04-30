@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelectionStore } from '../context/SelectionContext'
+import { loadLand } from '../lib/landData'
 import { minimapState } from './minimapState'
 import './Minimap.css'
 
-const LAND_URL = '/data/manhattan/land.json'
 const W = 180
 const H = 220
 const PAD = 800 // metres of padding around land bbox
@@ -76,7 +76,7 @@ export default function Minimap() {
 
   useEffect(() => {
     let cancelled = false
-    fetch(LAND_URL).then((r) => r.json()).then((d) => {
+    loadLand().then((d) => {
       if (!cancelled) setLand(d.landmasses)
     }).catch((err) => console.error('[Minimap] land fetch:', err))
     return () => { cancelled = true }

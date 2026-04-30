@@ -10,7 +10,8 @@
  * Module-level cache: a single fetch is shared across every consumer.
  */
 
-const LAND_URL = '/data/manhattan/land.json'
+import { loadLand } from './landData'
+
 export const WORLD_PADDING = 600 // metres of water around each landmass
 
 let cachedMask = null
@@ -79,8 +80,7 @@ export function buildMask(land) {
 export function loadMask() {
   if (cachedMask) return Promise.resolve(cachedMask)
   if (cachedPromise) return cachedPromise
-  cachedPromise = fetch(LAND_URL)
-    .then((r) => r.json())
+  cachedPromise = loadLand()
     .then((d) => { cachedMask = buildMask(d); return cachedMask })
     .catch((err) => { cachedPromise = null; throw err })
   return cachedPromise

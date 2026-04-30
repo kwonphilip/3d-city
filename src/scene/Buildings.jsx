@@ -5,10 +5,10 @@ import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import { usePerfModeStore } from '../context/PerfModeContext'
 import { useBuildingRegistry } from '../context/BuildingRegistry'
+import { loadLand } from '../lib/landData'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
 
 const MANIFEST_URL = '/data/manhattan/manifest.json'
-const LAND_URL = '/data/manhattan/land.json'
 const CHECK_EVERY = 15
 // Worker pool: parallel extrude across cores. Capped because each worker
 // keeps a copy of THREE in memory (the geometry worker bundle is ~135 kB) and
@@ -206,10 +206,10 @@ export default function Buildings() {
     })
   }, [setManifestReady])
 
-  // Load all borough/region rings indexed by name.
+  // Load all borough/region rings indexed by name. Shares one fetch with
+  // Terrain and Minimap via the loadLand cache.
   useEffect(() => {
-    fetch(LAND_URL)
-      .then(r => r.json())
+    loadLand()
       .then(d => {
         const map = new Map()
         for (const lm of d.landmasses || []) {
