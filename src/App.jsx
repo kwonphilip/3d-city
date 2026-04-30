@@ -1,18 +1,15 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import CityCanvas from './scene/CityCanvas'
-import Nav from './ui/Nav'
-import StylePicker from './ui/StylePicker'
-import QualityPanel from './ui/QualityPanel'
+import MapView from './MapView'
+import Landing from './pages/Landing'
 
 export default function App() {
   return (
-    <div className="app">
-      <CityCanvas />
-      <Nav />
-      <div className="ui-overlay">
-        <StylePicker />
-        <QualityPanel />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/map" element={<MapView />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
