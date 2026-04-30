@@ -143,7 +143,11 @@ export default function Minimap() {
   }
 
   return (
-    <div className="minimap">
+    <div
+      className="minimap"
+      data-tooltip="Click anywhere to fly the camera there. The yellow circle shows roughly what's visible right now."
+      data-tooltip-pos="left"
+    >
       <canvas
         ref={canvasRef}
         width={W}

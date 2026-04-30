@@ -4,6 +4,7 @@ import StylePicker from './ui/StylePicker'
 import QualityPanel from './ui/QualityPanel'
 import Compass from './ui/Compass'
 import Minimap from './ui/Minimap'
+import './ui/tooltip.css'
 
 export default function MapView() {
   return (

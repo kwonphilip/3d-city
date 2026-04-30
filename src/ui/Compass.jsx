@@ -21,7 +21,12 @@ export default function Compass() {
   }, [])
 
   return (
-    <div className="compass" aria-label="Compass">
+    <div
+      className="compass"
+      aria-label="Compass"
+      data-tooltip="The red arrow always points north."
+      data-tooltip-pos="left"
+    >
       <div ref={dialRef} className="compass-dial">
         <span className="compass-mark compass-n">N</span>
         <span className="compass-mark compass-e">E</span>

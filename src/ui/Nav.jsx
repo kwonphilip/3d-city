@@ -26,7 +26,12 @@ export default function Nav() {
 
   return (
     <nav className="nav">
-      <form className="nav-search" onSubmit={handleSearch}>
+      <form
+        className="nav-search"
+        onSubmit={handleSearch}
+        data-tooltip="Search any NYC address. The camera flies to the result."
+        data-tooltip-pos="bottom"
+      >
         <input
           value={query}
           onChange={e => { setQuery(e.target.value); setStatus(null) }}
