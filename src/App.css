@@ -18,3 +18,36 @@
 .ui-overlay > * {
   pointer-events: auto;
 }
+
+.app-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #0b1024 0%, #131a3a 60%, #1f2a55 100%);
+  color: rgba(255, 255, 255, 0.85);
+  font: 500 14px/1.4 system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  z-index: 20;
+  transition: opacity 0.35s ease;
+}
+
+.app-loading.app-loading-hidden {
+  opacity: 0;
+}
+
+.app-loading-spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-top-color: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  margin-right: 12px;
+  animation: app-loading-spin 0.9s linear infinite;
+}
+
+@keyframes app-loading-spin {
+  to { transform: rotate(360deg); }
+}

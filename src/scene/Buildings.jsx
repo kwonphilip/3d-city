@@ -196,7 +196,12 @@ export default function Buildings() {
   }, [addTile])
 
   useEffect(() => {
-    fetch(MANIFEST_URL).then(r => r.json()).then(m => { manifestRef.current = m })
+    fetch(MANIFEST_URL).then(r => r.json()).then(m => {
+      manifestRef.current = m
+      // Force the next useFrame to run the in-range check instead of
+      // waiting up to ~250ms for the periodic CHECK_EVERY tick.
+      frameRef.current = CHECK_EVERY - 1
+    })
   }, [])
 
   // Load all borough/region rings indexed by name.
