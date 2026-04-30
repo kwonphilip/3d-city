@@ -9,6 +9,7 @@ import Roads from './Roads'
 import Starfield from './Starfield'
 import CompassBridge from './CompassBridge'
 import MinimapBridge from './MinimapBridge'
+import PerfModeReveal from './PerfModeReveal'
 
 function CameraRig() {
   useCameraFlight()
@@ -30,6 +31,7 @@ function Scene() {
       <CameraRig />
       <CompassBridge />
       <MinimapBridge />
+      <PerfModeReveal />
     </>
   )
 }
