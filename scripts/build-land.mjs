@@ -260,52 +260,20 @@ function offsetRings(rings, distance) {
   return solution
 }
 
-// Convert Clipper Paths into [{outer, holes}] using the standard non-zero
-// winding interpretation (positive area = outer, negative = hole). Outer rings
-// are matched to their containing holes by point-in-polygon.
+// Convert Clipper Paths to [{outer, holes: []}]. Inner rings (holes) from
+// concave merge topology are intentionally dropped — visually they'd appear as
+// gaps in the water tile, which is what we're trying to eliminate. The outer
+// rings alone give a clean continuous shape.
 function clipperPathsToPolygons(paths) {
-  const outers = []
-  const holes = []
+  const polys = []
   for (const path of paths) {
     if (path.length < 3) continue
-    const ring = clipperToRing(path)
-    const simplified = simplify(ring, WATER_SIMPLIFY_TOL)
+    if (!ClipperLib.Clipper.Orientation(path)) continue // skip holes
+    const simplified = simplify(clipperToRing(path), WATER_SIMPLIFY_TOL)
     if (simplified.length < 3) continue
-    if (ClipperLib.Clipper.Orientation(path)) outers.push(simplified)
-    else holes.push(simplified)
-  }
-  // For each hole, find the outer ring that contains it.
-  const polys = outers.map((outer) => ({ outer: round1(outer), holes: [] }))
-  for (const hole of holes) {
-    const [hx, hy] = hole[0]
-    let bestIdx = -1
-    let bestArea = Infinity
-    for (let i = 0; i < polys.length; i++) {
-      if (!pointInRing(hx, hy, polys[i].outer)) continue
-      const area = Math.abs(signedArea(polys[i].outer))
-      if (area < bestArea) { bestArea = area; bestIdx = i }
-    }
-    if (bestIdx >= 0) polys[bestIdx].holes.push(round1(hole))
+    polys.push({ outer: round1(simplified), holes: [] })
   }
   return polys
-}
-
-function signedArea(ring) {
-  let a = 0
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    a += ring[j][0] * ring[i][1] - ring[i][0] * ring[j][1]
-  }
-  return a / 2
-}
-
-function pointInRing(x, y, ring) {
-  let inside = false
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const xi = ring[i][0], yi = ring[i][1]
-    const xj = ring[j][0], yj = ring[j][1]
-    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside
-  }
-  return inside
 }
 
 function computeWaterShape(landmasses) {

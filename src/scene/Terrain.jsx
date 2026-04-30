@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import useNycMask from '../hooks/useNycMask'
-import { bufferRing, WORLD_PADDING } from '../lib/nycMask'
 
 const LAND_URL = '/data/manhattan/land.json'
 const PARKS_URL = '/data/manhattan/parks.json'
@@ -77,13 +76,18 @@ export default function Terrain() {
   const style = useStyle()
   const mask = useNycMask()
   const [landmasses, setLandmasses] = useState(null)
+  const [waterShape, setWaterShape] = useState(null)
   const [parks, setParks] = useState(null)
 
   useEffect(() => {
     let cancelled = false
     fetch(LAND_URL)
       .then((r) => r.json())
-      .then((d) => { if (!cancelled) setLandmasses(d.landmasses) })
+      .then((d) => {
+        if (cancelled) return
+        setLandmasses(d.landmasses)
+        if (d.waterShape) setWaterShape(d.waterShape)
+      })
       .catch((err) => console.error('[Terrain] land fetch failed:', err))
     return () => { cancelled = true }
   }, [])
@@ -129,18 +133,13 @@ export default function Terrain() {
     [visibleParks, style.parkMaterial, parkIsOutline],
   )
 
-  // Water shape: each landmass dilated outward by WORLD_PADDING and rendered as
-  // a flat polygon. The result follows NYC's outline instead of being a giant
-  // rectangle. Overlapping borough buffers (Manhattan ↔ Bronx, Brooklyn ↔ Queens
-  // via shared boundary) merge visually by overdraw.
-  const waterGeom = useMemo(() => {
-    if (!landmasses) return null
-    const buffered = landmasses
-      .map((lm) => bufferRing(lm.outer, WORLD_PADDING))
-      .filter((r) => r && r.length >= 3)
-      .map((outer) => ({ outer }))
-    return buildFillGeometry(buffered)
-  }, [landmasses])
+  // Water shape is pre-computed offline by scripts/build-land.mjs (real polygon
+  // offset via Clipper, then merged into one or more closed polygons). Runtime
+  // just builds geometry from the rings.
+  const waterGeom = useMemo(
+    () => waterShape ? buildFillGeometry(waterShape) : null,
+    [waterShape],
+  )
 
   useEffect(() => () => landFillGeom?.dispose(), [landFillGeom])
   useEffect(() => () => landOutlineGeom?.dispose(), [landOutlineGeom])

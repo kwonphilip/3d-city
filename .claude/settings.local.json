@@ -33,7 +33,9 @@
       "WebFetch(domain:www.google.com)",
       "WebFetch(domain:api.us.socrata.com)",
       "Bash(curl -sL \"https://data.cityofnewyork.us/api/geospatial/gthc-hcne?method=export&format=GeoJSON\" -o /tmp/nyc-boroughs.json -w \"HTTP: %{http_code}, size: %{size_download}\\\\n\")",
-      "Bash(node scripts/build-parks.mjs)"
+      "Bash(node scripts/build-parks.mjs)",
+      "Bash(npm i *)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

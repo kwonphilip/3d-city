@@ -87,47 +87,6 @@ export function loadMask() {
 }
 
 /**
- * Polygon offset / dilation by `distance` metres. Returns a new ring expanded
- * outward (+distance) or inward (-distance). Per-vertex miter join with a clamp
- * to avoid spikes at sharp corners. Outward direction is chosen per edge by the
- * "away from centroid" heuristic — robust enough for borough-scale shapes.
- */
-export function bufferRing(ring, distance) {
-  if (!ring || ring.length < 3) return null
-  const n = ring.length
-
-  let cx = 0, cz = 0
-  for (const [x, z] of ring) { cx += x; cz += z }
-  cx /= n; cz /= n
-
-  const edgeNormals = new Array(n)
-  for (let i = 0; i < n; i++) {
-    const a = ring[i], b = ring[(i + 1) % n]
-    const dx = b[0] - a[0], dz = b[1] - a[1]
-    const len = Math.hypot(dx, dz) || 1
-    let nx = -dz / len, nz = dx / len
-    const midX = (a[0] + b[0]) / 2, midZ = (a[1] + b[1]) / 2
-    if ((midX - cx) * nx + (midZ - cz) * nz < 0) { nx = -nx; nz = -nz }
-    edgeNormals[i] = [nx, nz]
-  }
-
-  const MITER_CLAMP = 3
-  const out = new Array(n)
-  for (let i = 0; i < n; i++) {
-    const np = edgeNormals[(i - 1 + n) % n]
-    const nn = edgeNormals[i]
-    const dot = np[0] * nn[0] + np[1] * nn[1]
-    const denom = Math.max(0.1, 1 + dot)
-    let mx = (np[0] + nn[0]) / denom
-    let mz = (np[1] + nn[1]) / denom
-    const mLen = Math.hypot(mx, mz)
-    if (mLen > MITER_CLAMP) { mx *= MITER_CLAMP / mLen; mz *= MITER_CLAMP / mLen }
-    out[i] = [ring[i][0] + distance * mx, ring[i][1] + distance * mz]
-  }
-  return out
-}
-
-/**
  * Liang-Barsky polyline clipping against an axis-aligned bbox.
  * Returns an array of sub-paths (each a list of [x, z] verts) entirely inside
  * the bbox. Crossings produce new boundary verts so sub-paths terminate cleanly

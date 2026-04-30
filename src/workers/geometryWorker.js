@@ -31,7 +31,7 @@ function buildBuilding(building) {
 self.onmessage = ({ data }) => {
   if (data.type !== 'BUILD_TILE') return
 
-  const { tileId, buildings, minHeight = 0 } = data
+  const { tileId, cacheKey, buildings, minHeight = 0 } = data
   const positions = []
   const normals = []
   const indices = []
@@ -73,7 +73,7 @@ self.onmessage = ({ data }) => {
   }
 
   if (buildingMeta.length === 0) {
-    self.postMessage({ type: 'TILE_READY', tileId, empty: true, buildingMeta: [] })
+    self.postMessage({ type: 'TILE_READY', tileId, cacheKey, empty: true, buildingMeta: [] })
     return
   }
 
@@ -82,7 +82,7 @@ self.onmessage = ({ data }) => {
   const idxArr = new Uint32Array(indices)
 
   self.postMessage(
-    { type: 'TILE_READY', tileId, positions: posArr.buffer, normals: nrmArr.buffer, indices: idxArr.buffer, buildingMeta },
+    { type: 'TILE_READY', tileId, cacheKey, positions: posArr.buffer, normals: nrmArr.buffer, indices: idxArr.buffer, buildingMeta },
     [posArr.buffer, nrmArr.buffer, idxArr.buffer],
   )
 }
