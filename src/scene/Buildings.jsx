@@ -134,6 +134,7 @@ export default function Buildings() {
   const popupCenter = usePerfModeStore(s => s.popupCenter)
   const addTile = useBuildingRegistry(s => s.addTile)
   const removeTile = useBuildingRegistry(s => s.removeTile)
+  const setManifestReady = useBuildingRegistry(s => s.setManifestReady)
 
   const qualityRef = useRef({ renderRadius, minBuildingHeight, boroughs })
   useEffect(() => {
@@ -198,11 +199,12 @@ export default function Buildings() {
   useEffect(() => {
     fetch(MANIFEST_URL).then(r => r.json()).then(m => {
       manifestRef.current = m
+      setManifestReady()
       // Force the next useFrame to run the in-range check instead of
       // waiting up to ~250ms for the periodic CHECK_EVERY tick.
       frameRef.current = CHECK_EVERY - 1
     })
-  }, [])
+  }, [setManifestReady])
 
   // Load all borough/region rings indexed by name.
   useEffect(() => {
