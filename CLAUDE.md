@@ -14,7 +14,6 @@ npm run preview   # preview production build locally
 Data pipeline scripts (run once, output committed or served statically):
 ```bash
 node scripts/build-tiles.mjs      # NYC OpenData GeoJSON → tiled .bin + manifest.json
-node scripts/geocode-pins.mjs     # pin labels → lon/lat → data/pins.json
 ```
 
 ## Stack
@@ -35,7 +34,6 @@ src/
     CityCanvas.jsx      # <Canvas>, MapControls, scene composition
     Buildings.jsx       # streams tiles by camera proximity, renders one Mesh per tile
     Highlight.jsx       # extrudes the selected building with the style's highlightMaterial
-    Pins.jsx            # fixed nav pin markers (HTML labels via drei)
   styles/
     index.js            # preset registry + DEFAULT_STYLE_ID
     lowPolyFlat.jsx     # default (v1)
@@ -50,7 +48,7 @@ src/
     QualityContext.jsx      # zustand: render radius, min building height
     SelectionContext.jsx    # zustand: { target: {label, x, z} | null }
   ui/
-    Nav.jsx             # fixed pins + search box
+    Nav.jsx             # address search box
     QualityPanel.jsx    # sliders: render radius, height threshold
     StylePicker.jsx     # style toggle
   lib/
@@ -63,9 +61,6 @@ public/
     manhattan/
       manifest.json     # tile grid metadata, served statically
       tile_x_y.json     # buildings (footprint, height, center) per 500m cell
-
-data/
-  pins.json             # fixed nav pin geocodes; bundled via JS import (small, fixed)
 ```
 
 State lives in zustand stores rather than React Context because R3F's `<Canvas>` mounts a separate React root, and Context does not bridge that boundary.
@@ -111,7 +106,6 @@ Each file under `src/styles/` exports a uniform preset shape:
 
 ### Geocoding
 
-- Fixed pins: geocoded offline by `scripts/geocode-pins.mjs`, stored in `data/pins.json`. Bundled into the JS via `import` (small, fixed, ~10 entries).
 - Search box: runtime via Nominatim, bounded to Manhattan viewbox. Results cached in a `useRef` map to avoid re-fetching. Nominatim requires a proxy or careful rate-limiting if embedded in a public site.
 
 ### Performance knobs

@@ -3,7 +3,6 @@ import { MapControls } from '@react-three/drei'
 import { useStyle } from '../context/StyleContext'
 import useCameraFlight from '../hooks/useCameraFlight'
 import Buildings from './Buildings'
-import Pins from './Pins'
 import Highlight from './Highlight'
 import Terrain from './Terrain'
 import Roads from './Roads'
@@ -25,7 +24,6 @@ function Scene() {
       <Terrain />
       <Roads />
       <Buildings />
-      <Pins />
       <Highlight />
       <CameraRig />
     </>

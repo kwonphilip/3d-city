@@ -8,33 +8,6 @@
   max-width: 280px;
 }
 
-.nav-pins {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 8px 10px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-  border-radius: 8px;
-}
-
-.nav-pin {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 12px;
-  text-align: left;
-  padding: 4px 6px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.12s, color 0.12s;
-}
-
-.nav-pin:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
 .nav-search {
   display: flex;
   gap: 6px;

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useSelectionStore } from '../context/SelectionContext'
 import useGeocode from '../hooks/useGeocode'
-import pinsData from '../../data/pins.json'
 import './Nav.css'
 
 export default function Nav() {
@@ -27,17 +26,6 @@ export default function Nav() {
 
   return (
     <nav className="nav">
-      <div className="nav-pins">
-        {pinsData.map(pin => (
-          <button
-            key={pin.id}
-            className="nav-pin"
-            onClick={() => fly(pin.label, pin.lon, pin.lat)}
-          >
-            {pin.label}
-          </button>
-        ))}
-      </div>
       <form className="nav-search" onSubmit={handleSearch}>
         <input
           value={query}
