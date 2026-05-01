@@ -13,11 +13,12 @@ const CHECK_EVERY = 15
 // keeps a copy of THREE in memory (the geometry worker bundle is ~135 kB) and
 // because contention for the GPU upload at the end is serialized anyway.
 const NUM_WORKERS = Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) - 1))
-// Cap concurrent dispatches so when the camera moves, the worker queue stays
-// small and the next check tick can re-prioritize by distance instead of
-// waiting on stale far-tile builds. 2× workers leaves enough in-flight to keep
-// every worker busy without queuing too far ahead.
-const MAX_IN_FLIGHT = NUM_WORKERS * 2
+// Cap concurrent dispatches so the camera-move re-prioritization at each tick
+// has slots to fill with newly-near tiles. 4× workers keeps every worker fed
+// across the ~250ms tick gap (each tile builds in ~20–50ms) while bounding
+// the wasted work when the camera moves and in-flight far tiles arrive after
+// they've already left range.
+const MAX_IN_FLIGHT = NUM_WORKERS * 4
 // LRU bound on the (tileId|minHeight|boroughs)-keyed geometry cache. Sized so
 // one full borough configuration (~30 Manhattan tiles) plus headroom for a
 // couple of recent toggles fits without thrash. Each entry is ~50–150 KB.
