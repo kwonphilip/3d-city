@@ -5,9 +5,9 @@ import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import { useBuildingRegistry } from '../context/BuildingRegistry'
 import { loadLand } from '../lib/landData'
+import { loadBuildingsManifest } from '../lib/manifests'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
 
-const MANIFEST_URL = '/data/manhattan/manifest.json'
 const CHECK_EVERY = 15
 // Worker pool: parallel extrude across cores. Capped because each worker
 // keeps a copy of THREE in memory (the geometry worker bundle is ~135 kB) and
@@ -165,7 +165,7 @@ export default function Buildings() {
   }, [addTile])
 
   useEffect(() => {
-    fetch(MANIFEST_URL).then(r => r.json()).then(m => {
+    loadBuildingsManifest().then((m) => {
       manifestRef.current = m
       // Force the next useFrame to run the in-range check instead of
       // waiting up to ~250ms for the periodic CHECK_EVERY tick.

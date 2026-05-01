@@ -4,9 +4,9 @@ import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import useNycMask from '../hooks/useNycMask'
+import { loadRoadsManifest } from '../lib/manifests'
 import RoadsWorker from '../workers/roadsWorker.js?worker'
 
-const MANIFEST_URL = '/data/manhattan/roads_manifest.json'
 const CHECK_EVERY = 15
 // Cap concurrent fetch+build dispatches so when the camera moves, the queue
 // stays small and the next tick can re-prioritize by distance instead of
@@ -105,8 +105,7 @@ export default function Roads() {
   }, [])
 
   useEffect(() => {
-    fetch(MANIFEST_URL)
-      .then((r) => r.json())
+    loadRoadsManifest()
       .then((m) => {
         manifestRef.current = m
         // Force the next useFrame to run the in-range check instead of
