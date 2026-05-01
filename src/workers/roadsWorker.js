@@ -2,20 +2,22 @@
  * Web Worker: filters and builds road / bridge / pillar geometry for one road
  * tile, off the main thread.
  *
- * Input:  { type: 'BUILD_ROAD_TILE', tileId, tile: { roads, bridges } }
+ * Input:
+ *   { type: 'INIT_MASK', land }            — main-thread-cached land payload;
+ *                                            sent once on worker init.
+ *   { type: 'BUILD_ROAD_TILE', tileId, tile: { roads, bridges } }
  * Output: { type: 'ROAD_TILE_READY', tileId, road | null, bridge | null, pillar | null }
  *         where each non-null field is { positions, normals, indices } as
  *         Transferable ArrayBuffers (consumer wraps them as Float32/Uint32).
  *
- * The worker self-loads /data/manhattan/land.json on first dispatch so it can
- * filter cross-state segments via the same NYC mask the main thread uses. The
- * fetch is parallel to the main-thread mask load and dispatches queue behind
- * `getMask()`.
+ * The mask is built from `INIT_MASK` rather than fetched here directly so the
+ * worker reuses the main thread's already-cached land.json instead of issuing
+ * a duplicate network request. Build dispatches queue behind `getMask()` for
+ * the (rare) case where one arrives before INIT_MASK is processed.
  */
 
 import { buildMask, clipPathToBbox } from '../lib/nycMask'
 
-const LAND_URL = '/data/manhattan/land.json'
 const ROAD_Y = 4
 const BRIDGE_Y = 18
 const PILLAR_RADIUS = 2
@@ -31,15 +33,11 @@ const WIDTH = {
 }
 
 let cachedMask = null
-let cachedMaskPromise = null
+let resolveMask = null
+const maskPromise = new Promise((resolve) => { resolveMask = resolve })
 
 function getMask() {
-  if (cachedMask) return Promise.resolve(cachedMask)
-  if (cachedMaskPromise) return cachedMaskPromise
-  cachedMaskPromise = fetch(LAND_URL)
-    .then((r) => r.json())
-    .then((d) => { cachedMask = buildMask(d); return cachedMask })
-  return cachedMaskPromise
+  return cachedMask ? Promise.resolve(cachedMask) : maskPromise
 }
 
 function filterTile(tile, mask) {
@@ -179,6 +177,11 @@ function finalize(positionsArr, indicesArr) {
 }
 
 self.onmessage = ({ data }) => {
+  if (data.type === 'INIT_MASK') {
+    cachedMask = buildMask(data.land)
+    resolveMask(cachedMask)
+    return
+  }
   if (data.type !== 'BUILD_ROAD_TILE') return
   const { tileId, tile } = data
   getMask().then((mask) => {

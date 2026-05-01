@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import useNycMask from '../hooks/useNycMask'
+import { loadLand } from '../lib/landData'
 import { loadRoadsManifest } from '../lib/manifests'
 import RoadsWorker from '../workers/roadsWorker.js?worker'
 
@@ -98,6 +99,13 @@ export default function Roads() {
       setTileGeoms((prev) => new Map(prev).set(tileId, { road, bridge, pillar }))
     }
     workerRef.current = w
+    // Hand the worker the mask data the main thread is already loading,
+    // instead of letting it issue a duplicate fetch for land.json. Workers
+    // process messages in FIFO order, so any BUILD_ROAD_TILE posted afterwards
+    // queues behind getMask() inside the worker until INIT_MASK lands.
+    loadLand()
+      .then((land) => w.postMessage({ type: 'INIT_MASK', land }))
+      .catch((err) => console.error('[Roads] mask init:', err))
     // Force the next useFrame to run the in-range check. Mirrors Buildings.jsx
     // for the workers-finish-last race against the manifest fetch.
     frameRef.current = CHECK_EVERY - 1
