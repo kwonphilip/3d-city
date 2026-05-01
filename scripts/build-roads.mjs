@@ -237,21 +237,23 @@ async function main() {
   console.log(`\nAll bands done. processed=${processed} skipped=${skipped} dupes=${dupes}`)
   console.log(`Writing ${tiles.size} tile files…`)
 
-  const manifest = {
-    origin: { lat: ORIGIN_LAT, lon: ORIGIN_LON },
-    tileSize: TILE_SIZE,
-    source: 'OpenStreetMap (Overpass)',
-    generatedAt: new Date().toISOString(),
-    tiles: [],
-  }
-
+  // Slim manifest format — `[gridX, gridZ]` per tile, runtime derives
+  // id/file/bounds. See src/lib/manifests.js.
+  const manifestTiles = []
   for (const [key, { roads, bridges }] of tiles) {
     const file = `road_${key}.json`
     await fs.writeFile(path.join(OUT_DIR, file), JSON.stringify({ tileId: key, bounds: tileBounds(key), roads, bridges }))
-    manifest.tiles.push({ id: key, file: `roads/${file}`, bounds: tileBounds(key), roadCount: roads.length, bridgeCount: bridges.length })
+    const [gx, gz] = key.split('_').map(Number)
+    manifestTiles.push([gx, gz])
   }
 
-  await fs.writeFile(MANIFEST_FILE, JSON.stringify(manifest, null, 2))
+  const manifest = {
+    v: 2,
+    origin: { lat: ORIGIN_LAT, lon: ORIGIN_LON },
+    tileSize: TILE_SIZE,
+    tiles: manifestTiles,
+  }
+  await fs.writeFile(MANIFEST_FILE, JSON.stringify(manifest))
 
   // Cleanup
   try {

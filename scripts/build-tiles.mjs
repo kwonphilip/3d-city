@@ -273,23 +273,25 @@ async function main() {
   console.log(`\nAll pages complete. Processed: ${processed} | Skipped: ${skipped}`)
   console.log(`Writing ${tiles.size} tile files…`)
 
-  const manifest = {
-    origin: { lat: ORIGIN_LAT, lon: ORIGIN_LON },
-    tileSize: TILE_SIZE,
-    borough: 'manhattan',
-    source: `NYC OpenData Building Footprints (${DATASET_ID})`,
-    generatedAt: new Date().toISOString(),
-    tiles: [],
-  }
-
+  // Slim manifest format — `[gridX, gridZ]` per tile, runtime derives
+  // id/file/bounds. See src/lib/manifests.js. Drops ~95% of the manifest
+  // bytes vs. the verbose shape we used previously.
+  const manifestTiles = []
   for (const [key, buildings] of tiles) {
     const file = `tile_${key}.json`
     const bounds = tileBounds(key)
     await fs.writeFile(path.join(OUT_DIR, file), JSON.stringify({ tileId: key, bounds, buildings }))
-    manifest.tiles.push({ id: key, file, bounds, buildingCount: buildings.length })
+    const [gx, gz] = key.split('_').map(Number)
+    manifestTiles.push([gx, gz])
   }
 
-  await fs.writeFile(path.join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))
+  const manifest = {
+    v: 2,
+    origin: { lat: ORIGIN_LAT, lon: ORIGIN_LON },
+    tileSize: TILE_SIZE,
+    tiles: manifestTiles,
+  }
+  await fs.writeFile(path.join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest))
 
   // Clean up checkpoint and per-page files
   try {
