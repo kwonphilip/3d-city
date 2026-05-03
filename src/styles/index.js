@@ -19,4 +19,4 @@ export const STYLE_REGISTRY = [
   cyberpunk,
   wireframe,
 ]
-export const DEFAULT_STYLE_ID = 'monoDay'
+export const DEFAULT_STYLE_ID = 'stylizedMono'
