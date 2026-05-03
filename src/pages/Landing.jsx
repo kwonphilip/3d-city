@@ -61,7 +61,7 @@ export default function Landing() {
 
       <div className="landing-content">
         <h1 className="landing-title">3D NYC</h1>
-        <p className="landing-subtitle">Interactive 3D model of New York City building footprints.</p>
+        <p className="landing-subtitle">Interactive 3D model of New York City.<br /><br />Loading may take a few moments due to large number of 3D models. Please adjust "Render Radius" to optimize performance.</p>
 
         <div className="landing-buttons">
           <Link to="/map" className="landing-button landing-button-full">
