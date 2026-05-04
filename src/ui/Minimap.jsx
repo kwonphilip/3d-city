@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelectionStore } from '../context/SelectionContext'
+import { useStyle } from '../context/StyleContext'
 import { loadLand } from '../lib/landData'
 import { minimapState } from './minimapState'
 import './Minimap.css'
@@ -8,13 +9,14 @@ const W = 180
 const H = 220
 const PAD = 800 // metres of padding around land bbox
 
-// Names whose polygons make up the rendered "world" we want to navigate. The
-// rest of the boroughs ship in land.json but aren't toggled on by default and
-// would balloon the bbox to ~47 km, shrinking Manhattan to a sliver.
-const SHOWN_NAMES = new Set(['Manhattan', 'Ellis Island'])
-
 function filterLandmasses(landmasses) {
-  return landmasses.filter((lm) => SHOWN_NAMES.has(lm.name) && lm.outer && lm.outer.length >= 3)
+  return landmasses.filter((lm) => lm.outer && lm.outer.length >= 3)
+}
+
+function colorString(material, fallback) {
+  const c = material?.color
+  if (c && typeof c.getStyle === 'function') return c.getStyle()
+  return fallback
 }
 
 function computeBbox(landmasses) {
@@ -43,17 +45,15 @@ function makeProjection(bbox) {
   }
 }
 
-function bakeLand(landmasses, proj) {
+function bakeLand(landmasses, proj, colors) {
   const off = document.createElement('canvas')
   off.width = W
   off.height = H
   const ctx = off.getContext('2d')
-  // Water — dark blue.
-  ctx.fillStyle = '#0d1830'
+  ctx.fillStyle = colors.water
   ctx.fillRect(0, 0, W, H)
-  // Land — clearly brighter so Manhattan reads at a glance.
-  ctx.fillStyle = '#5d7ea8'
-  ctx.strokeStyle = '#9bb3d4'
+  ctx.fillStyle = colors.land
+  ctx.strokeStyle = colors.stroke
   ctx.lineWidth = 0.75
   for (const lm of landmasses) {
     ctx.beginPath()
@@ -72,6 +72,7 @@ function bakeLand(landmasses, proj) {
 export default function Minimap() {
   const canvasRef = useRef(null)
   const flyToWorld = useSelectionStore((s) => s.flyToWorld)
+  const style = useStyle()
   const [land, setLand] = useState(null)
 
   useEffect(() => {
@@ -81,6 +82,14 @@ export default function Minimap() {
     }).catch((err) => console.error('[Minimap] land fetch:', err))
     return () => { cancelled = true }
   }, [])
+
+  // Colors track the active style so the minimap reads as the same map you're
+  // looking at in 3D. Falls back to the original blue palette for presets that
+  // don't define water/land materials with a color (none currently, but cheap
+  // insurance).
+  const waterColor = colorString(style.waterMaterial, '#0d1830')
+  const landColor = colorString(style.landMaterial, '#5d7ea8')
+  const strokeColor = colorString(style.landMaterial, '#9bb3d4')
 
   const projRef = useRef(null)
   const bboxRef = useRef(null)
@@ -93,8 +102,8 @@ export default function Minimap() {
     const proj = makeProjection(bbox)
     projRef.current = proj
     bboxRef.current = bbox
-    bakedRef.current = bakeLand(filtered, proj)
-  }, [land])
+    bakedRef.current = bakeLand(filtered, proj, { water: waterColor, land: landColor, stroke: strokeColor })
+  }, [land, waterColor, landColor, strokeColor])
 
   useEffect(() => {
     if (!land) return

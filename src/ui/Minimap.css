@@ -8,7 +8,8 @@
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: #0b1020;
+  background: transparent;
+  opacity: 0.85;
   pointer-events: auto;
 }
 
