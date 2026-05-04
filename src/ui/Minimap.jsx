@@ -19,6 +19,19 @@ function colorString(material, fallback) {
   return fallback
 }
 
+// Hex `#rgb`/`#rrggbb` → `rgba(...)` for canvas strokeStyle. Used to add
+// alpha to a style's highlightBeamColor so borough outlines read as a muted
+// ink wash rather than a saturated accent stripe.
+function hexToRgba(hex, alpha) {
+  if (typeof hex !== 'string' || hex[0] !== '#') return hex
+  let h = hex.slice(1)
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('')
+  const r = parseInt(h.slice(0, 2), 16)
+  const g = parseInt(h.slice(2, 4), 16)
+  const b = parseInt(h.slice(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 function computeBbox(landmasses) {
   let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity
   for (const lm of landmasses) {
@@ -45,6 +58,16 @@ function makeProjection(bbox) {
   }
 }
 
+function tracePolygon(ctx, outer, proj) {
+  ctx.beginPath()
+  for (let i = 0; i < outer.length; i++) {
+    const [px, pz] = proj.worldToPx(outer[i][0], outer[i][1])
+    if (i === 0) ctx.moveTo(px, pz)
+    else ctx.lineTo(px, pz)
+  }
+  ctx.closePath()
+}
+
 function bakeLand(landmasses, proj, colors) {
   const off = document.createElement('canvas')
   off.width = W
@@ -52,18 +75,22 @@ function bakeLand(landmasses, proj, colors) {
   const ctx = off.getContext('2d')
   ctx.fillStyle = colors.water
   ctx.fillRect(0, 0, W, H)
+
+  // Two passes: all fills, then all strokes. Borough adjacencies (Brooklyn ↔
+  // Queens, etc.) are stored as separate polygons that share an edge — if we
+  // stroked-then-filled per polygon, the next neighbour's fill would erase
+  // half of that shared border. Fill-then-stroke keeps the borough outlines
+  // crisp on top.
   ctx.fillStyle = colors.land
-  ctx.strokeStyle = colors.stroke
-  ctx.lineWidth = 0.75
   for (const lm of landmasses) {
-    ctx.beginPath()
-    for (let i = 0; i < lm.outer.length; i++) {
-      const [px, pz] = proj.worldToPx(lm.outer[i][0], lm.outer[i][1])
-      if (i === 0) ctx.moveTo(px, pz)
-      else ctx.lineTo(px, pz)
-    }
-    ctx.closePath()
+    tracePolygon(ctx, lm.outer, proj)
     ctx.fill()
+  }
+  ctx.strokeStyle = colors.stroke
+  ctx.lineWidth = 1.25
+  ctx.lineJoin = 'round'
+  for (const lm of landmasses) {
+    tracePolygon(ctx, lm.outer, proj)
     ctx.stroke()
   }
   return off
@@ -84,12 +111,14 @@ export default function Minimap() {
   }, [])
 
   // Colors track the active style so the minimap reads as the same map you're
-  // looking at in 3D. Falls back to the original blue palette for presets that
-  // don't define water/land materials with a color (none currently, but cheap
-  // insurance).
+  // looking at in 3D. Borough outlines use the style's accent (highlightBeam)
+  // because the land-fill colour has no contrast with itself — using it here
+  // made the boundaries invisible in Paper Map and Cyberpunk where water and
+  // land are nearly the same value. The 0.55 alpha keeps the stroke from
+  // reading as an aggressive coloured stripe on louder palettes.
   const waterColor = colorString(style.waterMaterial, '#0d1830')
   const landColor = colorString(style.landMaterial, '#5d7ea8')
-  const strokeColor = colorString(style.landMaterial, '#9bb3d4')
+  const strokeColor = hexToRgba(style.highlightBeamColor || '#888', 0.55)
 
   const projRef = useRef(null)
   const bboxRef = useRef(null)

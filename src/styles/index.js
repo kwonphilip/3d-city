@@ -21,4 +21,4 @@ export const STYLE_REGISTRY = [
   floatingMap,
   wireframe,
 ]
-export const DEFAULT_STYLE_ID = 'stylizedMono'
+export const DEFAULT_STYLE_ID = 'monoDay'

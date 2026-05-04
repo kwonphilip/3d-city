@@ -9,10 +9,12 @@
   top: 16px;
   right: 16px;
   /* Leave room for the 220px-tall minimap at the bottom-right (16px gap +
-     220px minimap + 16px breathing room = 252px). Without this the quality
-     panel grows downward into the minimap on shorter viewports. */
+     220px minimap + 16px breathing room = 252px). max-height is a soft cap;
+     no overflow rule because clipping here would cut off the QualityPanel's
+     left-positioned tooltips and (per CSS spec) promote overflow-x to auto,
+     spawning a stray horizontal scrollbar. The StylePicker's own .sp-list
+     already self-scrolls, so panel-level scrolling is handled there. */
   max-height: calc(100vh - 252px);
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
