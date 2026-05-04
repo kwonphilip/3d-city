@@ -39,6 +39,11 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      # Pages serves 404.html for any unknown path. Mirroring index.html
+      # there gives the SPA shell to deep links (e.g. /3d-city/map) and
+      # page refreshes, so the router can take over instead of 404'ing.
+      - name: Add SPA 404 fallback
+        run: cp dist/index.html dist/404.html
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact
