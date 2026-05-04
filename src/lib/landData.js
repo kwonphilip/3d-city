@@ -5,7 +5,9 @@
 // three concurrent ~309 KB requests + three JSON parses for the same data.
 // Mirrors the pattern in lib/nycMask.js's loadMask().
 
-const LAND_URL = '/data/manhattan/land.json'
+import { dataUrl } from './dataPaths'
+
+const LAND_URL = dataUrl('land.json')
 
 let cached = null
 let cachedPromise = null

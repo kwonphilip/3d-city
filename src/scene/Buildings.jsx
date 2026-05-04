@@ -6,6 +6,7 @@ import { useQuality } from '../context/QualityContext'
 import { useBuildingRegistry } from '../context/BuildingRegistry'
 import { loadLand } from '../lib/landData'
 import { loadBuildingsManifest } from '../lib/manifests'
+import { dataUrl } from '../lib/dataPaths'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
 
 const CHECK_EVERY = 15
@@ -332,7 +333,7 @@ export default function Buildings() {
       } else {
         const ac = new AbortController()
         abortersRef.current.set(tile.id, ac)
-        fetch(`/data/manhattan/${tile.file}`, { signal: ac.signal })
+        fetch(dataUrl(tile.file), { signal: ac.signal })
           .then(r => r.json())
           .then(({ buildings }) => {
             abortersRef.current.delete(tile.id)

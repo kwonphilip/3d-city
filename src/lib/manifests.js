@@ -16,8 +16,10 @@
 // during component mount, the roads manifest fetch only enters the network
 // queue after the buildings JSON has arrived.
 
-const BUILDINGS_URL = '/data/manhattan/manifest.json'
-const ROADS_URL = '/data/manhattan/roads_manifest.json'
+import { dataUrl } from './dataPaths'
+
+const BUILDINGS_URL = dataUrl('manifest.json')
+const ROADS_URL = dataUrl('roads_manifest.json')
 
 function inflate(slim, fileFor) {
   const tileSize = slim.tileSize ?? 500

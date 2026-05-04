@@ -3,8 +3,9 @@ import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import useNycMask from '../hooks/useNycMask'
 import { loadLand } from '../lib/landData'
+import { dataUrl } from '../lib/dataPaths'
 
-const PARKS_URL = '/data/manhattan/parks.json'
+const PARKS_URL = dataUrl('parks.json')
 const LAND_Y = 3
 const PARK_Y = 3.5 // between land (3) and roads (4)
 

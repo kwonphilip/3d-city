@@ -6,6 +6,7 @@ import { useQuality } from '../context/QualityContext'
 import useNycMask from '../hooks/useNycMask'
 import { loadLand } from '../lib/landData'
 import { loadRoadsManifest } from '../lib/manifests'
+import { dataUrl } from '../lib/dataPaths'
 import RoadsWorker from '../workers/roadsWorker.js?worker'
 
 const CHECK_EVERY = 15
@@ -199,7 +200,7 @@ export default function Roads() {
 
       const ac = new AbortController()
       abortersRef.current.set(t.id, ac)
-      fetch(`/data/manhattan/${t.file}`, { signal: ac.signal })
+      fetch(dataUrl(t.file), { signal: ac.signal })
         .then((r) => r.json())
         .then((data) => {
           abortersRef.current.delete(t.id)
