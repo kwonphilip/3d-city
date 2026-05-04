@@ -11,10 +11,10 @@ function detectDefaults() {
 // Borough keys here must match the `name` field on landmasses in land.json.
 const DEFAULT_BOROUGHS = {
   Manhattan: true,
-  Brooklyn: false,
-  Queens: false,
-  Bronx: false,
-  'Staten Island': false,
+  Brooklyn: true,
+  Queens: true,
+  Bronx: true,
+  'Staten Island': true,
 }
 
 export const useQualityStore = create((set) => ({
