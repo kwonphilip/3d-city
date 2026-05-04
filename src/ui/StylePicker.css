@@ -55,13 +55,17 @@
   transform: rotate(180deg);
 }
 
-/* Expanded list */
+/* Expanded list. max-height bounds the list so the picker self-scrolls
+   instead of relying on .ui-overlay's outer scroll, which has no visible
+   indicator that more entries exist below the fold. */
 .sp-open .sp-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 4px 10px 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .sp-group {
