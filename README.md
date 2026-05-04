@@ -1,18 +1,53 @@
-# React + Vite
+# 3d-city
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interactive 3D NYC city viewer in the browser. Buildings are extruded from real
+OpenStreetMap footprints, streamed in 500 m tiles by camera proximity, and
+rendered through a swappable style system (day/night/wireframe/etc.).
 
-Currently, two official plugins are available:
+## Develop
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm run dev       # Vite dev server with HMR
+npm run build     # production build
+npm run lint      # ESLint
+npm run preview   # preview the production build locally
+```
 
-## React Compiler
+## Data pipeline
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+The static tile/manifest files under `public/data/manhattan/` are produced
+offline by the scripts in `scripts/`:
 
-Note: This will impact Vite dev & build performances.
+```bash
+node scripts/build-tiles.mjs       # building footprints → tiled .json + manifest
+node scripts/build-roads.mjs       # OSM ways → tiled road geometry + manifest
+node scripts/build-land.mjs        # land/water polygons
+node scripts/build-parks.mjs       # park polygons
+node scripts/slim-manifests.mjs    # one-shot manifest size reducer
+```
 
-## Expanding the ESLint configuration
+Architecture notes live in [CLAUDE.md](CLAUDE.md).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Credits
+
+**Data**
+
+- Building footprints, road geometry, and park polygons:
+  [OpenStreetMap](https://www.openstreetmap.org/) contributors, fetched via the
+  [Overpass API](https://overpass-api.de/). Data is © OpenStreetMap
+  contributors and licensed under
+  [ODbL](https://www.openstreetmap.org/copyright).
+- Address search: [Nominatim](https://nominatim.org/) (OpenStreetMap).
+
+**Libraries**
+
+- [Three.js](https://threejs.org/) for WebGL rendering.
+- [@react-three/fiber](https://github.com/pmndrs/react-three-fiber) +
+  [@react-three/drei](https://github.com/pmndrs/drei) for the React renderer
+  and helpers.
+- [React](https://react.dev/) (with the React Compiler) +
+  [Vite](https://vitejs.dev/) for the app framework and build.
+- [Zustand](https://github.com/pmndrs/zustand) for state shared across the
+  R3F Canvas boundary.
+- [clipper-lib](https://www.npmjs.com/package/clipper-lib) for offline polygon
+  offsetting in the land pipeline.
