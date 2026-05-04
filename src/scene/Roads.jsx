@@ -86,15 +86,24 @@ export default function Roads() {
   // LRU cache of built geometry keyed by tileId. On a hit we skip both fetch
   // and worker entirely.
   const geomCacheRef = useRef(new Map())
+  // tileId -> AbortController for the in-flight fetch. Lets us release the
+  // HTTP/1 connection lane the moment a tile leaves range so a new nearby
+  // tile can take it instead of queueing behind a stale fetch.
+  const abortersRef = useRef(new Map())
 
   useEffect(() => {
     const w = new RoadsWorker()
     w.onmessage = ({ data }) => {
       if (data.type !== 'ROAD_TILE_READY') return
       const { tileId, road, bridge, pillar } = data
+      // Tick deletes from inFlightRef when a tile leaves range. Cache the
+      // result either way so a return visit is free, but only push to React
+      // state if the tile is still wanted.
+      const wasWanted = inFlightRef.current.has(tileId)
       inFlightRef.current.delete(tileId)
       if (!road && !bridge && !pillar) return
       lruSet(geomCacheRef.current, tileId, { road, bridge, pillar }, GEOM_CACHE_SIZE)
+      if (!wasWanted) return
       loadedRef.current.add(tileId)
       setTileGeoms((prev) => new Map(prev).set(tileId, { road, bridge, pillar }))
     }
@@ -146,6 +155,17 @@ export default function Roads() {
       }
     }
 
+    // Free slots held by in-flight tiles that drifted out of range. Aborts
+    // the fetch (releasing its HTTP/1 lane) so the new nearby tiles below can
+    // dispatch on this same tick instead of waiting for the previous-camera
+    // fetches to drain.
+    for (const id of inFlightRef.current) {
+      if (inRange.has(id)) continue
+      const ac = abortersRef.current.get(id)
+      if (ac) { ac.abort(); abortersRef.current.delete(id) }
+      inFlightRef.current.delete(id)
+    }
+
     // Build a sorted candidate list (nearest first) so when MAX_IN_FLIGHT clips
     // the queue, the closest pending tiles are dispatched and far tiles wait
     // for the next tick. Camera-move re-prioritization is implicit.
@@ -177,17 +197,23 @@ export default function Roads() {
         continue
       }
 
-      fetch(`/data/manhattan/${t.file}`)
+      const ac = new AbortController()
+      abortersRef.current.set(t.id, ac)
+      fetch(`/data/manhattan/${t.file}`, { signal: ac.signal })
         .then((r) => r.json())
         .then((data) => {
+          abortersRef.current.delete(t.id)
           tileDataRef.current.set(t.id, data)
-          if (!workerRef.current) {
-            inFlightRef.current.delete(t.id)
-            return
-          }
+          // Tick may have evicted this tile while the fetch was in flight;
+          // skip the worker post in that case (the data is cached for return
+          // visits via tileDataRef).
+          if (!workerRef.current || !inFlightRef.current.has(t.id)) return
           workerRef.current.postMessage({ type: 'BUILD_ROAD_TILE', tileId: t.id, tile: data })
         })
-        .catch(() => inFlightRef.current.delete(t.id))
+        .catch((err) => {
+          abortersRef.current.delete(t.id)
+          if (err?.name !== 'AbortError') inFlightRef.current.delete(t.id)
+        })
     }
 
     const toRemove = []

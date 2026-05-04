@@ -128,12 +128,22 @@ export default function Buildings() {
   // hit we skip the worker entirely — toggling back to a previously-seen
   // configuration is a one-frame state update.
   const geomCacheRef = useRef(new Map())
+  // tileId -> AbortController for the in-flight fetch. Lets us cancel the
+  // HTTP request when a tile drifts out of range, freeing its connection lane
+  // for whatever just came into range (the dominant cost on a fast pan to a
+  // distant section of the map under HTTP/1's 6-connection cap).
+  const abortersRef = useRef(new Map())
   const frameRef = useRef(0)
 
   useEffect(() => {
     const handleMessage = ({ data }) => {
       if (data.type !== 'TILE_READY') return
       const { tileId, cacheKey, positions, normals, indices, buildingMeta, empty } = data
+      // The tick loop deletes from inFlightRef when a tile leaves range. If
+      // the worker result arrives after that, we still want the geom cache
+      // populated for the next return visit, but we don't want to render a
+      // tile that's no longer in view.
+      const wasWanted = inFlightRef.current.has(tileId)
       inFlightRef.current.delete(tileId)
       if (empty) return
       const posArr = new Float32Array(positions)
@@ -142,6 +152,7 @@ export default function Buildings() {
       if (cacheKey) {
         lruSet(geomCacheRef.current, cacheKey, { posArr, nrmArr, idxArr, buildingMeta }, GEOM_CACHE_SIZE)
       }
+      if (!wasWanted) return
       loadedIdsRef.current.add(tileId)
       setRenderedTiles(prev => new Map(prev).set(tileId, { posArr, nrmArr, idxArr }))
       addTile(tileId, buildingMeta)
@@ -228,6 +239,17 @@ export default function Buildings() {
       }
     }
 
+    // Free slots held by in-flight tiles that drifted out of range. Abort
+    // their fetches so HTTP/1 connection lanes are released for whatever just
+    // came into range. Without this, a fast camera teleport waits for the
+    // previous-position fetches to drain before the new ones can dispatch.
+    for (const id of inFlightRef.current) {
+      if (inRange.has(id)) continue
+      const ac = abortersRef.current.get(id)
+      if (ac) { ac.abort(); abortersRef.current.delete(id) }
+      inFlightRef.current.delete(id)
+    }
+
     // Compute the enabled-borough name set once per check. If rings haven't
     // loaded yet, fall back to "render everything" so we don't show an empty
     // city. Buildings are tagged on first dispatch (idempotent), so per-tile
@@ -243,6 +265,10 @@ export default function Buildings() {
     const sortedEnabled = filterEnabled ? [...enabledSet].sort().join(',') : '*'
 
     const dispatch = (tileId, buildings) => {
+      // Tile may have left range between fetch start and fetch resolution;
+      // the tick already cleaned up its in-flight slot, so don't post stale
+      // work to the worker.
+      if (!inFlightRef.current.has(tileId)) return
       const ws = workersRef.current
       if (ws.length === 0) {
         inFlightRef.current.delete(tileId)
@@ -304,13 +330,21 @@ export default function Buildings() {
       if (cached) {
         dispatch(tile.id, cached.buildings)
       } else {
-        fetch(`/data/manhattan/${tile.file}`)
+        const ac = new AbortController()
+        abortersRef.current.set(tile.id, ac)
+        fetch(`/data/manhattan/${tile.file}`, { signal: ac.signal })
           .then(r => r.json())
           .then(({ buildings }) => {
+            abortersRef.current.delete(tile.id)
             tileDataRef.current.set(tile.id, { buildings })
             dispatch(tile.id, buildings)
           })
-          .catch(() => inFlightRef.current.delete(tile.id))
+          .catch((err) => {
+            abortersRef.current.delete(tile.id)
+            // AbortError means the tick already removed this tile from
+            // inFlightRef; calling delete again is a no-op but harmless.
+            if (err?.name !== 'AbortError') inFlightRef.current.delete(tile.id)
+          })
       }
     }
 
