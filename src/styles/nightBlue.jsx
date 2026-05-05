@@ -6,7 +6,7 @@ export default {
   description: 'Steel night, warm gold accents',
   perfTier: 'standard',
   category: 'night',
-  background: '#03050d',
+  background: '#080d1f',
   buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#6a8fc8') }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#ffaa44') }),
   highlightOutlineColor: '#ffd28a',

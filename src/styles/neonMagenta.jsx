@@ -6,7 +6,7 @@ export default {
   description: 'Violet city, electric cyan accents',
   perfTier: 'standard',
   category: 'night',
-  background: '#0a0220',
+  background: '#100330',
   buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#7a3a9a') }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#00e5ff') }),
   highlightOutlineColor: '#00ffff',

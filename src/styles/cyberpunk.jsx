@@ -6,7 +6,7 @@ export default {
   description: 'Hot pink + cyan, max contrast',
   perfTier: 'standard',
   category: 'night',
-  background: '#000005',
+  background: '#050010',
   buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#ff2d8a') }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#fff066') }),
   highlightOutlineColor: '#ffff99',
