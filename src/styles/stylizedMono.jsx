@@ -19,7 +19,7 @@ export default {
   parkMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#cfd8c4') }),
   clipToLand: true,
   transparentBackground: true,
-  noiseBackground: { color1: '#c8d8e8', color2: '#e8e0d4' },
+  noiseBackground: { color1: '#c8d8e8', color2: '#edecea' },
   cloudLayer: { color: '#faf8f5', opacity: 0.6 },
   skyClass: 'sky-day-cycle',
   glowColor: null, // light theme, no glow
