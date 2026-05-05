@@ -4,6 +4,7 @@ import stylizedMono from './stylizedMono.jsx'
 import monoDay from './monoDay.jsx'
 import wireframe from './wireframe.jsx'
 import floatingMap from './floatingMap.jsx'
+import floatingMapDay from './floatingMapDay.jsx'
 import nightBlue from './nightBlue.jsx'
 import neonMagenta from './neonMagenta.jsx'
 import cyberpunk from './cyberpunk.jsx'
@@ -19,6 +20,7 @@ export const STYLE_REGISTRY = [
   neonMagenta,
   cyberpunk,
   floatingMap,
+  floatingMapDay,
   wireframe,
 ]
 export const DEFAULT_STYLE_ID = 'monoDay'

@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 
 export default {
-  id: 'floatingMap',
-  label: 'Floating Map',
+  id: 'darkOutline',
+  label: 'Dark Outline',
   description: 'Borough outlines + glowing roads; buildings float in the void',
   perfTier: 'light',
   category: 'outline',
