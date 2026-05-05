@@ -21,6 +21,8 @@ export default defineStyle({
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#8d8a83') }),
   clipToLand: true,
   transparentBackground: true,
+  noiseBackground: { color1: '#c8d8e8', color2: '#dde6ec' },
+  cloudLayer: { color: '#eef2f6', opacity: 0.65 },
   skyClass: 'sky-day-cycle',
   lights: DayLights,
 })

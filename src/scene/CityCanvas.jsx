@@ -23,7 +23,12 @@ function Scene() {
     <>
       {!style.transparentBackground && <color attach="background" args={[style.background]} />}
       {style.noiseBackground && (
-        <NoiseBackground color1={style.noiseBackground.color1} color2={style.noiseBackground.color2} />
+        <NoiseBackground
+          color1={style.noiseBackground.color1}
+          color2={style.noiseBackground.color2}
+          cloudColor={style.cloudLayer?.color}
+          cloudOpacity={style.cloudLayer?.opacity}
+        />
       )}
       {Lights && <Lights />}
       {style.stars !== false && <Starfield />}

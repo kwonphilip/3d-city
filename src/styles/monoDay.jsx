@@ -25,6 +25,7 @@ export default defineStyle({
   clipToLand: true,
   transparentBackground: true,
   noiseBackground: { color1: '#c8d8e8', color2: '#e8e0d4' },
+  cloudLayer: { color: '#f0eee8', opacity: 0.7 },
   skyClass: 'sky-day-cycle',
   lights: DayLights,
 })
