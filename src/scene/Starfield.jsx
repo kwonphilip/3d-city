@@ -32,11 +32,12 @@ export default function Starfield() {
   const material = useMemo(
     () => new THREE.PointsMaterial({
       color: 0xffffff,
-      size: 6,
+      size: 7,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 1.0,
       depthWrite: false,
+      depthTest: false,
       blending: THREE.AdditiveBlending,
     }),
     [],
@@ -48,7 +49,7 @@ export default function Starfield() {
 
   return (
     <group ref={groupRef}>
-      <points geometry={geom} material={material} frustumCulled={false} />
+      <points geometry={geom} material={material} frustumCulled={false} renderOrder={-2} />
     </group>
   )
 }
