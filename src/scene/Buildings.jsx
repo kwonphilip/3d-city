@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
-import { useThree, useFrame } from '@react-three/fiber'
+import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import { useBuildingRegistry } from '../context/BuildingRegistry'
 import { loadLand } from '../lib/landData'
 import { loadBuildingsManifest } from '../lib/manifests'
-import { dataUrl } from '../lib/dataPaths'
+import { pointInRing } from '../lib/polygons'
+import { lruGet, lruSet } from '../lib/lru'
+import { useTileStreamer } from '../hooks/useTileStreamer'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
 
 const CHECK_EVERY = 15
@@ -39,22 +41,9 @@ function TileMesh({ posArr, nrmArr, idxArr, material }) {
   return <mesh geometry={geom} material={material} />
 }
 
-function pointInRing(x, z, ring) {
-  let inside = false
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const xi = ring[i][0], zi = ring[i][1]
-    const xj = ring[j][0], zj = ring[j][1]
-    const intersect = (zi > z) !== (zj > z) &&
-      x < ((xj - xi) * (z - zi)) / (zj - zi) + xi
-    if (intersect) inside = !inside
-  }
-  return inside
-}
-
-// Tag each building's `_borough` with the name of the landmass containing its
-// center (or null if outside all). Idempotent: skips already-tagged buildings,
-// so it's safe to call on every dispatch — the per-borough ring scan only runs
-// once per building over the session.
+// Tags each building's `_borough` with the landmass ring that contains its
+// center. Idempotent: skips already-tagged buildings, so repeated calls only
+// do the ring scan once per building over the session.
 function tagBuildingsWithBorough(buildings, ringsByBorough) {
   for (const b of buildings) {
     if (b._borough !== undefined) continue
@@ -69,27 +58,8 @@ function tagBuildingsWithBorough(buildings, ringsByBorough) {
   }
 }
 
-// Map-based LRU: re-inserting a key moves it to the end of insertion order,
-// so eviction by `keys().next()` always drops the oldest.
-function lruGet(map, key) {
-  if (!map.has(key)) return null
-  const v = map.get(key)
-  map.delete(key)
-  map.set(key, v)
-  return v
-}
-
-function lruSet(map, key, value, limit) {
-  if (map.has(key)) map.delete(key)
-  map.set(key, value)
-  while (map.size > limit) {
-    const oldest = map.keys().next().value
-    map.delete(oldest)
-  }
-}
-
-// Stable serialization of the boroughs object so the flush effect only fires
-// when the *set* of enabled boroughs actually changes (not on every render).
+// Stable serialization of the borough toggle state so the flush effect only
+// fires when the enabled set actually changes, not on every render.
 function boroughsKey(boroughs) {
   return Object.entries(boroughs)
     .filter(([, on]) => on)
@@ -118,23 +88,73 @@ export default function Buildings() {
   const workersRef = useRef([])
   const nextWorkerRef = useRef(0)
   const manifestRef = useRef(null)
-  // Map<boroughName, ring[]> — each value is an array of outer rings. Used by the
+  // Map<boroughName, ring[]> — outer rings per landmass name. Used by the
   // borough filter to decide which buildings keep their 3D form.
   const ringsByBoroughRef = useRef(null)
-  // Persistent cache of fetched tile JSON: tileId -> { buildings }. Survives
-  // borough flushes so toggling re-uses already-fetched data instead of
-  // hitting the network again.
+  // Persistent raw-tile cache: tileId → { buildings }. Survives borough
+  // flushes so re-enabling a borough re-uses already-fetched data.
   const tileDataRef = useRef(new Map())
-  // LRU cache of built geometry keyed by (tileId|minHeight|boroughs). On a
-  // hit we skip the worker entirely — toggling back to a previously-seen
-  // configuration is a one-frame state update.
+  // LRU geometry cache keyed by (tileId|minHeight|boroughs). Toggling back to
+  // a previously-seen configuration is a one-frame state update with no worker.
   const geomCacheRef = useRef(new Map())
-  // tileId -> AbortController for the in-flight fetch. Lets us cancel the
-  // HTTP request when a tile drifts out of range, freeing its connection lane
-  // for whatever just came into range (the dominant cost on a fast pan to a
-  // distant section of the map under HTTP/1's 6-connection cap).
   const abortersRef = useRef(new Map())
-  const frameRef = useRef(0)
+
+  const forceTick = useTileStreamer({
+    checkEvery: CHECK_EVERY,
+    maxInFlight: MAX_IN_FLIGHT,
+    getManifest: () => manifestRef.current,
+    camera,
+    getRadius: () => qualityRef.current.renderRadius,
+    loadedRef: loadedIdsRef,
+    inFlightRef,
+    tileDataRef,
+    abortersRef,
+    onDispatch: (tileId, { buildings }) => {
+      const ws = workersRef.current
+      if (ws.length === 0) { inFlightRef.current.delete(tileId); return }
+
+      const { minBuildingHeight: minH, boroughs: brs } = qualityRef.current
+      const ringsByBorough = ringsByBoroughRef.current
+      const filterEnabled = ringsByBorough != null
+      const enabledSet = new Set()
+      if (filterEnabled) {
+        for (const [name, on] of Object.entries(brs)) if (on) enabledSet.add(name)
+      }
+
+      let kept = buildings
+      if (filterEnabled) {
+        if (enabledSet.size === 0) { inFlightRef.current.delete(tileId); return }
+        tagBuildingsWithBorough(buildings, ringsByBorough)
+        kept = buildings.filter(b => enabledSet.has(b._borough))
+      }
+      if (kept.length === 0) { inFlightRef.current.delete(tileId); return }
+
+      const sortedEnabled = filterEnabled ? [...enabledSet].sort().join(',') : '*'
+      const cacheKey = `${tileId}|${minH}|${sortedEnabled}`
+      const hit = lruGet(geomCacheRef.current, cacheKey)
+      if (hit) {
+        inFlightRef.current.delete(tileId)
+        loadedIdsRef.current.add(tileId)
+        setRenderedTiles(prev => new Map(prev).set(tileId, {
+          posArr: hit.posArr, nrmArr: hit.nrmArr, idxArr: hit.idxArr,
+        }))
+        addTile(tileId, hit.buildingMeta)
+        return
+      }
+
+      const w = ws[nextWorkerRef.current]
+      nextWorkerRef.current = (nextWorkerRef.current + 1) % ws.length
+      w.postMessage({ type: 'BUILD_TILE', tileId, cacheKey, buildings: kept, minHeight: minH })
+    },
+    onRemove: (ids) => {
+      for (const id of ids) removeTile(id)
+      setRenderedTiles(prev => {
+        const next = new Map(prev)
+        for (const id of ids) next.delete(id)
+        return next
+      })
+    },
+  })
 
   useEffect(() => {
     const handleMessage = ({ data }) => {
@@ -142,8 +162,8 @@ export default function Buildings() {
       const { tileId, cacheKey, positions, normals, indices, buildingMeta, empty } = data
       // The tick loop deletes from inFlightRef when a tile leaves range. If
       // the worker result arrives after that, we still want the geom cache
-      // populated for the next return visit, but we don't want to render a
-      // tile that's no longer in view.
+      // populated for the next return visit, but we don't render a tile
+      // that's no longer in view.
       const wasWanted = inFlightRef.current.has(tileId)
       inFlightRef.current.delete(tileId)
       if (empty) return
@@ -165,25 +185,19 @@ export default function Buildings() {
       workers.push(w)
     }
     workersRef.current = workers
-    // Force the next useFrame to run the in-range check. If the manifest
-    // already resolved before workers were ready, its frameRef bump fired
-    // into a useFrame that bailed (workers.length === 0). Bumping again
-    // here covers the workers-finish-last case.
-    frameRef.current = CHECK_EVERY - 1
-    return () => {
-      for (const w of workers) w.terminate()
-      workersRef.current = []
-    }
-  }, [addTile])
+    // Force a tick because the manifest may have loaded before workers were
+    // ready, meaning its frameRef bump hit a useFrame that bailed early.
+    forceTick()
+    return () => { for (const w of workers) w.terminate(); workersRef.current = [] }
+  }, [addTile, forceTick])
 
   useEffect(() => {
     loadBuildingsManifest().then((m) => {
       manifestRef.current = m
-      // Force the next useFrame to run the in-range check instead of
-      // waiting up to ~250ms for the periodic CHECK_EVERY tick.
-      frameRef.current = CHECK_EVERY - 1
+      // Skip the next ~250ms wait for the periodic CHECK_EVERY tick.
+      forceTick()
     })
-  }, [])
+  }, [forceTick])
 
   // Load all borough/region rings indexed by name. Shares one fetch with
   // Terrain and Minimap via the loadLand cache.
@@ -198,11 +212,11 @@ export default function Buildings() {
         }
         ringsByBoroughRef.current = map
       })
-      .catch(() => { /* filter unavailable; treat as no filter */ })
+      .catch(() => { /* filter unavailable; render everything */ })
   }, [])
 
-  // Borough toggle change → flush loaded tiles so they re-fetch under the new
-  // filter. The geomCache key includes the borough set, so toggling back to a
+  // Borough toggle change → flush loaded tiles to re-stream with the new filter.
+  // The geom cache key includes the borough set, so toggling back to a
   // previously-seen configuration is a one-frame state update.
   const flushKey = boroughsKey(boroughs)
   useEffect(() => {
@@ -211,160 +225,8 @@ export default function Buildings() {
     inFlightRef.current.clear()
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setRenderedTiles(new Map())
-    // Fire the in-range check on the very next frame instead of waiting up to
-    // ~CHECK_EVERY frames (~750ms at 60fps) for the periodic tick.
-    frameRef.current = CHECK_EVERY - 1
-  }, [flushKey, removeTile])
-
-  useFrame(() => {
-    if (++frameRef.current % CHECK_EVERY !== 0) return
-    const manifest = manifestRef.current
-    const workers = workersRef.current
-    if (!manifest || workers.length === 0) return
-
-    const { x, y, z } = camera.position
-    const { renderRadius: baseRadius, minBuildingHeight: minH, boroughs: brs } = qualityRef.current
-    const inRange = new Set()
-    const distById = new Map()
-
-    const radius = Math.max(baseRadius, y * 1.5)
-    const r2 = radius * radius
-    for (const tile of manifest.tiles) {
-      const b = tile.bounds
-      const cx = (b.minX + b.maxX) / 2
-      const cz = (b.minZ + b.maxZ) / 2
-      const d2 = (x - cx) * (x - cx) + (z - cz) * (z - cz)
-      if (d2 < r2) {
-        inRange.add(tile.id)
-        distById.set(tile.id, d2)
-      }
-    }
-
-    // Free slots held by in-flight tiles that drifted out of range. Abort
-    // their fetches so HTTP/1 connection lanes are released for whatever just
-    // came into range. Without this, a fast camera teleport waits for the
-    // previous-position fetches to drain before the new ones can dispatch.
-    for (const id of inFlightRef.current) {
-      if (inRange.has(id)) continue
-      const ac = abortersRef.current.get(id)
-      if (ac) { ac.abort(); abortersRef.current.delete(id) }
-      inFlightRef.current.delete(id)
-    }
-
-    // Compute the enabled-borough name set once per check. If rings haven't
-    // loaded yet, fall back to "render everything" so we don't show an empty
-    // city. Buildings are tagged on first dispatch (idempotent), so per-tile
-    // filter is an O(1) Set.has(name) per building instead of a per-ring scan.
-    const ringsByBorough = ringsByBoroughRef.current
-    const filterEnabled = ringsByBorough != null
-    const enabledSet = new Set()
-    if (filterEnabled) {
-      for (const [name, on] of Object.entries(brs)) if (on) enabledSet.add(name)
-    }
-    const anyEnabled = enabledSet.size > 0
-
-    const sortedEnabled = filterEnabled ? [...enabledSet].sort().join(',') : '*'
-
-    const dispatch = (tileId, buildings) => {
-      // Tile may have left range between fetch start and fetch resolution;
-      // the tick already cleaned up its in-flight slot, so don't post stale
-      // work to the worker.
-      if (!inFlightRef.current.has(tileId)) return
-      const ws = workersRef.current
-      if (ws.length === 0) {
-        inFlightRef.current.delete(tileId)
-        return
-      }
-      let kept = buildings
-      if (filterEnabled) {
-        if (!anyEnabled) {
-          inFlightRef.current.delete(tileId)
-          return
-        }
-        tagBuildingsWithBorough(buildings, ringsByBorough)
-        kept = buildings.filter(b => enabledSet.has(b._borough))
-      }
-      if (kept.length === 0) {
-        inFlightRef.current.delete(tileId)
-        return
-      }
-      const cacheKey = `${tileId}|${minH}|${sortedEnabled}`
-      const hit = lruGet(geomCacheRef.current, cacheKey)
-      if (hit) {
-        inFlightRef.current.delete(tileId)
-        loadedIdsRef.current.add(tileId)
-        setRenderedTiles(prev => new Map(prev).set(tileId, {
-          posArr: hit.posArr,
-          nrmArr: hit.nrmArr,
-          idxArr: hit.idxArr,
-        }))
-        addTile(tileId, hit.buildingMeta)
-        return
-      }
-      const w = ws[nextWorkerRef.current]
-      nextWorkerRef.current = (nextWorkerRef.current + 1) % ws.length
-      w.postMessage({
-        type: 'BUILD_TILE',
-        tileId,
-        cacheKey,
-        buildings: kept,
-        minHeight: minH,
-      })
-    }
-
-    // Build a sorted candidate list (nearest first) so when the cap clips the
-    // queue, the closest pending tiles are dispatched and far-out tiles wait
-    // for the next tick. Camera-move re-sorting is implicit via this rebuild.
-    const candidates = []
-    for (const tile of manifest.tiles) {
-      if (!inRange.has(tile.id)) continue
-      if (loadedIdsRef.current.has(tile.id) || inFlightRef.current.has(tile.id)) continue
-      candidates.push(tile)
-    }
-    candidates.sort((a, b) => distById.get(a.id) - distById.get(b.id))
-
-    for (const tile of candidates) {
-      if (inFlightRef.current.size >= MAX_IN_FLIGHT) break
-      inFlightRef.current.add(tile.id)
-
-      const cached = tileDataRef.current.get(tile.id)
-      if (cached) {
-        dispatch(tile.id, cached.buildings)
-      } else {
-        const ac = new AbortController()
-        abortersRef.current.set(tile.id, ac)
-        fetch(dataUrl(tile.file), { signal: ac.signal })
-          .then(r => r.json())
-          .then(({ buildings }) => {
-            abortersRef.current.delete(tile.id)
-            tileDataRef.current.set(tile.id, { buildings })
-            dispatch(tile.id, buildings)
-          })
-          .catch((err) => {
-            abortersRef.current.delete(tile.id)
-            // AbortError means the tick already removed this tile from
-            // inFlightRef; calling delete again is a no-op but harmless.
-            if (err?.name !== 'AbortError') inFlightRef.current.delete(tile.id)
-          })
-      }
-    }
-
-    const toRemove = []
-    for (const id of loadedIdsRef.current) {
-      if (!inRange.has(id)) toRemove.push(id)
-    }
-    if (toRemove.length > 0) {
-      for (const id of toRemove) {
-        loadedIdsRef.current.delete(id)
-        removeTile(id)
-      }
-      setRenderedTiles(prev => {
-        const next = new Map(prev)
-        for (const id of toRemove) next.delete(id)
-        return next
-      })
-    }
-  })
+    forceTick()
+  }, [flushKey, removeTile, forceTick])
 
   return (
     <>

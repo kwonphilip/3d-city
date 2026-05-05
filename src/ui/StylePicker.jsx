@@ -1,18 +1,13 @@
 import { useState } from 'react'
 import { STYLE_REGISTRY } from '../styles/index'
 import { useStyleStore } from '../context/StyleContext'
+import { colorFromMaterial } from '../lib/color'
 import './StylePicker.css'
 
 const CATEGORY_ORDER = ['day', 'night', 'outline']
 const CATEGORY_LABEL = { day: 'Day', night: 'Night', outline: 'Outline' }
 const PERF_LABEL = { light: 'Light', standard: 'Standard', heavy: 'Heavy' }
 const STORAGE_KEY = 'style-picker-open'
-
-function colorFromMaterial(m) {
-  if (!m) return null
-  if (m.color?.getHexString) return '#' + m.color.getHexString()
-  return null
-}
 
 function Swatch({ preset }) {
   const bg = preset.background

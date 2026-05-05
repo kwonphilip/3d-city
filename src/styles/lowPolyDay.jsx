@@ -1,6 +1,8 @@
 import * as THREE from 'three'
+import { defineStyle } from './_base'
+import { DayLights } from './_lights'
 
-export default {
+export default defineStyle({
   id: 'lowPolyDay',
   label: 'Low-Poly Day',
   description: 'Daylight map, soft shading',
@@ -17,14 +19,5 @@ export default {
   roadMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#bcb8b0') }),
   bridgeMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#aaa6a0') }),
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#8d8a83') }),
-  glowColor: null, // daytime; the city doesn't need to glow
-  stars: false,
-  lights: () => (
-    <>
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[600, 1000, 400]} intensity={1.0} color="#fff5e0" />
-      <directionalLight position={[-300, 600, -200]} intensity={0.25} color="#cfd9e8" />
-    </>
-  ),
-  postFx: null,
-}
+  lights: DayLights,
+})

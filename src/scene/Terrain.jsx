@@ -3,17 +3,12 @@ import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import useNycMask from '../hooks/useNycMask'
 import { loadLand } from '../lib/landData'
+import { ringCentroid } from '../lib/polygons'
 import { dataUrl } from '../lib/dataPaths'
 
 const PARKS_URL = dataUrl('parks.json')
 const LAND_Y = 3
 const PARK_Y = 3.5 // between land (3) and roads (4)
-
-function ringCentroid(ring) {
-  let cx = 0, cz = 0
-  for (const [x, z] of ring) { cx += x; cz += z }
-  return [cx / ring.length, cz / ring.length]
-}
 
 // Generic flat-polygon merge: takes [{outer, holes?}] entries and produces a
 // single rotated-onto-XZ ShapeGeometry. Used for both landmasses and parks.

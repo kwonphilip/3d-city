@@ -1,10 +1,11 @@
 import * as THREE from 'three'
+import { defineStyle } from './_base'
+import { DayLights } from './_lights'
 
-// Daytime atlas palette: water, land, parks, and roads are all unlit MeshBasicMaterial
-// so they read as a flat 2D map. Buildings are MeshLambertMaterial (with sun + ambient
-// lights) so each face shades distinctly — without that, identical-color faces blend
-// into a single silhouette and look bad in 3D.
-export default {
+// Water, land, parks, and roads are unlit MeshBasicMaterial so they read as a
+// flat 2D map. Buildings use MeshLambertMaterial so each face shades distinctly
+// — without that, identical-color faces merge into a single silhouette in 3D.
+export default defineStyle({
   id: 'monoDay',
   label: 'Mono Day',
   description: 'Daylight map, flat ground + shaded buildings',
@@ -21,14 +22,5 @@ export default {
   roadMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#bcb8b0') }),
   bridgeMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#aaa6a0') }),
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#8d8a83') }),
-  glowColor: null,
-  stars: false,
-  lights: () => (
-    <>
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[600, 1000, 400]} intensity={1.0} color="#fff5e0" />
-      <directionalLight position={[-300, 600, -200]} intensity={0.25} color="#cfd9e8" />
-    </>
-  ),
-  postFx: null,
-}
+  lights: DayLights,
+})

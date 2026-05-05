@@ -1,38 +1,22 @@
 import * as THREE from 'three'
 
-// Building base sits at y=0, land at y=3 — so a translucent land plane reads as
-// a "floating map" that buildings poke through. Water + roads + bridges are
-// hidden so the only ground-plane geometry left is the borough silhouettes.
-// `transparent: true` with `depthWrite: false` keeps buildings from being
-// culled by the land plane while still alpha-blending against the black
-// background.
 export default {
   id: 'floatingMap',
   label: 'Floating Map',
-  description: 'Borough silhouettes in the void; buildings pop through',
+  description: 'Borough outlines + glowing roads; buildings float in the void',
   perfTier: 'light',
   category: 'outline',
-  background: '#000000',
+  background: '#0a1428',
   buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#e8eef8') }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#4aa8ff') }),
   highlightOutlineColor: '#9bd4ff',
   highlightBeamColor: '#4aa8ff',
   waterMaterial: new THREE.MeshBasicMaterial({ visible: false }),
-  landMaterial: new THREE.MeshBasicMaterial({
-    color: new THREE.Color('#3a4566'),
-    transparent: true,
-    opacity: 0.45,
-    depthWrite: false,
-  }),
-  parkMaterial: new THREE.MeshBasicMaterial({
-    color: new THREE.Color('#3a5a40'),
-    transparent: true,
-    opacity: 0.5,
-    depthWrite: false,
-  }),
-  roadMaterial: new THREE.MeshBasicMaterial({ visible: false }),
-  bridgeMaterial: new THREE.MeshBasicMaterial({ visible: false }),
-  bridgePillarMaterial: new THREE.MeshBasicMaterial({ visible: false }),
+  landMaterial: new THREE.LineBasicMaterial({ color: new THREE.Color('#6a7a9a') }),
+  parkMaterial: new THREE.LineBasicMaterial({ color: new THREE.Color('#4a7a5a') }),
+  roadMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#9bd4ff') }),
+  bridgeMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#b8e0ff') }),
+  bridgePillarMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#4a5a7a') }),
   glowColor: '#4aa8ff',
   stars: false,
   lights: () => (

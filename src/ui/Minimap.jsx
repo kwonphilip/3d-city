@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelectionStore } from '../context/SelectionContext'
 import { useStyle } from '../context/StyleContext'
 import { loadLand } from '../lib/landData'
+import { colorString, hexToRgba } from '../lib/color'
 import { minimapState } from './minimapState'
 import './Minimap.css'
 
@@ -11,25 +12,6 @@ const PAD = 800 // metres of padding around land bbox
 
 function filterLandmasses(landmasses) {
   return landmasses.filter((lm) => lm.outer && lm.outer.length >= 3)
-}
-
-function colorString(material, fallback) {
-  const c = material?.color
-  if (c && typeof c.getStyle === 'function') return c.getStyle()
-  return fallback
-}
-
-// Hex `#rgb`/`#rrggbb` → `rgba(...)` for canvas strokeStyle. Used to add
-// alpha to a style's highlightBeamColor so borough outlines read as a muted
-// ink wash rather than a saturated accent stripe.
-function hexToRgba(hex, alpha) {
-  if (typeof hex !== 'string' || hex[0] !== '#') return hex
-  let h = hex.slice(1)
-  if (h.length === 3) h = h.split('').map((c) => c + c).join('')
-  const r = parseInt(h.slice(0, 2), 16)
-  const g = parseInt(h.slice(2, 4), 16)
-  const b = parseInt(h.slice(4, 6), 16)
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
 function computeBbox(landmasses) {

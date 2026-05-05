@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
-import * as THREE from 'three'
+import { useThree } from '@react-three/fiber'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import useNycMask from '../hooks/useNycMask'
 import { loadLand } from '../lib/landData'
 import { loadRoadsManifest } from '../lib/manifests'
-import { dataUrl } from '../lib/dataPaths'
+import { lruGet, lruSet } from '../lib/lru'
+import { makeBufferGeometry } from '../lib/threeBuffers'
+import { useTileStreamer } from '../hooks/useTileStreamer'
 import RoadsWorker from '../workers/roadsWorker.js?worker'
 
 const CHECK_EVERY = 15
@@ -19,31 +20,6 @@ const MAX_IN_FLIGHT = 6
 // hundred KB), so a generous cap is cheap and means re-visiting a recent area
 // is a one-frame state update with no fetch and no worker dispatch.
 const GEOM_CACHE_SIZE = 128
-
-function makeBufferGeometry({ positions, normals, indices }) {
-  const g = new THREE.BufferGeometry()
-  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3))
-  g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3))
-  g.setIndex(new THREE.BufferAttribute(new Uint32Array(indices), 1))
-  return g
-}
-
-function lruGet(map, key) {
-  if (!map.has(key)) return null
-  const v = map.get(key)
-  map.delete(key)
-  map.set(key, v)
-  return v
-}
-
-function lruSet(map, key, value, limit) {
-  if (map.has(key)) map.delete(key)
-  map.set(key, value)
-  while (map.size > limit) {
-    const oldest = map.keys().next().value
-    map.delete(oldest)
-  }
-}
 
 function RoadTile({ entry, roadMat, bridgeMat, pillarMat }) {
   const roadGeom = useMemo(() => entry.road ? makeBufferGeometry(entry.road) : null, [entry.road])
@@ -80,158 +56,84 @@ export default function Roads() {
   const inFlightRef = useRef(new Set())
   const manifestRef = useRef(null)
   const workerRef = useRef(null)
-  const frameRef = useRef(0)
-  // Persistent cache of fetched raw tile JSON: tileId -> tile. Avoids
-  // re-fetching when the camera leaves and re-enters an area.
+  // Persistent raw tile JSON cache: avoids re-fetching on camera leave/return.
   const tileDataRef = useRef(new Map())
-  // LRU cache of built geometry keyed by tileId. On a hit we skip both fetch
-  // and worker entirely.
+  // LRU cache of built geometry by tileId. A hit skips both fetch and worker.
   const geomCacheRef = useRef(new Map())
-  // tileId -> AbortController for the in-flight fetch. Lets us release the
-  // HTTP/1 connection lane the moment a tile leaves range so a new nearby
-  // tile can take it instead of queueing behind a stale fetch.
   const abortersRef = useRef(new Map())
+
+  const forceTick = useTileStreamer({
+    checkEvery: CHECK_EVERY,
+    maxInFlight: MAX_IN_FLIGHT,
+    getManifest: () => manifestRef.current,
+    camera,
+    getRadius: () => radiusRef.current,
+    // Roads uses the NYC mask to skip tiles fully outside the visible world,
+    // saving fetches for far Long Island / NJ tiles.
+    getMask: () => maskRef.current,
+    loadedRef,
+    inFlightRef,
+    tileDataRef,
+    abortersRef,
+    // Geom-cache hit: update render state directly and skip fetch + worker.
+    tryGeomCache: (tileId) => {
+      const hit = lruGet(geomCacheRef.current, tileId)
+      if (!hit) return false
+      setTileGeoms(prev => new Map(prev).set(tileId, hit))
+      return true
+    },
+    onDispatch: (tileId, data) => {
+      if (!workerRef.current) return
+      workerRef.current.postMessage({ type: 'BUILD_ROAD_TILE', tileId, tile: data })
+    },
+    onRemove: (ids) => {
+      setTileGeoms(prev => {
+        const next = new Map(prev)
+        for (const id of ids) next.delete(id)
+        return next
+      })
+    },
+  })
 
   useEffect(() => {
     const w = new RoadsWorker()
     w.onmessage = ({ data }) => {
       if (data.type !== 'ROAD_TILE_READY') return
       const { tileId, road, bridge, pillar } = data
-      // Tick deletes from inFlightRef when a tile leaves range. Cache the
-      // result either way so a return visit is free, but only push to React
-      // state if the tile is still wanted.
+      // The tick loop deletes from inFlightRef when a tile leaves range. Cache
+      // the result either way for return visits, but only push to React state
+      // if the tile is still wanted.
       const wasWanted = inFlightRef.current.has(tileId)
       inFlightRef.current.delete(tileId)
       if (!road && !bridge && !pillar) return
       lruSet(geomCacheRef.current, tileId, { road, bridge, pillar }, GEOM_CACHE_SIZE)
       if (!wasWanted) return
       loadedRef.current.add(tileId)
-      setTileGeoms((prev) => new Map(prev).set(tileId, { road, bridge, pillar }))
+      setTileGeoms(prev => new Map(prev).set(tileId, { road, bridge, pillar }))
     }
     workerRef.current = w
-    // Hand the worker the mask data the main thread is already loading,
-    // instead of letting it issue a duplicate fetch for land.json. Workers
-    // process messages in FIFO order, so any BUILD_ROAD_TILE posted afterwards
-    // queues behind getMask() inside the worker until INIT_MASK lands.
+    // Hand the worker the main thread's already-cached land data so it doesn't
+    // issue a duplicate fetch. Messages queue in FIFO order, so any
+    // BUILD_ROAD_TILE dispatched afterwards lands safely after INIT_MASK.
     loadLand()
       .then((land) => w.postMessage({ type: 'INIT_MASK', land }))
       .catch((err) => console.error('[Roads] mask init:', err))
-    // Force the next useFrame to run the in-range check. Mirrors Buildings.jsx
-    // for the workers-finish-last race against the manifest fetch.
-    frameRef.current = CHECK_EVERY - 1
+    forceTick()
     return () => w.terminate()
-  }, [])
+  }, [forceTick])
 
   useEffect(() => {
     loadRoadsManifest()
       .then((m) => {
         manifestRef.current = m
-        // Force the next useFrame to run the in-range check instead of
-        // waiting up to ~250ms for the periodic CHECK_EVERY tick.
-        frameRef.current = CHECK_EVERY - 1
+        forceTick()
       })
       .catch((err) => console.error('[Roads] manifest fetch:', err))
-  }, [])
-
-  useFrame(() => {
-    if (++frameRef.current % CHECK_EVERY !== 0) return
-    const manifest = manifestRef.current
-    if (!manifest || !workerRef.current) return
-    const m = maskRef.current
-    const { x, y, z } = camera.position
-    const radius = Math.max(radiusRef.current, y * 1.5)
-    const r2 = radius * radius
-    const inRange = new Set()
-    const distById = new Map()
-    for (const t of manifest.tiles) {
-      // Skip tiles entirely outside the visible world — saves the network fetch
-      // for far-Long-Island and far-NJ tiles even before per-segment filtering.
-      if (m && !m.bboxIntersects(t.bounds)) continue
-      const cx = (t.bounds.minX + t.bounds.maxX) / 2
-      const cz = (t.bounds.minZ + t.bounds.maxZ) / 2
-      const d2 = (x - cx) * (x - cx) + (z - cz) * (z - cz)
-      if (d2 < r2) {
-        inRange.add(t.id)
-        distById.set(t.id, d2)
-      }
-    }
-
-    // Free slots held by in-flight tiles that drifted out of range. Aborts
-    // the fetch (releasing its HTTP/1 lane) so the new nearby tiles below can
-    // dispatch on this same tick instead of waiting for the previous-camera
-    // fetches to drain.
-    for (const id of inFlightRef.current) {
-      if (inRange.has(id)) continue
-      const ac = abortersRef.current.get(id)
-      if (ac) { ac.abort(); abortersRef.current.delete(id) }
-      inFlightRef.current.delete(id)
-    }
-
-    // Build a sorted candidate list (nearest first) so when MAX_IN_FLIGHT clips
-    // the queue, the closest pending tiles are dispatched and far tiles wait
-    // for the next tick. Camera-move re-prioritization is implicit.
-    const candidates = []
-    for (const t of manifest.tiles) {
-      if (!inRange.has(t.id)) continue
-      if (loadedRef.current.has(t.id) || inFlightRef.current.has(t.id)) continue
-      candidates.push(t)
-    }
-    candidates.sort((a, b) => distById.get(a.id) - distById.get(b.id))
-
-    for (const t of candidates) {
-      if (inFlightRef.current.size >= MAX_IN_FLIGHT) break
-      inFlightRef.current.add(t.id)
-
-      // Geom cache hit → skip fetch + worker entirely.
-      const cachedGeom = lruGet(geomCacheRef.current, t.id)
-      if (cachedGeom) {
-        inFlightRef.current.delete(t.id)
-        loadedRef.current.add(t.id)
-        setTileGeoms((prev) => new Map(prev).set(t.id, cachedGeom))
-        continue
-      }
-
-      // Tile-data cache hit → skip fetch, dispatch to worker.
-      const cachedTile = tileDataRef.current.get(t.id)
-      if (cachedTile) {
-        workerRef.current.postMessage({ type: 'BUILD_ROAD_TILE', tileId: t.id, tile: cachedTile })
-        continue
-      }
-
-      const ac = new AbortController()
-      abortersRef.current.set(t.id, ac)
-      fetch(dataUrl(t.file), { signal: ac.signal })
-        .then((r) => r.json())
-        .then((data) => {
-          abortersRef.current.delete(t.id)
-          tileDataRef.current.set(t.id, data)
-          // Tick may have evicted this tile while the fetch was in flight;
-          // skip the worker post in that case (the data is cached for return
-          // visits via tileDataRef).
-          if (!workerRef.current || !inFlightRef.current.has(t.id)) return
-          workerRef.current.postMessage({ type: 'BUILD_ROAD_TILE', tileId: t.id, tile: data })
-        })
-        .catch((err) => {
-          abortersRef.current.delete(t.id)
-          if (err?.name !== 'AbortError') inFlightRef.current.delete(t.id)
-        })
-    }
-
-    const toRemove = []
-    for (const id of loadedRef.current) if (!inRange.has(id)) toRemove.push(id)
-    if (toRemove.length > 0) {
-      for (const id of toRemove) loadedRef.current.delete(id)
-      setTileGeoms((prev) => {
-        const next = new Map(prev)
-        for (const id of toRemove) next.delete(id)
-        return next
-      })
-    }
-  })
+  }, [forceTick])
 
   if (!style.roadMaterial) return null
-  // Hold off rendering until the mask loads. Otherwise we'd flash the full
-  // bbox (NJ + Nassau Co.) for one frame before the filter kicks in.
+  // Wait for the mask before rendering to avoid a one-frame flash of out-of-NYC
+  // tiles (Long Island, NJ) before the per-tile bbox filter kicks in.
   if (!mask) return null
   return (
     <>
