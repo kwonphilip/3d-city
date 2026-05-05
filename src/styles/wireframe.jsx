@@ -19,6 +19,8 @@ export default {
   bridgePillarMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#0088ff'), wireframe: true }),
   // Outline-only parks for wireframe — green coastline-style line.
   parkMaterial: new THREE.LineBasicMaterial({ color: new THREE.Color('#33ff88') }),
+  clipToLand: true,
+  transparentBackground: true,
   glowColor: '#00ff88',
   stars: false, // would clash with the wireframed scene
   lights: () => null,

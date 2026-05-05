@@ -17,6 +17,8 @@ export default {
   bridgeMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#00fff0') }),
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#00b8b0') }),
   parkMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#1a2818') }),
+  clipToLand: true,
+  transparentBackground: true,
   glowColor: '#00fff0',
   stars: true,
   lights: () => (

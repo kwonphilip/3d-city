@@ -6,10 +6,12 @@ import QualityPanel from './ui/QualityPanel'
 import Compass from './ui/Compass'
 import Minimap from './ui/Minimap'
 import { useBuildingRegistry } from './context/BuildingRegistry'
+import { useStyle } from './context/StyleContext'
 import './ui/tooltip.css'
 
 export default function MapView() {
   const ready = useBuildingRegistry((s) => s.tiles.size > 0)
+  const skyGradient = useStyle().skyGradient
   const [loadingMounted, setLoadingMounted] = useState(true)
   useEffect(() => {
     if (!ready) return
@@ -18,7 +20,7 @@ export default function MapView() {
   }, [ready])
 
   return (
-    <div className="app">
+    <div className="app" style={skyGradient ? { background: skyGradient } : undefined}>
       <CityCanvas />
       <Nav />
       <div className="ui-overlay">

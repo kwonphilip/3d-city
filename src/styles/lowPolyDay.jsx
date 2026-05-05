@@ -19,5 +19,8 @@ export default defineStyle({
   roadMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#bcb8b0') }),
   bridgeMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#aaa6a0') }),
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#8d8a83') }),
+  clipToLand: true,
+  transparentBackground: true,
+  skyGradient: 'linear-gradient(to bottom, #6a8fa8 0%, #b8cdd8 50%, #dde8ee 100%)',
   lights: DayLights,
 })
