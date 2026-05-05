@@ -7,6 +7,7 @@ import Highlight from './Highlight'
 import Terrain from './Terrain'
 import Roads from './Roads'
 import Starfield from './Starfield'
+import NoiseBackground from './NoiseBackground'
 import CompassBridge from './CompassBridge'
 import MinimapBridge from './MinimapBridge'
 
@@ -21,6 +22,9 @@ function Scene() {
   return (
     <>
       {!style.transparentBackground && <color attach="background" args={[style.background]} />}
+      {style.noiseBackground && (
+        <NoiseBackground color1={style.noiseBackground.color1} color2={style.noiseBackground.color2} />
+      )}
       {Lights && <Lights />}
       {style.stars !== false && <Starfield />}
       <Terrain />
