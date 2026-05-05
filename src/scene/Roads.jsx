@@ -10,12 +10,12 @@ import { makeBufferGeometry } from '../lib/threeBuffers'
 import { useTileStreamer } from '../hooks/useTileStreamer'
 import RoadsWorker from '../workers/roadsWorker.js?worker'
 
-const CHECK_EVERY = 15
+const CHECK_EVERY = 5
 // Cap concurrent fetch+build dispatches so when the camera moves, the queue
 // stays small and the next tick can re-prioritize by distance instead of
-// flushing every newly-in-range tile at once. 6 keeps the single road worker
-// fed without queuing very-far tiles ahead of nearby ones.
-const MAX_IN_FLIGHT = 6
+// flushing every newly-in-range tile at once.
+const MAX_IN_FLIGHT = 8
+const NUM_WORKERS = 2
 // LRU bound on built road geometry. Each entry is small (a few KB to a few
 // hundred KB), so a generous cap is cheap and means re-visiting a recent area
 // is a one-frame state update with no fetch and no worker dispatch.
@@ -55,7 +55,8 @@ export default function Roads() {
   const loadedRef = useRef(new Set())
   const inFlightRef = useRef(new Set())
   const manifestRef = useRef(null)
-  const workerRef = useRef(null)
+  const workersRef = useRef([])
+  const nextWorkerRef = useRef(0)
   // Persistent raw tile JSON cache: avoids re-fetching on camera leave/return.
   const tileDataRef = useRef(new Map())
   // LRU cache of built geometry by tileId. A hit skips both fetch and worker.
@@ -83,8 +84,11 @@ export default function Roads() {
       return true
     },
     onDispatch: (tileId, data) => {
-      if (!workerRef.current) return
-      workerRef.current.postMessage({ type: 'BUILD_ROAD_TILE', tileId, tile: data })
+      const ws = workersRef.current
+      if (ws.length === 0) return
+      const w = ws[nextWorkerRef.current]
+      nextWorkerRef.current = (nextWorkerRef.current + 1) % ws.length
+      w.postMessage({ type: 'BUILD_ROAD_TILE', tileId, tile: data })
     },
     onRemove: (ids) => {
       setTileGeoms(prev => {
@@ -96,8 +100,7 @@ export default function Roads() {
   })
 
   useEffect(() => {
-    const w = new RoadsWorker()
-    w.onmessage = ({ data }) => {
+    const handleMessage = ({ data }) => {
       if (data.type !== 'ROAD_TILE_READY') return
       const { tileId, road, bridge, pillar } = data
       // The tick loop deletes from inFlightRef when a tile leaves range. Cache
@@ -111,15 +114,26 @@ export default function Roads() {
       loadedRef.current.add(tileId)
       setTileGeoms(prev => new Map(prev).set(tileId, { road, bridge, pillar }))
     }
-    workerRef.current = w
-    // Hand the worker the main thread's already-cached land data so it doesn't
-    // issue a duplicate fetch. Messages queue in FIFO order, so any
+    const workers = []
+    // Hand each worker the main thread's already-cached land data so they don't
+    // issue duplicate fetches. Messages queue in FIFO order, so any
     // BUILD_ROAD_TILE dispatched afterwards lands safely after INIT_MASK.
     loadLand()
-      .then((land) => w.postMessage({ type: 'INIT_MASK', land }))
+      .then((land) => {
+        for (let i = 0; i < NUM_WORKERS; i++) {
+          const w = new RoadsWorker()
+          w.onmessage = handleMessage
+          w.postMessage({ type: 'INIT_MASK', land })
+          workers.push(w)
+        }
+        workersRef.current = workers
+        forceTick()
+      })
       .catch((err) => console.error('[Roads] mask init:', err))
-    forceTick()
-    return () => w.terminate()
+    return () => {
+      for (const w of workers) w.terminate()
+      workersRef.current = []
+    }
   }, [forceTick])
 
   useEffect(() => {

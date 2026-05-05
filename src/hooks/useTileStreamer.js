@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 import { dataUrl } from '../lib/dataPaths'
 
 /**
@@ -10,6 +11,8 @@ import { dataUrl } from '../lib/dataPaths'
  * - Aborts fetches for tiles that drifted out of range (freeing HTTP/1 lanes).
  * - Fetches and caches raw tile JSON, then calls onDispatch.
  * - Calls onRemove when tiles leave range.
+ * - Prefetches tile JSON slightly ahead of range in the camera-forward direction
+ *   so that when the camera moves forward, those tiles skip the network wait.
  *
  * The caller owns loadedRef / inFlightRef / tileDataRef / abortersRef so it can
  * reset them independently (e.g. on a borough toggle) without re-mounting the hook.
@@ -20,8 +23,11 @@ import { dataUrl } from '../lib/dataPaths'
  * @returns {Function} forceTick — call to make the next frame run the full
  *   in-range check immediately (e.g. after manifest load or worker init).
  */
+
+const _fwdVec = new THREE.Vector3()
+
 export function useTileStreamer({
-  checkEvery = 15,
+  checkEvery = 5,
   maxInFlight,
   getManifest,   // () => manifest | null
   camera,
@@ -57,22 +63,46 @@ export function useTileStreamer({
     // Scale radius with camera height so the city stays populated when zoomed
     // out (the slider sets the floor, altitude raises the ceiling).
     const radius = Math.max(getRadius(), y * 1.5)
-    const r2 = radius * radius
     const mask = getMask?.()
 
-    // --- Compute which tiles are in range ---
+    // Camera forward direction projected onto the XZ plane.
+    // Used to elongate the in-range test forward (more tiles where the camera
+    // looks) and to prefetch tiles just outside range in that direction.
+    camera.getWorldDirection(_fwdVec)
+    const fmag = Math.hypot(_fwdVec.x, _fwdVec.z) || 1e-6
+    const ux = _fwdVec.x / fmag
+    const uz = _fwdVec.z / fmag
+    // pitch: 0 = straight down (overhead), 1 = fully horizontal (horizon).
+    const pitch = Math.min(1, fmag)
+
+    // Ellipse radii: stretch forward, tighten behind, keep sides at base radius.
+    const forwardR = radius * (1 + pitch * 1.5)   // up to 2.5× ahead at horizon
+    const backR    = radius * Math.max(0.5, 1 - pitch * 0.4)
+    const sideR    = radius
+    const prefetchR = forwardR * 1.4               // prefetch ring edge in front
+
+    // --- Compute which tiles are in range (elliptical test) ---
     const inRange = new Set()
+    const inPrefetch = new Set()
     const distById = new Map()
     for (const t of manifest.tiles) {
-      // Skip tiles whose bbox lies entirely outside the visible world (saves
-      // fetches for far Long Island / NJ tiles when using the NYC mask).
       if (mask && !mask.bboxIntersects(t.bounds)) continue
       const cx = (t.bounds.minX + t.bounds.maxX) / 2
       const cz = (t.bounds.minZ + t.bounds.maxZ) / 2
-      const d2 = (x - cx) * (x - cx) + (z - cz) * (z - cz)
-      if (d2 < r2) {
+      const dx = cx - x, dz = cz - z
+      const along = dx * ux + dz * uz       // signed forward component
+      const cross = -dx * uz + dz * ux      // perpendicular component
+
+      const longR = along >= 0 ? forwardR : backR
+      const ellipseD2 = (along * along) / (longR * longR) + (cross * cross) / (sideR * sideR)
+      if (ellipseD2 < 1) {
         inRange.add(t.id)
-        distById.set(t.id, d2)
+        // Store approximate Euclidean d² for nearest-first sort.
+        distById.set(t.id, dx * dx + dz * dz)
+      } else if (along > 0) {
+        // Outside in-range ellipse but in front — candidate for prefetch.
+        const prefetchD2 = (along * along) / (prefetchR * prefetchR) + (cross * cross) / (sideR * sideR)
+        if (prefetchD2 < 1) inPrefetch.add(t.id)
       }
     }
 
@@ -132,6 +162,23 @@ export function useTileStreamer({
           abortersRef.current.delete(t.id)
           if (err?.name !== 'AbortError') inFlightRef.current.delete(t.id)
         })
+    }
+
+    // --- Prefetch tile JSON for tiles just ahead of the in-range ellipse ---
+    // Capped at 3 per tick to avoid flooding the network. These go only into
+    // tileDataRef, never into inFlightRef/loadedRef, so they don't render.
+    let prefetchCount = 0
+    for (const t of manifest.tiles) {
+      if (prefetchCount >= 3) break
+      if (!inPrefetch.has(t.id)) continue
+      if (loadedRef.current.has(t.id)) continue
+      if (inFlightRef.current.has(t.id)) continue
+      if (tileDataRef.current.has(t.id)) continue
+      prefetchCount++
+      fetch(dataUrl(t.file))
+        .then((r) => r.json())
+        .then((data) => { tileDataRef.current.set(t.id, data) })
+        .catch(() => {})
     }
 
     // --- Remove tiles that left range ---

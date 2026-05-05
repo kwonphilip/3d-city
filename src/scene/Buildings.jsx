@@ -11,7 +11,7 @@ import { lruGet, lruSet } from '../lib/lru'
 import { useTileStreamer } from '../hooks/useTileStreamer'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
 
-const CHECK_EVERY = 15
+const CHECK_EVERY = 5
 // Worker pool: parallel extrude across cores. Capped because each worker
 // keeps a copy of THREE in memory (the geometry worker bundle is ~135 kB) and
 // because contention for the GPU upload at the end is serialized anyway.

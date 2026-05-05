@@ -1,1 +1,1 @@
-{"tileId":"48_37","bounds":{"minX":24000,"maxX":24500,"minZ":18500,"maxZ":19000},"roads":[{"id":"25764799","klass":"residential","bridge":false,"path":[[23987.9,18858.5],[24375.9,18857.9]],"mid":[24375.9,18857.9]}],"bridges":[]}
+{"tileId":"48_37","bounds":{"minX":24000,"maxX":24500,"minZ":18500,"maxZ":19000},"roads":[{"id":"25764799","klass":"residential","path":[[23987.9,18858.5],[24375.9,18857.9]],"mid":[24375.9,18857.9]}],"bridges":[]}

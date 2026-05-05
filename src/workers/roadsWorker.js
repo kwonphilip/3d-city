@@ -49,9 +49,9 @@ function filterTile(tile, mask) {
   for (const b of tile.bridges) {
     const path = b.path
     if (!path || path.length < 2) continue
-    const start = path[0]
-    const end = path[path.length - 1]
-    if (!mask.contains(start[0], start[1]) && !mask.contains(end[0], end[1])) continue
+    // Bridges span water by definition, so endpoint-on-land filtering would
+    // drop mid-span OSM ways (e.g. GW, Verrazano middle segments). Rely on the
+    // worldBbox clip alone to discard bridges outside the visible NYC area.
     const runs = clipPathToBbox(path, mask.worldBbox)
     for (const run of runs) {
       if (run.length >= 2) bridges.push({ ...b, path: run })

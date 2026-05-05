@@ -149,8 +149,13 @@ function processElement(el) {
   const hwy = tags.highway
   if (!hwy || !ALLOWED_CLASSES.has(hwy)) return null
 
+  if (tags.tunnel && tags.tunnel !== 'no') return null
+
   const klass = classify(hwy)
-  const isBridge = tags.bridge === 'yes' || tags.bridge === 'viaduct' || tags.man_made === 'bridge'
+  const isBridge =
+    (tags.bridge && tags.bridge !== 'no') ||
+    tags.man_made === 'bridge' ||
+    (tags.layer && Number(tags.layer) > 0)
 
   const projected = el.geometry.map(({ lon, lat }) => project(lon, lat))
   const simplified = simplify(projected, SIMPLIFY_TOLERANCE)
