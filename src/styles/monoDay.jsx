@@ -24,6 +24,6 @@ export default defineStyle({
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#8d8a83') }),
   clipToLand: true,
   transparentBackground: true,
-  skyGradient: 'linear-gradient(to bottom, #6a8fa8 0%, #b8cdd8 50%, #dde8ee 100%)',
+  skyClass: 'sky-day-cycle',
   lights: DayLights,
 })

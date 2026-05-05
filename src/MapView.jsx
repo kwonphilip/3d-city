@@ -11,7 +11,9 @@ import './ui/tooltip.css'
 
 export default function MapView() {
   const ready = useBuildingRegistry((s) => s.tiles.size > 0)
-  const skyGradient = useStyle().skyGradient
+  const style = useStyle()
+  const skyClass = style.skyClass
+  const skyGradient = style.skyGradient
   const [loadingMounted, setLoadingMounted] = useState(true)
   useEffect(() => {
     if (!ready) return
@@ -20,7 +22,7 @@ export default function MapView() {
   }, [ready])
 
   return (
-    <div className="app" style={skyGradient ? { background: skyGradient } : undefined}>
+    <div className={`app${skyClass ? ` ${skyClass}` : ''}`} style={skyGradient ? { background: skyGradient } : undefined}>
       <CityCanvas />
       <Nav />
       <div className="ui-overlay">

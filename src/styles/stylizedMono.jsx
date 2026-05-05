@@ -19,7 +19,7 @@ export default {
   parkMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#cfd8c4') }),
   clipToLand: true,
   transparentBackground: true,
-  skyGradient: 'linear-gradient(to bottom, #6a8fa8 0%, #b8cdd8 50%, #dde8ee 100%)',
+  skyClass: 'sky-day-cycle',
   glowColor: null, // light theme, no glow
   stars: false,
   lights: () => (
