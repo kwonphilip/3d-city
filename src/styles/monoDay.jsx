@@ -22,5 +22,7 @@ export default defineStyle({
   roadMaterial: new THREE.MeshBasicMaterial({ color: new THREE.Color('#bcb8b0') }),
   bridgeMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#aaa6a0') }),
   bridgePillarMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#8d8a83') }),
+  clipToLand: true,
+  transparentBackground: true,
   lights: DayLights,
 })

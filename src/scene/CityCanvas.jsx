@@ -20,7 +20,7 @@ function Scene() {
   const Lights = style.lights
   return (
     <>
-      <color attach="background" args={[style.background]} />
+      {!style.transparentBackground && <color attach="background" args={[style.background]} />}
       {Lights && <Lights />}
       {style.stars !== false && <Starfield />}
       <Terrain />
@@ -38,7 +38,7 @@ export default function CityCanvas({ children }) {
   return (
     <Canvas
       camera={{ position: [0, 800, 900], fov: 45, near: 50, far: 60000 }}
-      gl={{ antialias: true, powerPreference: 'high-performance', logarithmicDepthBuffer: true }}
+      gl={{ antialias: true, powerPreference: 'high-performance', logarithmicDepthBuffer: true, alpha: true }}
       style={{ width: '100%', height: '100%' }}
     >
       <Scene />

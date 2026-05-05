@@ -106,6 +106,43 @@ export default function Terrain() {
   const landIsOutline = isLineMaterial(style.landMaterial)
   const parkIsOutline = isLineMaterial(style.parkMaterial)
 
+  // Anti-mask: a large rectangle with borough shapes cut as holes, rendered in
+  // the background color just above the water plane. Covers the 600m water halo
+  // that the waterShape offset produces outside the actual coastline outline.
+  const antiMaskGeom = useMemo(() => {
+    if (!style.clipToLand || !landmasses) return null
+    const EXTENT = 50000
+    const shape = new THREE.Shape()
+    shape.moveTo(-EXTENT, EXTENT)
+    shape.lineTo(EXTENT, EXTENT)
+    shape.lineTo(EXTENT, -EXTENT)
+    shape.lineTo(-EXTENT, -EXTENT)
+    for (const lm of landmasses) {
+      const pts = lm.outer
+      if (!pts || pts.length < 3) continue
+      const hole = new THREE.Path()
+      hole.moveTo(pts[0][0], -pts[0][1])
+      for (let i = 1; i < pts.length; i++) hole.lineTo(pts[i][0], -pts[i][1])
+      shape.holes.push(hole)
+    }
+    const geom = new THREE.ShapeGeometry(shape)
+    geom.rotateX(-Math.PI / 2)
+    return geom
+  }, [landmasses, style.clipToLand])
+
+  const antiMaskMat = useMemo(() => {
+    if (!style.clipToLand) return null
+    if (style.transparentBackground) {
+      // Depth-write-only: occludes the water plane without painting pixels,
+      // letting the transparent canvas show through outside the borough outlines.
+      return new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: true })
+    }
+    return new THREE.MeshBasicMaterial({ color: new THREE.Color(style.background) })
+  }, [style.background, style.clipToLand, style.transparentBackground])
+
+  useEffect(() => () => antiMaskGeom?.dispose(), [antiMaskGeom])
+  useEffect(() => () => antiMaskMat?.dispose(), [antiMaskMat])
+
   // Drop parks whose centroid isn't on NYC land — kills NJ + Nassau Co. parks
   // that the Overpass bbox sweep pulled in.
   const visibleParks = useMemo(() => {
@@ -165,6 +202,9 @@ export default function Terrain() {
       )}
       {parkOutlineGeom && (
         <lineSegments geometry={parkOutlineGeom} material={style.parkMaterial} position={[0, PARK_Y, 0]} />
+      )}
+      {antiMaskGeom && antiMaskMat && (
+        <mesh renderOrder={-1} geometry={antiMaskGeom} material={antiMaskMat} position={[0, 1, 0]} />
       )}
     </>
   )
