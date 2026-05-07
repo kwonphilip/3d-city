@@ -22,10 +22,11 @@ const NUM_WORKERS = Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? 
 // the wasted work when the camera moves and in-flight far tiles arrive after
 // they've already left range.
 const MAX_IN_FLIGHT = NUM_WORKERS * 4
-// LRU bound on the (tileId|minHeight|boroughs)-keyed geometry cache. Sized so
-// one full borough configuration (~30 Manhattan tiles) plus headroom for a
-// couple of recent toggles fits without thrash. Each entry is ~50–150 KB.
-const GEOM_CACHE_SIZE = 64
+// LRU bound on the (tileId|minHeight|boroughs)-keyed geometry cache. The full
+// dataset is ~3,200 tiles; 256 entries (~25–60 MB) covers a comfortable
+// browse history so revisiting a previously-seen area renders in one frame
+// from cache instead of re-fetching + re-extruding.
+const GEOM_CACHE_SIZE = 256
 
 function TileMesh({ posArr, nrmArr, idxArr, material }) {
   const geom = useMemo(() => {

@@ -25,6 +25,15 @@ import { dataUrl } from '../lib/dataPaths'
  */
 
 const _fwdVec = new THREE.Vector3()
+const _prevLook = new THREE.Vector3(0, 0, -1)
+const _prevPos = new THREE.Vector3(NaN, NaN, NaN)
+
+// Burst mode: triggered by sudden camera changes (fast drag, orbit, zoom,
+// minimap teleport). We can't predict where the user is heading, so we drop
+// the look-direction bias, fill an omnidirectional ring, and lift throughput
+// caps for a short cooldown.
+const BURST_THRESHOLD = 0.4
+const BURST_COOLDOWN_FRAMES = 30   // ~0.5s @ 60fps after last trigger
 
 export function useTileStreamer({
   checkEvery = 5,
@@ -53,9 +62,36 @@ export function useTileStreamer({
   tryGeomCacheRef.current = tryGeomCache
 
   const frameRef = useRef(0)
+  const burstUntilRef = useRef(0)
 
   useFrame(() => {
-    if (++frameRef.current % checkEvery !== 0) return
+    // Motion detection runs every frame (never gated) so a burst trigger
+    // doesn't get missed in the 4-out-of-5 frames the streamer normally skips.
+    const cx0 = camera.position.x, cy0 = camera.position.y, cz0 = camera.position.z
+    camera.getWorldDirection(_fwdVec)
+    let motionScore = 0
+    if (Number.isFinite(_prevPos.x)) {
+      const dposSq = (cx0 - _prevPos.x) ** 2 + (cy0 - _prevPos.y) ** 2 + (cz0 - _prevPos.z) ** 2
+      const dpos = Math.sqrt(dposSq)
+      const dotLook = Math.max(-1, Math.min(1, _fwdVec.dot(_prevLook)))
+      const dlook = Math.acos(dotLook)
+      const dyrel = Math.abs(cy0 - _prevPos.y) / Math.max(1, cy0)
+      // Weights tuned so a fast drag (~50–200m/frame) or noticeable orbit
+      // (~0.05 rad/frame) crosses the 0.4 threshold but slow drift does not.
+      motionScore = dpos / 50 + dlook * 2 + dyrel * 5
+    }
+    _prevPos.set(cx0, cy0, cz0)
+    _prevLook.copy(_fwdVec)
+
+    if (motionScore > BURST_THRESHOLD) {
+      burstUntilRef.current = frameRef.current + BURST_COOLDOWN_FRAMES
+    }
+    const isBurst = frameRef.current < burstUntilRef.current
+    // In burst mode, run the streaming check every frame so newly-near tiles
+    // dispatch immediately instead of waiting up to 5 frames (~80ms).
+    const tickEvery = isBurst ? 1 : checkEvery
+
+    if (++frameRef.current % tickEvery !== 0) return
     const manifest = getManifest()
     if (!manifest) return
 
@@ -65,10 +101,7 @@ export function useTileStreamer({
     const radius = Math.max(getRadius(), y * 1.5)
     const mask = getMask?.()
 
-    // Camera forward direction projected onto the XZ plane.
-    // Used to elongate the in-range test forward (more tiles where the camera
-    // looks) and to prefetch tiles just outside range in that direction.
-    camera.getWorldDirection(_fwdVec)
+    // Camera forward direction (already computed above).
     const fmag = Math.hypot(_fwdVec.x, _fwdVec.z) || 1e-6
     const ux = _fwdVec.x / fmag
     const uz = _fwdVec.z / fmag
@@ -76,10 +109,17 @@ export function useTileStreamer({
     const pitch = Math.min(1, fmag)
 
     // Ellipse radii: stretch forward, tighten behind, keep sides at base radius.
-    const forwardR = radius * (1 + pitch * 1.5)   // up to 2.5× ahead at horizon
-    const backR    = radius * Math.max(0.5, 1 - pitch * 0.4)
-    const sideR    = radius
-    const prefetchR = forwardR * 1.4               // prefetch ring edge in front
+    // In burst mode collapse to a circle of radius*1.3 — we don't know which
+    // way the user is heading, so fill the disk evenly.
+    const forwardR = isBurst ? radius * 1.3 : radius * (1 + pitch * 1.5)
+    const backR    = isBurst ? radius * 1.3 : radius * Math.max(0.5, 1 - pitch * 0.4)
+    const sideR    = isBurst ? radius * 1.3 : radius
+    const prefetchR = forwardR * 1.4
+
+    // Burst lifts throughput caps so the wider ring fills before the cooldown
+    // expires. Workers stay capped (CPU-bound) but the fetch pipeline doesn't.
+    const effectiveMaxInFlight = isBurst ? maxInFlight * 2 : maxInFlight
+    const effectivePrefetchCap = isBurst ? 8 : 3
 
     // --- Compute which tiles are in range (elliptical test) ---
     const inRange = new Set()
@@ -87,9 +127,9 @@ export function useTileStreamer({
     const distById = new Map()
     for (const t of manifest.tiles) {
       if (mask && !mask.bboxIntersects(t.bounds)) continue
-      const cx = (t.bounds.minX + t.bounds.maxX) / 2
-      const cz = (t.bounds.minZ + t.bounds.maxZ) / 2
-      const dx = cx - x, dz = cz - z
+      const tcx = (t.bounds.minX + t.bounds.maxX) / 2
+      const tcz = (t.bounds.minZ + t.bounds.maxZ) / 2
+      const dx = tcx - x, dz = tcz - z
       const along = dx * ux + dz * uz       // signed forward component
       const cross = -dx * uz + dz * ux      // perpendicular component
 
@@ -99,8 +139,9 @@ export function useTileStreamer({
         inRange.add(t.id)
         // Store approximate Euclidean d² for nearest-first sort.
         distById.set(t.id, dx * dx + dz * dz)
-      } else if (along > 0) {
-        // Outside in-range ellipse but in front — candidate for prefetch.
+      } else if (isBurst || along > 0) {
+        // Outside in-range ellipse — candidate for prefetch. In burst mode
+        // prefetch in all directions; otherwise only ahead of look.
         const prefetchD2 = (along * along) / (prefetchR * prefetchR) + (cross * cross) / (sideR * sideR)
         if (prefetchD2 < 1) inPrefetch.add(t.id)
       }
@@ -127,7 +168,7 @@ export function useTileStreamer({
     candidates.sort((a, b) => distById.get(a.id) - distById.get(b.id))
 
     for (const t of candidates) {
-      if (inFlightRef.current.size >= maxInFlight) break
+      if (inFlightRef.current.size >= effectiveMaxInFlight) break
       inFlightRef.current.add(t.id)
 
       // Geom-cache hit: caller updates render state and returns true; the hook
@@ -165,11 +206,12 @@ export function useTileStreamer({
     }
 
     // --- Prefetch tile JSON for tiles just ahead of the in-range ellipse ---
-    // Capped at 3 per tick to avoid flooding the network. These go only into
-    // tileDataRef, never into inFlightRef/loadedRef, so they don't render.
+    // Cap is lifted in burst mode so a sudden direction change has warm JSON
+    // ready when those tiles enter range. These go only into tileDataRef,
+    // never into inFlightRef/loadedRef, so they don't render.
     let prefetchCount = 0
     for (const t of manifest.tiles) {
-      if (prefetchCount >= 3) break
+      if (prefetchCount >= effectivePrefetchCap) break
       if (!inPrefetch.has(t.id)) continue
       if (loadedRef.current.has(t.id)) continue
       if (inFlightRef.current.has(t.id)) continue
