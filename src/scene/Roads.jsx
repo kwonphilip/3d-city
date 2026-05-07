@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useThree } from '@react-three/fiber'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
+import { useSelectionStore } from '../context/SelectionContext'
 import useNycMask from '../hooks/useNycMask'
 import { loadLand } from '../lib/landData'
 import { loadRoadsManifest } from '../lib/manifests'
@@ -15,11 +16,15 @@ const CHECK_EVERY = 5
 // stays small and the next tick can re-prioritize by distance instead of
 // flushing every newly-in-range tile at once.
 const MAX_IN_FLIGHT = 8
-const NUM_WORKERS = 2
-// LRU bound on built road geometry. Each entry is small (a few KB to a few
-// hundred KB), so a generous cap is cheap and means re-visiting a recent area
-// is a one-frame state update with no fetch and no worker dispatch.
-const GEOM_CACHE_SIZE = 128
+// Match Buildings' worker count. Roads has ~6,800 tile files (more than
+// Buildings' ~3,200 because it extends across bridges to NJ/Long Island) and
+// the worker also splits roads/bridges/pillars, so it's the slower of the two
+// pipelines — the extra worker matters here.
+const NUM_WORKERS = Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) - 1))
+// LRU bound on built road geometry. Bumped from 128 because the dataset is
+// twice the size of Buildings (~6,800 tiles); 512 entries (~25–60 MB) gives
+// comparable revisit hit rate to Buildings' 256/3,200.
+const GEOM_CACHE_SIZE = 512
 
 function RoadTile({ entry, roadMat, bridgeMat, pillarMat }) {
   const roadGeom = useMemo(() => entry.road ? makeBufferGeometry(entry.road) : null, [entry.road])
@@ -63,7 +68,7 @@ export default function Roads() {
   const geomCacheRef = useRef(new Map())
   const abortersRef = useRef(new Map())
 
-  const forceTick = useTileStreamer({
+  const { forceTick, prefetchAround } = useTileStreamer({
     checkEvery: CHECK_EVERY,
     maxInFlight: MAX_IN_FLIGHT,
     getManifest: () => manifestRef.current,
@@ -144,6 +149,16 @@ export default function Roads() {
       })
       .catch((err) => console.error('[Roads] manifest fetch:', err))
   }, [forceTick])
+
+  // Destination prefetch: warm road tile JSON for minimap / address-search
+  // targets during the camera-flight lerp, so bridges and roads at the
+  // destination skip the network round-trip on arrival.
+  const target = useSelectionStore(s => s.target)
+  useEffect(() => {
+    if (!target) return
+    const r = Math.max(radiusRef.current, camera.position.y * 1.5)
+    prefetchAround(target.x, target.z, r)
+  }, [target, camera, prefetchAround])
 
   if (!style.roadMaterial) return null
   // Wait for the mask before rendering to avoid a one-frame flash of out-of-NYC
