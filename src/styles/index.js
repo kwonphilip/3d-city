@@ -6,6 +6,7 @@ import wireframe from './wireframe.jsx'
 import floatingMap from './floatingMap.jsx'
 import floatingMapDay from './floatingMapDay.jsx'
 import nightBlue from './nightBlue.jsx'
+import twilightBlue from './twilightBlue.jsx'
 import neonMagenta from './neonMagenta.jsx'
 import cyberpunk from './cyberpunk.jsx'
 
@@ -17,6 +18,7 @@ export const STYLE_REGISTRY = [
   stylizedMono,
   lowPolyFlat,
   nightBlue,
+  twilightBlue,
   neonMagenta,
   cyberpunk,
   floatingMap,
