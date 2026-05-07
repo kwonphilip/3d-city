@@ -10,6 +10,7 @@ import { loadBuildingsManifest } from '../lib/manifests'
 import { pointInRing } from '../lib/polygons'
 import { lruGet, lruSet } from '../lib/lru'
 import { useTileStreamer } from '../hooks/useTileStreamer'
+import { loadingState } from '../ui/loadingState'
 import GeometryWorker from '../workers/geometryWorker.js?worker'
 
 const CHECK_EVERY = 5
@@ -200,6 +201,17 @@ export default function Buildings() {
       forceTick()
     })
   }, [forceTick])
+
+  // Publish in-flight count to the shared loading-indicator singleton.
+  useEffect(() => {
+    const id = setInterval(() => {
+      loadingState.buildingsInFlight = inFlightRef.current.size
+    }, 100)
+    return () => {
+      clearInterval(id)
+      loadingState.buildingsInFlight = 0
+    }
+  }, [])
 
   // Destination prefetch: when the user picks a target via minimap or address
   // search, useCameraFlight lerps over ~1s. Warm the tile JSON for the

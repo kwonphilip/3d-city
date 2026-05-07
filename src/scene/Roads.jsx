@@ -9,6 +9,7 @@ import { loadRoadsManifest } from '../lib/manifests'
 import { lruGet, lruSet } from '../lib/lru'
 import { makeBufferGeometry } from '../lib/threeBuffers'
 import { useTileStreamer } from '../hooks/useTileStreamer'
+import { loadingState } from '../ui/loadingState'
 import RoadsWorker from '../workers/roadsWorker.js?worker'
 
 const CHECK_EVERY = 5
@@ -149,6 +150,17 @@ export default function Roads() {
       })
       .catch((err) => console.error('[Roads] manifest fetch:', err))
   }, [forceTick])
+
+  // Publish in-flight count to the shared loading-indicator singleton.
+  useEffect(() => {
+    const id = setInterval(() => {
+      loadingState.roadsInFlight = inFlightRef.current.size
+    }, 100)
+    return () => {
+      clearInterval(id)
+      loadingState.roadsInFlight = 0
+    }
+  }, [])
 
   // Destination prefetch: warm road tile JSON for minimap / address-search
   // targets during the camera-flight lerp, so bridges and roads at the

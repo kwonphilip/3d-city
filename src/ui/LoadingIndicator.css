@@ -1,0 +1,92 @@
+.loading-indicator {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  /* Heavier dark pill + blur + border + shadow so the loader carves out a
+     clear shape on every style preset — dark scenes (cyberpunk, wireframe,
+     nightBlue) used to swallow the half-transparent black pill entirely. */
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.95);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.loading-indicator-active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Base silhouette stays dim and always visible. The shimmer overlay sits on
+   top, masked to the silhouette shape via the same SVG, with an animated
+   gradient background that sweeps a bright band across left → right. */
+.loading-indicator-skyline {
+  position: relative;
+  display: inline-block;
+  height: 40px;
+  line-height: 0;
+}
+
+.skyline-layer-base {
+  height: 40px;
+  width: auto;
+  display: block;
+  opacity: 0.55;
+  /* Force the SVG to render pure white regardless of its source fill colors
+     so the silhouette is always visible against the dark pill. */
+  filter: brightness(0) invert(1);
+}
+
+.skyline-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0.95) 50%,
+    transparent 62%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  background-position: 220% 0;
+  background-repeat: no-repeat;
+  mask-image: var(--skyline-mask);
+  -webkit-mask-image: var(--skyline-mask);
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.loading-indicator-active .skyline-shimmer {
+  opacity: 1;
+  animation: skyline-shimmer 1.6s linear infinite;
+}
+
+@keyframes skyline-shimmer {
+  0%   { background-position: 220% 0; }
+  100% { background-position: -120% 0; }
+}
+
+.loading-indicator-count {
+  min-width: 20px;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}

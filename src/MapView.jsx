@@ -5,6 +5,7 @@ import StylePicker from './ui/StylePicker'
 import QualityPanel from './ui/QualityPanel'
 import Compass from './ui/Compass'
 import Minimap from './ui/Minimap'
+import LoadingIndicator from './ui/LoadingIndicator'
 import { useBuildingRegistry } from './context/BuildingRegistry'
 import { useStyle } from './context/StyleContext'
 import './ui/tooltip.css'
@@ -31,6 +32,7 @@ export default function MapView() {
         <QualityPanel />
       </div>
       <Minimap />
+      <LoadingIndicator />
       {loadingMounted && (
         <div className={`app-loading${ready ? ' app-loading-hidden' : ''}`}>
           <div className="app-loading-spinner" />
