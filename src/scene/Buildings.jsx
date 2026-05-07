@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { useStyle } from '../context/StyleContext'
 import { useQuality } from '../context/QualityContext'
 import { useBuildingRegistry } from '../context/BuildingRegistry'
+import { useSelectionStore } from '../context/SelectionContext'
 import { loadLand } from '../lib/landData'
 import { loadBuildingsManifest } from '../lib/manifests'
 import { pointInRing } from '../lib/polygons'
@@ -100,7 +101,7 @@ export default function Buildings() {
   const geomCacheRef = useRef(new Map())
   const abortersRef = useRef(new Map())
 
-  const forceTick = useTileStreamer({
+  const { forceTick, prefetchAround } = useTileStreamer({
     checkEvery: CHECK_EVERY,
     maxInFlight: MAX_IN_FLIGHT,
     getManifest: () => manifestRef.current,
@@ -199,6 +200,20 @@ export default function Buildings() {
       forceTick()
     })
   }, [forceTick])
+
+  // Destination prefetch: when the user picks a target via minimap or address
+  // search, useCameraFlight lerps over ~1s. Warm the tile JSON for the
+  // destination cluster during that flight so the burst tick on arrival skips
+  // the network round-trip and only pays the worker extrude time.
+  const target = useSelectionStore(s => s.target)
+  useEffect(() => {
+    if (!target) return
+    // Use whichever is bigger between the slider floor and the altitude-scaled
+    // radius the streamer will use on arrival, so the prefetched cluster
+    // matches what'll actually be requested.
+    const r = Math.max(qualityRef.current.renderRadius, camera.position.y * 1.5)
+    prefetchAround(target.x, target.z, r)
+  }, [target, camera, prefetchAround])
 
   // Load all borough/region rings indexed by name. Shares one fetch with
   // Terrain and Minimap via the loadLand cache.

@@ -27,6 +27,11 @@ import { dataUrl } from '../lib/dataPaths'
 const _fwdVec = new THREE.Vector3()
 const _prevLook = new THREE.Vector3(0, 0, -1)
 const _prevPos = new THREE.Vector3(NaN, NaN, NaN)
+// XZ-plane EMA of camera velocity (m/s). Used in steady mode to bias the
+// prefetch ellipse toward where the camera is actually drifting, not just
+// where it's looking.
+const _velEMA = { x: 0, z: 0 }
+const VEL_EMA_ALPHA = 0.5  // short half-life so reversals are seen quickly
 
 // Burst mode: triggered by sudden camera changes (fast drag, orbit, zoom,
 // minimap teleport). We can't predict where the user is heading, so we drop
@@ -64,7 +69,7 @@ export function useTileStreamer({
   const frameRef = useRef(0)
   const burstUntilRef = useRef(0)
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     // Motion detection runs every frame (never gated) so a burst trigger
     // doesn't get missed in the 4-out-of-5 frames the streamer normally skips.
     const cx0 = camera.position.x, cy0 = camera.position.y, cz0 = camera.position.z
@@ -79,6 +84,14 @@ export function useTileStreamer({
       // Weights tuned so a fast drag (~50–200m/frame) or noticeable orbit
       // (~0.05 rad/frame) crosses the 0.4 threshold but slow drift does not.
       motionScore = dpos / 50 + dlook * 2 + dyrel * 5
+      // EMA the XZ velocity for steady-mode prefetch bias. Per-frame velocity
+      // is too noisy; a short EMA is responsive enough to track reversals.
+      if (delta > 0) {
+        const vx = (cx0 - _prevPos.x) / delta
+        const vz = (cz0 - _prevPos.z) / delta
+        _velEMA.x = _velEMA.x * (1 - VEL_EMA_ALPHA) + vx * VEL_EMA_ALPHA
+        _velEMA.z = _velEMA.z * (1 - VEL_EMA_ALPHA) + vz * VEL_EMA_ALPHA
+      }
     }
     _prevPos.set(cx0, cy0, cz0)
     _prevLook.copy(_fwdVec)
@@ -103,10 +116,26 @@ export function useTileStreamer({
 
     // Camera forward direction (already computed above).
     const fmag = Math.hypot(_fwdVec.x, _fwdVec.z) || 1e-6
-    const ux = _fwdVec.x / fmag
-    const uz = _fwdVec.z / fmag
+    let ux = _fwdVec.x / fmag
+    let uz = _fwdVec.z / fmag
     // pitch: 0 = straight down (overhead), 1 = fully horizontal (horizon).
     const pitch = Math.min(1, fmag)
+
+    // Steady-mode velocity bias: when the camera is drifting (slow continuous
+    // pan, below burst threshold), tilt the bias direction toward motion so
+    // the ellipse and prefetch lean where the camera is actually heading,
+    // not just where it's looking. Skipped in burst (already omnidirectional).
+    if (!isBurst) {
+      const speed = Math.hypot(_velEMA.x, _velEMA.z)
+      if (speed > 10) {  // m/s — quieter than walking pace; ignore noise
+        const w = Math.min(0.5, speed / 400)  // blend weight, capped at 50%
+        const bx = ux * (1 - w) + (_velEMA.x / speed) * w
+        const bz = uz * (1 - w) + (_velEMA.z / speed) * w
+        const bmag = Math.hypot(bx, bz) || 1
+        ux = bx / bmag
+        uz = bz / bmag
+      }
+    }
 
     // Ellipse radii: stretch forward, tighten behind, keep sides at base radius.
     // In burst mode collapse to a circle of radius*1.3 — we don't know which
@@ -237,5 +266,29 @@ export function useTileStreamer({
   // Stable across renders since checkEvery is a constant. Callers include this
   // in effect deps to force the next frame to run the full in-range check
   // (e.g. after manifest loads or worker pool is ready).
-  return useCallback(() => { frameRef.current = checkEvery - 1 }, [checkEvery])
+  const forceTick = useCallback(() => { frameRef.current = checkEvery - 1 }, [checkEvery])
+
+  // Warm tileDataRef for tiles within `radius` of (x, z) without rendering
+  // them. Called for known destinations (minimap clicks, address search) so
+  // the network fetch completes during the camera flight, leaving only the
+  // worker extrude when the streamer's burst tick picks them up on arrival.
+  const prefetchAround = useCallback((x, z, radius) => {
+    const manifest = getManifest()
+    if (!manifest) return
+    const r2 = radius * radius
+    for (const t of manifest.tiles) {
+      const cx = (t.bounds.minX + t.bounds.maxX) / 2
+      const cz = (t.bounds.minZ + t.bounds.maxZ) / 2
+      const dx = cx - x, dz = cz - z
+      if (dx * dx + dz * dz > r2) continue
+      if (tileDataRef.current.has(t.id)) continue
+      if (inFlightRef.current.has(t.id)) continue
+      fetch(dataUrl(t.file))
+        .then((r) => r.json())
+        .then((data) => { tileDataRef.current.set(t.id, data) })
+        .catch(() => {})
+    }
+  }, [getManifest, tileDataRef, inFlightRef])
+
+  return { forceTick, prefetchAround }
 }
