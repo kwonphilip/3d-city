@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 
 function detectDefaults() {
+  if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768) {
+    return { renderRadius: 1500, minBuildingHeight: 6 }
+  }
   const cores = navigator.hardwareConcurrency ?? 4
   const dpr = window.devicePixelRatio ?? 1
   if (cores >= 8 && dpr >= 2) return { renderRadius: 3000, minBuildingHeight: 3 }

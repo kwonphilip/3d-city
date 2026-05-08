@@ -21,7 +21,9 @@ const MAX_IN_FLIGHT = 8
 // Buildings' ~3,200 because it extends across bridges to NJ/Long Island) and
 // the worker also splits roads/bridges/pillars, so it's the slower of the two
 // pipelines — the extra worker matters here.
-const NUM_WORKERS = Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) - 1))
+const NUM_WORKERS = (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768)
+  ? 1
+  : Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) - 1))
 // LRU bound on built road geometry. Bumped from 128 because the dataset is
 // twice the size of Buildings (~6,800 tiles); 512 entries (~25–60 MB) gives
 // comparable revisit hit rate to Buildings' 256/3,200.

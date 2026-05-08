@@ -40,18 +40,28 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  /* Leave room for the 220px-tall minimap at the bottom-right (16px gap +
-     220px minimap + 16px breathing room = 252px). max-height is a soft cap;
-     no overflow rule because clipping here would cut off the QualityPanel's
-     left-positioned tooltips and (per CSS spec) promote overflow-x to auto,
-     spawning a stray horizontal scrollbar. The StylePicker's own .sp-list
-     already self-scrolls, so panel-level scrolling is handled there. */
-  max-height: calc(100vh - 252px);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
   pointer-events: none;
+}
+
+/* On desktop, leave room for the 220px-tall minimap at the bottom-right. */
+@media (hover: hover) and (pointer: fine) {
+  .ui-overlay {
+    max-height: calc(100vh - 252px);
+  }
+}
+
+/* On mobile the overlay sits below the full-width Nav bar (~64px + gap). */
+@media (hover: none) and (pointer: coarse) {
+  .ui-overlay {
+    top: 72px;
+    right: 8px;
+    max-height: calc(100vh - 80px);
+    gap: 4px;
+  }
 }
 
 .ui-overlay > * {

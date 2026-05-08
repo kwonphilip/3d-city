@@ -5,7 +5,10 @@ import StylePicker from './ui/StylePicker'
 import QualityPanel from './ui/QualityPanel'
 import Compass from './ui/Compass'
 import Minimap from './ui/Minimap'
+import MobileShell from './ui/MobileShell'
 import LoadingIndicator from './ui/LoadingIndicator'
+import useIsMobile from './hooks/useIsMobile'
+import useTapTooltip from './hooks/useTapTooltip'
 import { useBuildingRegistry } from './context/BuildingRegistry'
 import { useStyle } from './context/StyleContext'
 import './ui/tooltip.css'
@@ -13,24 +16,36 @@ import './ui/tooltip.css'
 export default function MapView() {
   const ready = useBuildingRegistry((s) => s.tiles.size > 0)
   const style = useStyle()
+  const isMobile = useIsMobile()
   const skyClass = style.skyClass
   const skyGradient = style.skyGradient
   const [loadingMounted, setLoadingMounted] = useState(true)
+
   useEffect(() => {
     if (!ready) return
     const t = setTimeout(() => setLoadingMounted(false), 450)
     return () => clearTimeout(t)
   }, [ready])
 
+  useTapTooltip()
+
+  const appClass = ['app', skyClass].filter(Boolean).join(' ')
+
   return (
-    <div className={`app${skyClass ? ` ${skyClass}` : ''}`} style={skyGradient ? { background: skyGradient } : undefined}>
+    <div className={appClass} style={skyGradient ? { background: skyGradient } : undefined}>
       <CityCanvas />
-      <Nav />
-      <div className="ui-overlay">
-        <Compass />
-        <StylePicker />
-        <QualityPanel />
-      </div>
+      {isMobile ? (
+        <MobileShell />
+      ) : (
+        <>
+          <Nav />
+          <div className="ui-overlay">
+            <Compass />
+            <StylePicker />
+            <QualityPanel />
+          </div>
+        </>
+      )}
       <Minimap />
       <LoadingIndicator />
       {loadingMounted && (

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { loadingState } from './loadingState'
+import useIsMobile from '../hooks/useIsMobile'
 import skylineUrl from '../assets/nyc-skyline.svg'
 import './LoadingIndicator.css'
 
 const REFRESH_MS = 100
 
 export default function LoadingIndicator() {
+  const isMobile = useIsMobile()
   const [count, setCount] = useState(0)
   const lastRef = useRef(0)
 
@@ -26,7 +28,7 @@ export default function LoadingIndicator() {
   const active = count > 0
   return (
     <div
-      className={`loading-indicator${active ? ' loading-indicator-active' : ''}`}
+      className={`loading-indicator${active ? ' loading-indicator-active' : ''}${isMobile ? ' loading-indicator-mobile' : ''}`}
       aria-live="polite"
       aria-label={active ? `Loading ${count} tiles` : 'Idle'}
     >

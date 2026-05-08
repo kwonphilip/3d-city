@@ -84,10 +84,24 @@
   border-color: rgba(255, 255, 255, 0.32);
   transform: translateY(-2px);
 }
+.landing-button:active {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.32);
+}
 
 .landing-button-full:hover {
   border-color: rgba(140, 170, 255, 0.55);
   background: rgba(90, 130, 220, 0.16);
+}
+.landing-button-full:active {
+  border-color: rgba(140, 170, 255, 0.55);
+  background: rgba(90, 130, 220, 0.16);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .landing-content {
+    padding: 24px 16px;
+  }
 }
 
 .landing-button-title {

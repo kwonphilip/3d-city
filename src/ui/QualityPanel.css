@@ -70,3 +70,31 @@
   margin-bottom: 2px;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .quality-panel {
+    min-width: 0;
+    width: 100%;
+    gap: 14px;
+    padding: 12px 16px;
+  }
+  .q-row input[type='range'] {
+    height: 28px;
+    margin: 4px 0;
+  }
+  .q-check {
+    min-height: 44px;
+    gap: 12px;
+  }
+  .q-check input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .q-row span:first-child,
+  .q-val,
+  .q-check span,
+  .q-borough-header {
+    font-size: 13px;
+  }
+}
+

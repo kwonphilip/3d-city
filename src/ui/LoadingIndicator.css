@@ -90,3 +90,9 @@
   text-align: left;
   font-variant-numeric: tabular-nums;
 }
+
+.loading-indicator-mobile {
+  top: auto;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(4px);
+}

@@ -172,3 +172,34 @@
 .sp-perf-heavy {
   color: #ff7a7a;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .style-picker {
+    width: 100%;
+    max-width: none;
+  }
+  .sp-header {
+    min-height: 48px;
+    padding: 10px 14px;
+  }
+  .sp-header:active {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .sp-card {
+    padding: 10px 12px;
+  }
+  .sp-card:active {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  .sp-swatch {
+    width: 36px;
+    height: 36px;
+  }
+  .sp-label {
+    font-size: 14px;
+  }
+  .sp-header-label {
+    font-size: 15px;
+  }
+}

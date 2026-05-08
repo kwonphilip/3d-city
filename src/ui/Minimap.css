@@ -19,3 +19,26 @@
   height: 100%;
   cursor: crosshair;
 }
+
+/* Mobile: hide by default. The MobileShell toggle promotes the parent .app
+   to .app-mobile-minimap-open which reveals the minimap as a centered overlay
+   sized to the canvas content (preserves the original 180×220 ratio).
+   The minimap canvas is a fixed 180×220 raster, so we scale via transform
+   instead of width/height to keep the bake crisp and the projection aligned. */
+@media (hover: none) and (pointer: coarse) {
+  .minimap {
+    display: none;
+  }
+  .app-mobile-minimap-open .minimap {
+    display: block;
+    bottom: auto;
+    right: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.6);
+    transform-origin: center;
+    opacity: 1;
+    z-index: 35;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  }
+}

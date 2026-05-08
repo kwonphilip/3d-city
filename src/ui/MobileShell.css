@@ -1,0 +1,160 @@
+/* MobileShell layout. The shell hosts the existing Nav, Compass, StylePicker,
+   and QualityPanel components; the cascade rules below neutralize their
+   absolute positioning so they flow inside the topbar and bottom sheet. */
+
+.ms-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ms-topbar > * {
+  pointer-events: auto;
+}
+
+/* Nav inside topbar: drop its absolute positioning and let it flex-fill. */
+.ms-topbar .nav {
+  position: static;
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+}
+
+/* Compass: shrink and drop NESW labels — at this size they overlap the
+   needle and are unreadable. The red north arrow is the load-bearing piece. */
+.ms-topbar .compass {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.ms-topbar .compass-mark {
+  display: none;
+}
+
+.ms-hamburger {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+.ms-hamburger:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+.ms-hamburger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+
+/* Bottom sheet. transform: translateY(100%) parks it off-screen; the
+   .ms-sheet-open class lifts it. The inline transform from the drag handler
+   takes precedence during a swipe. */
+.ms-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background 0.25s ease;
+  z-index: 30;
+}
+.ms-backdrop-open {
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+.ms-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 75vh;
+  background: rgba(20, 24, 36, 0.97);
+  backdrop-filter: blur(10px);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
+  transform: translateY(100%);
+  transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  z-index: 31;
+  display: flex;
+  flex-direction: column;
+}
+.ms-sheet-open {
+  transform: translateY(0);
+}
+
+/* Handle: the only region that drags. touch-action: none stops the browser
+   from converting a vertical swipe here into a page-scroll attempt while we
+   handle it via pointer events. */
+.ms-handle {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 8px;
+  cursor: grab;
+  touch-action: none;
+  flex-shrink: 0;
+}
+.ms-handle:active {
+  cursor: grabbing;
+}
+.ms-handle-bar {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.ms-sheet-content {
+  overflow-y: auto;
+  padding: 4px 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Keep scroll contained — without this, scrolling past the top/bottom of
+     the sheet content drives the page underneath (or pull-to-refresh on
+     iOS). */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* StylePicker / QualityPanel inside the sheet: the children already paint
+   their own dark backdrop; drop the panel-internal min-width and let them
+   stretch to the sheet width. */
+.ms-sheet-content .style-picker,
+.ms-sheet-content .quality-panel {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* StylePicker inside the sheet: let the list self-scroll. overflow:hidden on
+   .style-picker clips a visible-overflow list, so we restore auto scroll and
+   lift the 60vh cap to whatever fits inside the 75vh sheet. */
+.ms-sheet-content .style-picker {
+  overflow: visible;
+}
+.ms-sheet-content .sp-open .sp-list {
+  max-height: calc(75vh - 160px);
+  overflow-y: auto;
+}

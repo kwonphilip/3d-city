@@ -17,7 +17,9 @@ const CHECK_EVERY = 5
 // Worker pool: parallel extrude across cores. Capped because each worker
 // keeps a copy of THREE in memory (the geometry worker bundle is ~135 kB) and
 // because contention for the GPU upload at the end is serialized anyway.
-const NUM_WORKERS = Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) - 1))
+const NUM_WORKERS = (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768)
+  ? 1
+  : Math.max(1, Math.min(3, (typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) - 1))
 // Cap concurrent dispatches so the camera-move re-prioritization at each tick
 // has slots to fill with newly-near tiles. 4× workers keeps every worker fed
 // across the ~250ms tick gap (each tile builds in ~20–50ms) while bounding
