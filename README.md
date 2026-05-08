@@ -1,8 +1,9 @@
 # 3d-city
 
-Interactive 3D NYC city viewer in the browser. Buildings are extruded from real
-OpenStreetMap footprints, streamed in 500 m tiles by camera proximity, and
-rendered through a swappable style system (day/night/wireframe/etc.).
+Interactive 3D NYC city viewer in the browser. Buildings and roads are extruded
+from real OpenStreetMap geometry, streamed in 500 m tiles by camera proximity,
+and rendered through a swappable style system (11 presets: day, night, mono,
+wireframe, cyberpunk, and more). Works on desktop and mobile.
 
 ## Develop
 
@@ -19,14 +20,27 @@ The static tile/manifest files under `public/data/manhattan/` are produced
 offline by the scripts in `scripts/`:
 
 ```bash
-node scripts/build-tiles.mjs       # building footprints → tiled .json + manifest
-node scripts/build-roads.mjs       # OSM ways → tiled road geometry + manifest
-node scripts/build-land.mjs        # land/water polygons
-node scripts/build-parks.mjs       # park polygons
-node scripts/slim-manifests.mjs    # one-shot manifest size reducer
+node scripts/build-tiles.mjs      # building footprints → tiled .json + manifest
+node scripts/build-roads.mjs      # OSM ways → tiled road geometry + manifest
+node scripts/build-land.mjs       # land/water polygons
+node scripts/build-parks.mjs      # park polygons
+node scripts/slim-manifests.mjs   # one-shot manifest size reducer
 ```
 
 Architecture notes live in [CLAUDE.md](CLAUDE.md).
+
+## Features
+
+- **11 style presets** — low-poly day/night, monochrome, wireframe, cyberpunk,
+  neon, floating map, and more. Switch live with no geometry rebuild.
+- **Address search** — geocodes via Nominatim and flies the camera to the result.
+- **Minimap** — canvas overview with click-to-fly and camera position indicator.
+- **Quality controls** — render radius and building-height threshold sliders,
+  auto-detected from hardware on first load.
+- **Mobile layout** — bottom-sheet UI, touch-tuned camera controls, and a
+  conservative default quality preset for mobile hardware.
+- **Tile streaming** — elliptical in-range culling, burst mode on fast camera
+  moves, velocity-biased prefetch, and LRU geometry caches.
 
 ## Credits
 
