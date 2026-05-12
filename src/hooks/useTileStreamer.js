@@ -109,9 +109,6 @@ export function useTileStreamer({
     if (!manifest) return
 
     const { x, y, z } = camera.position
-    // Scale radius with camera height so the city stays populated when zoomed
-    // out (the slider sets the floor, altitude raises the ceiling).
-    const radius = Math.max(getRadius(), y * 1.5)
     const mask = getMask?.()
 
     // Camera forward direction (already computed above).
@@ -120,6 +117,19 @@ export function useTileStreamer({
     let uz = _fwdVec.z / fmag
     // pitch: 0 = straight down (overhead), 1 = fully horizontal (horizon).
     const pitch = Math.min(1, fmag)
+
+    // Side/back use an altitude-driven floor — they only need to cover what's
+    // around the camera. Forward uses the look-ray ground intercept so a
+    // near-horizon view reaches out to where the user is actually looking.
+    // Pitch is applied once (via lookGround), not compounded on top of a
+    // multiplier, and forward is capped at 2× the slider so the user's
+    // quality knob doubles as the forward-distance ceiling.
+    const baseR = Math.max(getRadius(), y * 1.5)
+    const lookGround = pitch < 0.995
+      ? y * pitch / Math.sqrt(1 - pitch * pitch)
+      : y * 10
+    const forwardMax = getRadius() * 2
+    const forwardFloor = Math.min(Math.max(baseR, lookGround), forwardMax)
 
     // Steady-mode velocity bias: when the camera is drifting (slow continuous
     // pan, below burst threshold), tilt the bias direction toward motion so
@@ -137,12 +147,11 @@ export function useTileStreamer({
       }
     }
 
-    // Ellipse radii: stretch forward, tighten behind, keep sides at base radius.
-    // In burst mode collapse to a circle of radius*1.3 — we don't know which
-    // way the user is heading, so fill the disk evenly.
-    const forwardR = isBurst ? radius * 1.3 : radius * (1 + pitch * 1.5)
-    const backR    = isBurst ? radius * 1.3 : radius * Math.max(0.5, 1 - pitch * 0.4)
-    const sideR    = isBurst ? radius * 1.3 : radius
+    // Ellipse radii: forward reaches the look-ground floor, sides hold at
+    // base, back tightens with pitch. In burst mode collapse to a circle.
+    const forwardR = isBurst ? forwardFloor * 1.3 : forwardFloor
+    const backR    = isBurst ? forwardFloor * 1.3 : baseR * Math.max(0.5, 1 - pitch * 0.4)
+    const sideR    = isBurst ? forwardFloor * 1.3 : baseR
     const prefetchR = forwardR * 1.4
 
     // Burst lifts throughput caps so the wider ring fills before the cooldown
@@ -150,8 +159,18 @@ export function useTileStreamer({
     const effectiveMaxInFlight = isBurst ? maxInFlight * 2 : maxInFlight
     const effectivePrefetchCap = isBurst ? 8 : 3
 
+    // Keep-envelope: a circle generous enough to contain the entire load
+    // ellipse plus a margin. Tiles already loaded or in-flight are evaluated
+    // against this larger circle for eviction/abort, so a 180° yaw that
+    // swings the elliptical forward lobe doesn't flap back-lobe tiles in and
+    // out as the camera rotates. The load test stays elliptical to keep
+    // in-flight slots biased toward where the camera is heading.
+    const keepR = Math.max(forwardR, sideR, backR) * 1.15
+    const keepR2 = keepR * keepR
+
     // --- Compute which tiles are in range (elliptical test) ---
     const inRange = new Set()
+    const inKeep = new Set()
     const inPrefetch = new Set()
     const distById = new Map()
     for (const t of manifest.tiles) {
@@ -159,6 +178,9 @@ export function useTileStreamer({
       const tcx = (t.bounds.minX + t.bounds.maxX) / 2
       const tcz = (t.bounds.minZ + t.bounds.maxZ) / 2
       const dx = tcx - x, dz = tcz - z
+      const d2 = dx * dx + dz * dz
+      if (d2 < keepR2) inKeep.add(t.id)
+
       const along = dx * ux + dz * uz       // signed forward component
       const cross = -dx * uz + dz * ux      // perpendicular component
 
@@ -167,7 +189,7 @@ export function useTileStreamer({
       if (ellipseD2 < 1) {
         inRange.add(t.id)
         // Store approximate Euclidean d² for nearest-first sort.
-        distById.set(t.id, dx * dx + dz * dz)
+        distById.set(t.id, d2)
       } else if (isBurst || along > 0) {
         // Outside in-range ellipse — candidate for prefetch. In burst mode
         // prefetch in all directions; otherwise only ahead of look.
@@ -177,10 +199,11 @@ export function useTileStreamer({
     }
 
     // --- Abort fetches for tiles that drifted out of range ---
-    // Freeing the HTTP/1 connection lane immediately lets the new nearby tiles
-    // dispatch on this same tick instead of queueing behind stale fetches.
+    // Use the keep-envelope so a yaw that pushes a fetching tile from the
+    // forward lobe into the side/back ellipse doesn't abort it; we'd only
+    // re-fetch the same tile a few frames later when burst expands the ring.
     for (const id of inFlightRef.current) {
-      if (inRange.has(id)) continue
+      if (inKeep.has(id)) continue
       const ac = abortersRef.current.get(id)
       if (ac) { ac.abort(); abortersRef.current.delete(id) }
       inFlightRef.current.delete(id)
@@ -253,9 +276,12 @@ export function useTileStreamer({
     }
 
     // --- Remove tiles that left range ---
+    // Eviction uses the keep-envelope (circle), not the load ellipse, so a
+    // tile loaded while it was in the forward lobe is not evicted the moment
+    // the camera yaws and that tile is now in the elliptical back lobe.
     const toRemove = []
     for (const id of loadedRef.current) {
-      if (!inRange.has(id)) toRemove.push(id)
+      if (!inKeep.has(id)) toRemove.push(id)
     }
     if (toRemove.length > 0) {
       for (const id of toRemove) loadedRef.current.delete(id)
