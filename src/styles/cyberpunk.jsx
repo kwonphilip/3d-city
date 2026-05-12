@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { makeHeightTintMaterial } from '../lib/heightMaterial'
 
 export default {
   id: 'cyberpunk',
@@ -7,7 +8,7 @@ export default {
   perfTier: 'standard',
   category: 'night',
   background: '#050010',
-  buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#ff2d8a') }),
+  buildingMaterial: makeHeightTintMaterial({ baseColor: '#ff2d8a', topColor: '#ff80b8', blend: 0.5 }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#fff066') }),
   highlightOutlineColor: '#ffff99',
   highlightBeamColor: '#fff066',

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { defineStyle } from './_base'
 import { DayLights } from './_lights'
+import { makeHeightTintMaterial } from '../lib/heightMaterial'
 
 // Water, land, parks, and roads are unlit MeshBasicMaterial so they read as a
 // flat 2D map. Buildings use MeshLambertMaterial so each face shades distinctly
@@ -12,7 +13,7 @@ export default defineStyle({
   perfTier: 'light',
   category: 'day',
   background: '#dde6ec',
-  buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#c8c4be') }),
+  buildingMaterial: makeHeightTintMaterial({ baseColor: '#c8c4be', topColor: '#e0dcd6' }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#4285f4') }),
   highlightOutlineColor: '#1f5fc4',
   highlightBeamColor: '#4285f4',

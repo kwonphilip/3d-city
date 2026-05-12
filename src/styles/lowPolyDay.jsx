@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { defineStyle } from './_base'
 import { DayLights } from './_lights'
+import { makeHeightTintMaterial } from '../lib/heightMaterial'
 
 export default defineStyle({
   id: 'lowPolyDay',
@@ -9,7 +10,7 @@ export default defineStyle({
   perfTier: 'standard',
   category: 'day',
   background: '#dde6ec',
-  buildingMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#9aa5b4') }),
+  buildingMaterial: makeHeightTintMaterial({ baseColor: '#9aa5b4', topColor: '#b8c8d8' }),
   highlightMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color('#4285f4') }),
   highlightOutlineColor: '#1f5fc4',
   highlightBeamColor: '#4285f4',

@@ -21,7 +21,7 @@ export default {
   stars: false,
   lights: () => (
     <>
-      <ambientLight intensity={0.9} color="#f8f4ee" />
+      <hemisphereLight args={['#e0ecf8', '#c0b090', 0.9]} />
       <directionalLight position={[500, 800, 300]} intensity={0.9} color="#ffffff" />
       <directionalLight position={[-300, 400, -200]} intensity={0.1} color="#e8e4dc" />
     </>

@@ -4,7 +4,7 @@
 // readable without full shadow-map overhead.
 export const DayLights = () => (
   <>
-    <ambientLight intensity={0.55} />
+    <hemisphereLight args={['#b0d8f5', '#8a7a5e', 0.55]} />
     <directionalLight position={[600, 1000, 400]} intensity={1.0} color="#fff5e0" />
     <directionalLight position={[-300, 600, -200]} intensity={0.25} color="#cfd9e8" />
   </>
